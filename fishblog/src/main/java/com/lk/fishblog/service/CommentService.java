@@ -10,7 +10,8 @@ import java.util.List;
 @Service
 public class CommentService {
     @Autowired
-    CommentRepository commentRepository;
+    private CommentRepository commentRepository;
+
 
     public Comment insertOneComment(Comment t){
         return commentRepository.save(t);

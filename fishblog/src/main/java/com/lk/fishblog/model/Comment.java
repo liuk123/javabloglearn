@@ -7,9 +7,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "B_COMMENT")
@@ -20,7 +20,14 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Comment extends BaseEntity implements Serializable {
-    private Long fromUserId;
-    private Long articleId;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private User fromUser;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Article article;
     private String content;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @OrderBy("id ASC")
+    private List<Reply> replyList;
 }

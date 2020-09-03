@@ -7,8 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -20,7 +19,11 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Reply extends BaseEntity implements Serializable{
-    private Long commentId;
-    private Long fromUserId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Comment comment;
+    @OneToOne(fetch = FetchType.LAZY)
+    private User fromUserId;
+    @OneToOne(fetch = FetchType.LAZY)
+    private User toUserId;
     private String content;
 }

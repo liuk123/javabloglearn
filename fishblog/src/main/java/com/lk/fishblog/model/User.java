@@ -22,5 +22,5 @@ import java.io.Serializable;
 public class User extends BaseEntity implements Serializable{
     private String userName;
     private String password;
-    private int role;
+    private Integer role;
 }
