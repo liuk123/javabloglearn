@@ -22,12 +22,13 @@ import java.util.List;
 public class Comment extends BaseEntity implements Serializable {
 
     @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="from_user_id")
     private User fromUser;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="article_id")
     private Article article;
     private String content;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @OrderBy("id ASC")
+    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Reply> replyList;
 }

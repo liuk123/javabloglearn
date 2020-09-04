@@ -12,9 +12,8 @@ public class CommentService {
     @Autowired
     private CommentRepository commentRepository;
 
-
-    public Comment insertOneComment(Comment t){
-        return commentRepository.save(t);
+    public Comment insertOneComment(Comment c){
+        return commentRepository.save(c);
     }
     public List<Comment> findAllComment(){
         return commentRepository.findAll();

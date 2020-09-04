@@ -8,10 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.Where;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
@@ -28,8 +25,7 @@ public class Article extends BaseEntity implements Serializable{
     private String title;
     private String content;
 
-
-    @OneToMany
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @OrderBy("id DESC")
     private List<Comment> commentList;
 }

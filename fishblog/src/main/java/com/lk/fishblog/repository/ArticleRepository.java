@@ -8,5 +8,7 @@ import java.util.List;
 
 
 public interface ArticleRepository extends JpaRepository<Article, Long> {
-    List<Reply> findByTorridAndTorr(Long torrid, int tr);
+    Article findAllById(Long id);
+    Article findByTitle(String title);
+//    List<Article> findAllByUserName(Long id);
 }

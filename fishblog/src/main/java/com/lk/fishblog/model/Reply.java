@@ -19,11 +19,14 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Reply extends BaseEntity implements Serializable{
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.REFRESH, optional = false)
+    @JoinColumn(name="comment_id")
     private Comment comment;
     @OneToOne(fetch = FetchType.LAZY)
-    private User fromUserId;
+    @JoinColumn(name="from_user_id")
+    private User fromUser;
     @OneToOne(fetch = FetchType.LAZY)
-    private User toUserId;
+    @JoinColumn(name="to_user_id")
+    private User toUser;
     private String content;
 }

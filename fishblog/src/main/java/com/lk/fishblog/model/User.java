@@ -20,7 +20,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User extends BaseEntity implements Serializable{
-    private String userName;
+    private String username;
     private String password;
     private Integer role;
 }

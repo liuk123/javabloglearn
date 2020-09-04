@@ -16,10 +16,4 @@ public class ReplyService {
         return replyRepository.save(r);
     }
 
-    public List<Reply> findAllByCommentId(Long cid){
-        return replyRepository.findByTorridAndTorr(cid,1);
-    }
-    public List<Reply> findAllByReplyid(Long rid){
-        return replyRepository.findByTorridAndTorr(rid,0);
-    }
 }

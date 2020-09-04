@@ -1,7 +1,9 @@
 package com.lk.fishblog.service;
 
 import com.lk.fishblog.model.Reply;
+import com.lk.fishblog.model.User;
 import com.lk.fishblog.repository.ReplyRepository;
+import com.lk.fishblog.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,16 +12,9 @@ import java.util.List;
 @Service
 public class UserService {
     @Autowired
-    ReplyRepository replyRepository;
+    UserRepository userRepository;
 
-    public Reply insertOneReply(Reply r){
-        return replyRepository.save(r);
-    }
-
-    public List<Reply> findAllByCommentId(Long cid){
-        return replyRepository.findByTorridAndTorr(cid,1);
-    }
-    public List<Reply> findAllByReplyid(Long rid){
-        return replyRepository.findByTorridAndTorr(rid,0);
+    public User insertOneUser(User u){
+        return userRepository.save(u);
     }
 }
