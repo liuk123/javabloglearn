@@ -6,19 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CommentService {
     @Autowired
     private CommentRepository commentRepository;
 
-    public Comment insertComment(Comment c){
+    public Comment save(Comment c){
         return commentRepository.save(c);
     }
-    public List<Comment> findAllComment(){
-        return commentRepository.findAll();
-    }
-    public Comment findAllById(Long id){
-        return commentRepository.findAllById(id);
+    public Optional<Comment> findById(Long id){
+        return commentRepository.findById(id);
     }
 }

@@ -25,6 +25,10 @@ public class Article extends BaseEntity implements Serializable{
     private String title;
     private String content;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id")
+    private User author;
+
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @OrderBy("id DESC")
     private List<Comment> commentList;

@@ -5,15 +5,17 @@ import com.lk.fishblog.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ArticleService {
     @Autowired
     ArticleRepository articleRepository;
 
-    public Article findById(Long id){
-        return articleRepository.findAllById(id);
+    public Optional<Article> findById(Long id){
+        return articleRepository.findById(id);
     }
-    public Article findByTitle(String title){
-        return articleRepository.findByTitle(title);
+    public Article save(Article a){
+        return articleRepository.save(a);
     }
 }

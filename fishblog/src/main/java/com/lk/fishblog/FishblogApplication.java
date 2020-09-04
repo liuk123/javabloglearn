@@ -20,20 +20,10 @@ import javax.transaction.Transactional;
 @EnableJpaRepositories
 public class FishblogApplication implements ApplicationRunner {
 
-	@Autowired
-	private ArticleService articleService;
-
-	@Autowired
-	private CommentService commentService;
-
 	public static void main(String[] args) {
 		SpringApplication.run(FishblogApplication.class, args);
 	}
 
 	@Override
-	@Transactional
-	public void run(ApplicationArguments args) throws Exception {
-		Article article = articleService.findByTitle("文章标题1");
-		Comment comment = commentService.findAllById(1L);
-	}
+	public void run(ApplicationArguments args) throws Exception {}
 }
