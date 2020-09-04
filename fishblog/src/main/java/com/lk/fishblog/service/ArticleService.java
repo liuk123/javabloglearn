@@ -15,7 +15,6 @@ public class ArticleService {
     @Autowired
     ArticleRepository articleRepository;
 
-    @Transactional
     public Article findById(Long id){
         return articleRepository.getOne(id);
     }

@@ -32,4 +32,9 @@ public class Article extends BaseEntity implements Serializable{
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @OrderBy("id DESC")
     private List<Comment> commentList;
+
+//    @Override
+//    public String toString(){
+//        return "";
+//    }
 }

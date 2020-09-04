@@ -15,8 +15,8 @@ import java.io.Serializable;
 @Table(name = "B_USER")
 @Builder
 @Data
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
+//@EqualsAndHashCode(callSuper = true)
+//@ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class User extends BaseEntity implements Serializable{
