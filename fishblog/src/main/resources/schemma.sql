@@ -39,5 +39,6 @@ create table b_article(
     update_time timestamp,
     content varchar(10000),
     title varchar(100),
+    user_id bigint,
     primary key(id)
 )

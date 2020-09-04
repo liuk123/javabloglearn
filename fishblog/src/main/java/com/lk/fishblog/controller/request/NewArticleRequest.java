@@ -1,5 +1,6 @@
 package com.lk.fishblog.controller.request;
 
+import com.lk.fishblog.model.User;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,6 +16,6 @@ public class NewArticleRequest {
     private String title;
     @NotEmpty
     private String content;
-    @NotNull
-    private Long authorId;
+    @NotEmpty
+    private User author;
 }

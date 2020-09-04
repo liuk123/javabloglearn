@@ -5,9 +5,6 @@ import com.lk.fishblog.repository.ReplyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-
 @Service
 public class ReplyService {
     @Autowired
@@ -16,8 +13,8 @@ public class ReplyService {
     public Reply save(Reply r){
         return replyRepository.save(r);
     }
-    public Optional<Reply> findById(Long id){
-        return replyRepository.findById(id);
+    public Reply findById(Long id){
+        return replyRepository.findById(id).get();
     }
 
 }
