@@ -23,16 +23,12 @@ public class User extends BaseEntity implements Serializable{
     private Integer role;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "b_user_article", joinColumns = {
-            @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "article_id") })
+    @JoinTable(
+        name = "b_user_article",
+        joinColumns = {
+            @JoinColumn(name = "user_id") },
+        inverseJoinColumns = {
+            @JoinColumn(name = "article_id") })
     private List<Article> articleList;
-
-//    @Override
-//    public String toString() {
-//        return "User{" +
-//                ", username='" + username + '\'' +
-//                ", role='" + role + '\'' +
-//                '}';
-//    }
 
 }

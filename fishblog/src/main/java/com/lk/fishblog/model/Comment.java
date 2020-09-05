@@ -19,6 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Comment extends BaseEntity implements Serializable {
 
+    @JsonIgnoreProperties(value = { "articleList" })
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="from_user_id")
     private User fromUser;
@@ -34,10 +35,4 @@ public class Comment extends BaseEntity implements Serializable {
             @JoinColumn(name = "comment_id") }, inverseJoinColumns = { @JoinColumn(name = "reply_id") })
     private List<Reply> replyList;
 
-//    @Override
-//    public String toString() {
-//        return "Comment{" +
-//                ", content='" + content + '\'' +
-//                '}';
-//    }
 }

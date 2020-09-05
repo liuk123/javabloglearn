@@ -14,7 +14,7 @@ public class ReplyService {
         return replyRepository.save(r);
     }
     public Reply findById(Long id){
-        return replyRepository.findById(id).get();
+        return replyRepository.getOne(id);
     }
 
 }

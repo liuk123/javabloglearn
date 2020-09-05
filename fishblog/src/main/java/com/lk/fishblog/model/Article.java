@@ -1,6 +1,7 @@
 package com.lk.fishblog.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import org.hibernate.annotations.Where;
 
@@ -35,11 +36,4 @@ public class Article extends BaseEntity implements Serializable{
             @JoinColumn(name = "article_id") }, inverseJoinColumns = { @JoinColumn(name = "comment_id") })
     private List<Comment> commentList;
 
-//    @Override
-//    public String toString() {
-//        return "Article{" +
-//                ", title='" + title + '\'' +
-//                ", content='" + content + '\'' +
-//                '}';
-//    }
 }

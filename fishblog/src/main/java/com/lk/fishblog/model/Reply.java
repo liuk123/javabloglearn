@@ -31,10 +31,4 @@ public class Reply extends BaseEntity implements Serializable{
 
     private String content;
 
-//    @Override
-//    public String toString() {
-//        return "Reply{" +
-//                ", content='" + content + '\'' +
-//                '}';
-//    }
 }
