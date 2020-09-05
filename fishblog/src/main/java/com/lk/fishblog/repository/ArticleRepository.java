@@ -4,5 +4,4 @@ import com.lk.fishblog.model.Article;
 
 
 public interface ArticleRepository extends BaseRepository<Article, Long> {
-    Article findByTitle(String title);
 }

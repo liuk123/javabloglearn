@@ -34,6 +34,7 @@ public class ArticleController {
     public Article getById(@PathVariable Long id){
 
         Article a = articleService.findById(id);
+        log.info("Coffee {}:", a);
         return a;
     }
 }

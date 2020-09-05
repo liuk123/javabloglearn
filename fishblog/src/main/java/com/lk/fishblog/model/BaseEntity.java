@@ -1,9 +1,7 @@
 package com.lk.fishblog.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -11,7 +9,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @MappedSuperclass
-//@Data
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class BaseEntity {
@@ -24,4 +22,10 @@ public class BaseEntity {
     @UpdateTimestamp
     private Date updateTime;
 
+//    @Override
+//    public String toString() {
+//        return "BaseEntity{" +
+//                ", id='" + id + '\'' +
+//                '}';
+//    }
 }

@@ -1,11 +1,7 @@
 package com.lk.fishblog.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -15,26 +11,35 @@ import java.util.List;
 @Entity
 @Table(name = "B_ARTICLE")
 @Builder
-@Data
+//@Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Article extends BaseEntity implements Serializable{
 
     private String title;
+    @Lob
+    @Basic(fetch = FetchType.EAGER)
     private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "articleList" })
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="user_id")
     private User author;
 
-    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @OrderBy("id DESC")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "b_article_comment", joinColumns = {
+            @JoinColumn(name = "article_id") }, inverseJoinColumns = { @JoinColumn(name = "comment_id") })
     private List<Comment> commentList;
 
 //    @Override
-//    public String toString(){
-//        return "";
+//    public String toString() {
+//        return "Article{" +
+//                ", title='" + title + '\'' +
+//                ", content='" + content + '\'' +
+//                '}';
 //    }
 }
