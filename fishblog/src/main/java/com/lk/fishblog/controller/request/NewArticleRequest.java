@@ -17,5 +17,5 @@ public class NewArticleRequest {
     @NotEmpty
     private String content;
     @NotEmpty
-    private User author;
+    private Long authorId;
 }

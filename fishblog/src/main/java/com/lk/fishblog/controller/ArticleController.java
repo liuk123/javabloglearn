@@ -2,15 +2,15 @@ package com.lk.fishblog.controller;
 
 import com.lk.fishblog.controller.request.NewArticleRequest;
 import com.lk.fishblog.model.Article;
+import com.lk.fishblog.model.User;
 import com.lk.fishblog.service.ArticleService;
 import com.lk.fishblog.service.CommentService;
 import com.lk.fishblog.service.ReplyService;
+import com.lk.fishblog.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import javax.validation.Valid;
 
 
 @RestController
@@ -23,11 +23,15 @@ public class ArticleController {
     CommentService commentService;
     @Autowired
     ArticleService articleService;
+    @Autowired
+    UserService userService;
 
-    @PostMapping(path = "/", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping(path = "/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public Article addJsonArticle(@RequestBody @Valid NewArticleRequest a){
-        return articleService.save(a.getTitle(),a.getContent(),a.getAuthor());
+    public Article addJsonArticle(@RequestBody NewArticleRequest a){
+        User author = userService.findById(a.getAuthorId());
+        log.info("Coffee {}:", author);
+        return articleService.save(a.getTitle(),a.getContent(), author);
     }
 
     @GetMapping(path="/{id}")
@@ -36,5 +40,12 @@ public class ArticleController {
         Article a = articleService.findById(id);
         log.info("Coffee {}:", a);
         return a;
+    }
+
+    @GetMapping(path="author/{id}")
+    public User getAuthorById(@PathVariable Long id){
+        User u = userService.findById(id);
+        log.info("Coffee {}:", u);
+        return u;
     }
 }
