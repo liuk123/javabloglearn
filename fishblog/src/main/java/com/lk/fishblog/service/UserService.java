@@ -1,5 +1,6 @@
 package com.lk.fishblog.service;
 
+import com.lk.fishblog.model.Article;
 import com.lk.fishblog.model.User;
 import com.lk.fishblog.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,15 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public User save(User u){
-        return userRepository.save(u);
+    public User save(String username, String password, Integer role){
+        return userRepository.save(
+            User.builder().username(username).password(password).role(role).build()
+        );
     }
     public User findById(Long id){
         return userRepository.getOne(id);
+    }
+    public void deleteById(Long id){
+        userRepository.deleteById(id);
     }
 }
