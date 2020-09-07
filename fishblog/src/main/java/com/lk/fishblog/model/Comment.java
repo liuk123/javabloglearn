@@ -30,7 +30,7 @@ public class Comment extends BaseEntity implements Serializable {
 
     private String content;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "b_comment_reply", joinColumns = {
             @JoinColumn(name = "comment_id") }, inverseJoinColumns = { @JoinColumn(name = "reply_id") })
     private List<Reply> replyList;

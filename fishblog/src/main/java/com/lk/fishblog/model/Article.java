@@ -19,8 +19,6 @@ import java.util.List;
 public class Article extends BaseEntity implements Serializable{
 
     private String title;
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
     private String content;
 
     @JsonIgnoreProperties(value = { "articleList", "password" })

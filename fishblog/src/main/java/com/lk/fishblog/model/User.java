@@ -22,7 +22,7 @@ public class User extends BaseEntity implements Serializable{
     private String password;
     private Integer role;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
         name = "b_user_article",
         joinColumns = {
