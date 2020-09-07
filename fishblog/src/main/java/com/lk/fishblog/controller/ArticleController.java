@@ -28,10 +28,10 @@ public class ArticleController {
 
     @PostMapping(path = "/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public Article addArticle(@RequestBody NewArticleRequest a){
+    public String addArticle(@RequestBody NewArticleRequest a){
         User author = userService.findById(a.getAuthorId());
         log.info("Coffee {}:", author);
-        return articleService.save(a.getTitle(),a.getContent(), author);
+        return articleService.saveA(a.getTitle(),a.getContent(), author);
     }
 
     @GetMapping(path="/{id}")

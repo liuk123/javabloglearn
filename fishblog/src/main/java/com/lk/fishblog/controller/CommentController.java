@@ -37,7 +37,7 @@ public class CommentController {
 
     @PostMapping(path = "/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public Comment addJsonComment(@RequestBody NewCommentRequest c){
+    public Comment add(@RequestBody NewCommentRequest c){
         User u = userService.findById(c.getFromUserId());
         log.info("CommentUser {}:", u);
         Article a = articleService.findById(c.getArticleId());
@@ -46,9 +46,9 @@ public class CommentController {
     }
 
     @DeleteMapping(path = "del/{id}")
-    public Void delComment(@PathVariable Long id){
+    public String del(@PathVariable Long id){
         commentService.deleteById(id);
-        return  null;
+        return "success";
     }
 
 }
