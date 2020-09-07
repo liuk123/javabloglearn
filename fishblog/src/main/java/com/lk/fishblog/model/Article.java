@@ -24,7 +24,7 @@ public class Article extends BaseEntity implements Serializable{
     private String content;
 
     @JsonIgnoreProperties(value = { "articleList", "password" })
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name="user_id")
     private User author;
 
@@ -32,5 +32,4 @@ public class Article extends BaseEntity implements Serializable{
     @JoinTable(name = "b_article_comment", joinColumns = {
             @JoinColumn(name = "article_id") }, inverseJoinColumns = { @JoinColumn(name = "comment_id") })
     private List<Comment> commentList;
-
 }

@@ -18,17 +18,17 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class Reply extends BaseEntity implements Serializable{
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @JoinColumn(name="comment_id")
     private Comment comment;
 
     @JsonIgnoreProperties(value = { "articleList", "password" })
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @JoinColumn(name="from_user_id")
     private User fromUser;
 
     @JsonIgnoreProperties(value = { "articleList", "password" })
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @JoinColumn(name="to_user_id")
     private User toUser;
 

@@ -28,4 +28,10 @@ public class ArticleService {
                 .build()
         );
     }
+    public void deleteById(Long id){
+        articleRepository.deleteById(id);
+    }
+//    public Article update(){
+//        return articleRepository.
+//    }
 }

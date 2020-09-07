@@ -45,4 +45,10 @@ public class CommentController {
         return commentService.save(c.getContent(), u, a);
     }
 
+    @DeleteMapping(path = "del/{id}")
+    public Void delComment(@PathVariable Long id){
+        commentService.deleteById(id);
+        return  null;
+    }
+
 }

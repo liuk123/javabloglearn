@@ -1,6 +1,5 @@
 package com.lk.fishblog.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,7 +11,8 @@ import java.util.List;
 @Builder
 //@Data
 @EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true, exclude = "articleList")
+//@ToString(callSuper = true, exclude = "articleList")
+@ToString(callSuper = true)
 @Setter
 @Getter
 @NoArgsConstructor

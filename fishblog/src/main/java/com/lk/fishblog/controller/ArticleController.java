@@ -28,24 +28,22 @@ public class ArticleController {
 
     @PostMapping(path = "/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public Article addJsonArticle(@RequestBody NewArticleRequest a){
+    public Article addArticle(@RequestBody NewArticleRequest a){
         User author = userService.findById(a.getAuthorId());
         log.info("Coffee {}:", author);
         return articleService.save(a.getTitle(),a.getContent(), author);
     }
 
     @GetMapping(path="/{id}")
-    public Article getById(@PathVariable Long id){
+    public Article getArticle(@PathVariable Long id){
 
         Article a = articleService.findById(id);
         log.info("Coffee {}:", a);
         return a;
     }
-
-    @GetMapping(path="author/{id}")
-    public User getAuthorById(@PathVariable Long id){
-        User u = userService.findById(id);
-        log.info("Coffee {}:", u);
-        return u;
+    @DeleteMapping(path = "del/{id}")
+    public Void delArticle(@PathVariable Long id){
+        articleService.deleteById(id);
+        return  null;
     }
 }
