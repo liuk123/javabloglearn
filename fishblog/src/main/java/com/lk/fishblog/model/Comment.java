@@ -10,9 +10,7 @@ import java.util.List;
 @Entity
 @Table(name = "B_COMMENT")
 @Builder
-//@Data
 @EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true, exclude="article")
 @Setter
 @Getter
 @NoArgsConstructor
@@ -20,18 +18,23 @@ import java.util.List;
 public class Comment extends BaseEntity implements Serializable {
 
     @JsonIgnoreProperties(value = { "articleList", "password" })
-    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH}, optional=false)
     @JoinColumn(name="from_user_id")
     private User fromUser;
 
-    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH}, optional=false)
     @JoinColumn(name="article_id")
     private Article article;
 
     private String content;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "b_comment_reply", joinColumns = {
-            @JoinColumn(name = "comment_id") }, inverseJoinColumns = { @JoinColumn(name = "reply_id") })
+    @OneToMany(mappedBy = "comment",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     private List<Reply> replyList;
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }

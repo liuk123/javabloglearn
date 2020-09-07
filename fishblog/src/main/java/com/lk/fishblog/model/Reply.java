@@ -9,29 +9,33 @@ import java.io.Serializable;
 @Entity
 @Table(name = "B_REPLY")
 @Builder
-//@Data
 @EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true, exclude="comment")
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Reply extends BaseEntity implements Serializable{
 
-    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH}, optional=false)
     @JoinColumn(name="comment_id")
     private Comment comment;
 
     @JsonIgnoreProperties(value = { "articleList", "password" })
-    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH}, optional=false)
     @JoinColumn(name="from_user_id")
     private User fromUser;
 
     @JsonIgnoreProperties(value = { "articleList", "password" })
-    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH}, optional=false)
     @JoinColumn(name="to_user_id")
     private User toUser;
 
     private String content;
 
+    @Override
+    public String toString() {
+        return "Reply{" +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }
