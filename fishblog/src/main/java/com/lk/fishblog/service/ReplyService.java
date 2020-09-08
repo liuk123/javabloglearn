@@ -8,12 +8,14 @@ import com.lk.fishblog.model.User;
 import com.lk.fishblog.repository.ReplyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Service
+@Transactional
 public class ReplyService {
     @Autowired
     ReplyRepository replyRepository;

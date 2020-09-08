@@ -39,7 +39,7 @@ public class CommentController {
     @GetMapping(path="top3/{id}")
     public List<Comment> getTop3ByArtId(@PathVariable Long id){
         List<Comment> a = commentService.findTop3ByArticleId(id);
-        log.info("Coffee {}:", a);
+        log.info("Coffee {}:", a.get(0).getReplyList());
         return a;
     }
 

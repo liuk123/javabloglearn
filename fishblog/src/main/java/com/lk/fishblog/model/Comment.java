@@ -28,6 +28,7 @@ public class Comment extends BaseEntity implements Serializable {
 
     private String content;
 
+    @JsonIgnoreProperties(value = {"comment"})
     @OneToMany(mappedBy = "comment",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     private List<Reply> replyList;
 

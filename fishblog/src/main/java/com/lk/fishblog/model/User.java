@@ -1,5 +1,6 @@
 package com.lk.fishblog.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,6 +28,7 @@ public class User extends BaseEntity implements Serializable{
 //        inverseJoinColumns = {
 //            @JoinColumn(name = "article_id") })
 //    private List<Article> articleList;
+    @JsonIgnoreProperties(value = {"author"})
     @OneToMany(mappedBy = "author", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     private List<Article> articleList;
 

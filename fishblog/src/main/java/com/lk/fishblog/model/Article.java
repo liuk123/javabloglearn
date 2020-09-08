@@ -27,6 +27,7 @@ public class Article extends BaseEntity implements Serializable{
     @JoinColumn(name="user_id")
     private User author;
 
+    @JsonIgnoreProperties(value = {"article"})
     @OneToMany(mappedBy = "article",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
     private List<Comment> commentList;
 
