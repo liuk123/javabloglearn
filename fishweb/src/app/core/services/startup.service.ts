@@ -29,6 +29,7 @@ export class StartupService {
       .subscribe(
         ([langData, appData]) => {
           this.menuService.menu = appData.menu;
+          
           // setting language data
           this.translate.setTranslation(this.i18n.defaultLang, langData);
           this.translate.setDefaultLang(this.i18n.defaultLang);

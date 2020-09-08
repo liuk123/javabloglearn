@@ -5,9 +5,23 @@
     </div>
     <div class="header-user-info">123</div>
     <ul nz-menu nzMode="horizontal" class="header-menu">
-      <li nz-menu-item nzSelected>nav 1</li>
-      <li nz-menu-item>nav 2</li>
-      <li nz-menu-item>nav 3</li>
+      <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: menus }"></ng-container>
+      <ng-template #menuTpl let-menus>
+        <ng-container *ngFor="let menuItem of menus">
+          <ng-container [ngSwitch]="menuItem.type">
+            <li nz-submenu [(nzOpen)]="menuItem.open" *ngSwitchCase="'sub'"
+              (nzOpenChange)="openHandler(menuItem.route)" [nzTitle]="menuItem.title" [nzIcon]="menuItem.icon">
+              <ul *ngIf="menuItem.children">
+                <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: menuItem.children }"></ng-container>
+              </ul>
+            </li>
+            <li nz-menu-item *ngSwitchCase="'router'" [routerLink]="[menuItem.route]">
+              {{menuItem.title}}</li>
+            <li nz-menu-item *ngSwitchCase="'link'" (click)="open(menuItem.link)">
+              {{menuItem.title}}</li>
+          </ng-container>
+        </ng-container>
+      </ng-template>
     </ul>
   </div>
 </div>

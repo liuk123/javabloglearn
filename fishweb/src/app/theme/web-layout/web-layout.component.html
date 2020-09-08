@@ -1,8 +1,9 @@
 <div class="nzlayout-site">
   <header class="nzlayout-header">
-    <app-header></app-header>
+    <app-header [menus]="menus"></app-header>
   </header>
   <main class="nzlayout-main-container">
-    <router-outlet></router-outlet>
+    <!-- <router-outlet></router-outlet> -->
+    <app-breadcrumb></app-breadcrumb>
   </main>
 </div>

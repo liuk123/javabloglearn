@@ -4,7 +4,7 @@ import { Menu, BreadcrumbMenu } from '../model/menu.model';
 import { Subject } from 'rxjs';
 
 const replaceObj = {
-  state: 'id',
+  // state: 'id',
 }
 
 @Injectable({
@@ -17,9 +17,7 @@ export class MenuService {
     return this._menu;
   }
   set menu(v) {
-    if(!objectUtil.isArray(replaceObj)){
-      this._menu = objectUtil.replaceObjKey(v, replaceObj);
-    }
+    this._menu = objectUtil.replaceObjKey(v, replaceObj);
   }
 
   breadcrumbStr: string;
@@ -28,6 +26,10 @@ export class MenuService {
   private itemSource = new Subject<BreadcrumbMenu[]>();
   routerEvent = this.itemSource.asObservable();
 
+  /**
+   * 
+   * @param value 改变面包屑导航
+   */
   setTitle(value) {
     this.breadcrumbStr = value;
     let links = this.breadcrumbStr.slice(1).split('/');

@@ -11,6 +11,7 @@ export interface ChildrenItem {
   open?: boolean;
   route?: string;
   link?: string;
+  badge?: Tag;
   children?: ChildrenItem[];
 }
 export interface Menu {
@@ -29,10 +30,10 @@ export interface Menu {
 
 export interface BreadcrumbMenu {
   title: string;
+  type?: MenuType;
   icon?: string;
   link?: string;
   route?: string;
-  type?: MenuType;
   children?: any;
 }
 

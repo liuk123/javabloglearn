@@ -1,50 +1,20 @@
 {
   "menu": [
     {
-      "route": "/demo",
-      "title": "模版",
+      "route": "blog",
+      "title": "博客",
       "type": "sub",
       "selected": false,
       "icon": "bars",
       "children": [
         {
-          "route": "/demo/homepage",
-          "title": "首页",
-          "type": "router"
-        },
-        {
-          "route": "/demo/upload",
-          "title": "上传",
-          "type": "router"
-        },
-        {
-          "route": "/demo/demo-list",
-          "title": "列表页",
-          "type": "router"
-        },
-        {
-          "route": "/demo/step",
-          "title": "步骤",
-          "type": "router"
-        },
-        {
-          "route": "/demo/canvas",
-          "title": "canvas",
-          "type": "router"
-        },
-        {
-          "route": "/demo/css",
-          "title": "css",
-          "type": "router"
-        },
-        {
-          "route": "/demo/drop-drag",
-          "title": "drop-drag",
+          "route": "list",
+          "title": "博客列表",
           "type": "router"
         }
       ]
     },{
-      "route": "/links",
+      "route": "links",
       "title": "网站",
       "type": "sub",
       "selected": true,

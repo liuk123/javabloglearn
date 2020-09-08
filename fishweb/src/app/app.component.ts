@@ -16,9 +16,13 @@ export class AppComponent implements OnInit {
   ) {}
   
   ngOnInit(){
-    this.router.events.pipe(filter((evt) => evt instanceof NavigationEnd)).subscribe((v: NavigationEnd) => {
-      this.menuSrv.setTitle(v.urlAfterRedirects);
-      console.log(v.url)
-    });
+    /**
+     * 面包屑菜单
+     */
+    // this.router.events.pipe(filter((evt) => evt instanceof NavigationEnd)).subscribe((v: NavigationEnd) => {
+    //   this.menuSrv.setTitle(v.urlAfterRedirects);
+    //   console.log(222)
+    //   console.log(v.url)
+    // });
   }
 }

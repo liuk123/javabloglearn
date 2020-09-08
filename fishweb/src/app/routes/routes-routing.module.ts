@@ -7,12 +7,12 @@ const routes: Routes = [
     path: '',
     component: WebLayoutComponent,
     children: [
-      // { path: '', redirectTo: 'demo', pathMatch: 'full'},
-      // { 
-      //   path: 'demo',
-      //   loadChildren: () => 
-      //     import('../../demo/demo.module').then(m=>m.DemoModule),
-      // },
+      { path: '', redirectTo: 'blog', pathMatch: 'full'},
+      { 
+        path: 'blog',
+        loadChildren: () => 
+          import('../../proj/blog/blog.module').then(m=>m.BlogModule),
+      },
     ]
   },
 ];
