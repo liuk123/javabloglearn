@@ -20,12 +20,6 @@ export class WebLayoutComponent implements OnInit {
     private router: Router,
   ) {
     this.menus= menuSrv.menu;
-    menuSrv.routerEvent.pipe(takeUntil(this.unsubscribe$)).subscribe(v => {
-      this.breadcrumbMenus = v;
-      this.menus= menuSrv.menu;
-      console.log(123)
-      console.log(this.menus)
-    });
     /**
      * 面包屑菜单
      */
@@ -34,7 +28,7 @@ export class WebLayoutComponent implements OnInit {
       takeUntil(this.unsubscribe$)
     ).subscribe((v: NavigationEnd) => {
       menuSrv.setTitle(v.urlAfterRedirects);
-      console.log(v.url)
+      this.breadcrumbMenus = menuSrv.breadcrumbMenu;
     });
   }
   ngOnInit(): void {

@@ -41,26 +41,29 @@ export class MenuService {
 
   setBreadcrumb(links, index, menu) {
     for (let menuItem of menu) {
-      if (!objectUtil.isBlank(menuItem.route) && links[index] == menuItem.route.slice(menuItem.route.lastIndexOf('/')+1)) {
+      if (!objectUtil.isBlank(menuItem.route) && 
+      links[index] == menuItem.route) {
 
         if (menuItem.type == "router") {
           this.breadcrumbMenu.push({
             title: menuItem.title,
             type: "router",
             route: menuItem.route,
+            children: this.addBreadcrumb(menu, menuItem.title)
           })
         } else if (menuItem.type == "link") {
           this.breadcrumbMenu.push({
             title: menuItem.title,
             type: "link",
             link: menuItem.link,
+            children: this.addBreadcrumb(menu, menuItem.title)
           })
         } else if (menuItem.type == "sub") {
           this.breadcrumbMenu.push({
             title: menuItem.title,
             type: "sub",
             route: menuItem.route,
-            children: this.addBreadcrumb(menuItem.children)
+            children: this.addBreadcrumb(menu, menuItem.title)
           })
         }
         if (links.length > index && objectUtil.isArray(menuItem.children) && menuItem.children.length > 0) {
@@ -71,24 +74,30 @@ export class MenuService {
     }
   }
 
-  addBreadcrumb(menu){
+  addBreadcrumb(menu, currenttitle?){
     let tem = []
     for(let menuItem of menu){
       if (menuItem.type == "router") {
-        tem.push({
-          title: menuItem.title,
-          route: menuItem.route,
-        })
+        if(currenttitle&&currenttitle != menuItem.title){
+          tem.push({
+            title: menuItem.title,
+            route: menuItem.route,
+          })
+        }
+        
       } else if (menuItem.type == "link") {
-        tem.push({
-          title: menuItem.title,
-          link: menuItem.link,
-        })
+          tem.push({
+            title: menuItem.title,
+            link: menuItem.link,
+          })
       } else if (menuItem.type == "sub") {
-        tem.push({
-          title: menuItem.title,
-          children: this.addBreadcrumb(menuItem.children)
-        })
+        if(currenttitle&&currenttitle != menuItem.title){
+          let a = this.addBreadcrumb(menuItem.children);
+          tem.push({
+            title: menuItem.title,
+            children: a
+          })
+        }
       }
     }
     return tem;

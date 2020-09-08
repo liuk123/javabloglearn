@@ -11,6 +11,10 @@
           "route": "list",
           "title": "博客列表",
           "type": "router"
+        },{
+          "route": "edit",
+          "title": "写博客",
+          "type": "router"
         }
       ]
     },{

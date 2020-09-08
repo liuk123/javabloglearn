@@ -3,10 +3,11 @@
     <i nz-icon nzType="home"></i>
   </nz-breadcrumb-item>
 
-  <ng-container *ngFor="let breadcrumbItem of breadcrumbMenu">
+  <ng-container *ngFor="let breadcrumbItem of breadcrumbMenus">
     <nz-breadcrumb-item *ngIf="breadcrumbItem?.type == 'router'">
       <a [routerLink]="[breadcrumbItem.route]">{{breadcrumbItem.title}}</a>
     </nz-breadcrumb-item>
+    
     <nz-breadcrumb-item *ngIf="breadcrumbItem?.type == 'sub'" [nzOverlay]="downMenu">
       {{breadcrumbItem.title}}
 

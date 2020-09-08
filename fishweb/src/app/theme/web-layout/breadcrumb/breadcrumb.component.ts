@@ -8,9 +8,11 @@ import { BreadcrumbMenu } from 'src/app/core/model/menu.model';
 })
 export class BreadcrumbComponent implements OnInit {
 
-  @Input() breadcrumbMenu: BreadcrumbMenu[] = [];
+  @Input() breadcrumbMenus: BreadcrumbMenu[] = [];
   constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.breadcrumbMenus)
+  }
 
 }
