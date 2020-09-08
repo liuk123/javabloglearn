@@ -17,8 +17,6 @@ import java.util.List;
 public class CommentService {
     @Autowired
     private CommentRepository commentRepository;
-    @Autowired
-    private ArticleRepository articleRepository;
 
     public Comment save(String content, User fromUser, Article article){
         return commentRepository.save(
@@ -30,21 +28,11 @@ public class CommentService {
                 .build()
         );
     }
-    public String saveA(String content, User fromUser, Article article){
-        Comment comment = Comment
-                .builder()
-                .content(content)
-                .fromUser(fromUser)
-                .article(article)
-                .build();
-        articleRepository.save(Article.builder().commentList(Collections.singletonList(comment)).build());
-        return "success";
-    }
     public Comment findById(Long id){
         return commentRepository.getOne(id);
     }
     public List<Comment> findTop3ByArticleId(Long id){
-        return  commentRepository.findAllAndReplyListByArticle_IdOrderByUpdateTimeDescIdAsc(id);
+        return  commentRepository.findTop3ByArticle_IdOrderByUpdateTimeDescIdAsc(id);
     }
 
     public void deleteById(Long id){
