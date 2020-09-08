@@ -15,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/comment")
 @Slf4j
@@ -34,6 +36,13 @@ public class CommentController {
         log.info("Coffee {}:", a);
         return a;
     }
+    @GetMapping(path="top3/{id}")
+    public List<Comment> getTop3ByArtId(@PathVariable Long id){
+        List<Comment> a = commentService.findTop3ByArticleId(id);
+        log.info("Coffee {}:", a);
+        return a;
+    }
+
 
     @PostMapping(path = "/add")
     @ResponseStatus(HttpStatus.CREATED)

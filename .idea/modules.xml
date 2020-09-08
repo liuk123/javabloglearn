@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="ProjectModuleManager">
-    <modules>
-      <module fileurl="file://$PROJECT_DIR$/fishblog/fishblog.iml" filepath="$PROJECT_DIR$/fishblog/fishblog.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/javabloglearn.iml" filepath="$PROJECT_DIR$/.idea/javabloglearn.iml" />
-    </modules>
-  </component>
-</project>

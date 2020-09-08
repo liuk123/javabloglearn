@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.List;
 
 @Service
 public class CommentService {
@@ -39,6 +40,9 @@ public class CommentService {
     }
     public Comment findById(Long id){
         return commentRepository.getOne(id);
+    }
+    public List<Comment> findTop3ByArticleId(Long id){
+        return  commentRepository.findTop3AndReplyListByArticle_IdOrderByUpdateTimeDescIdAsc(id);
     }
 
     public void deleteById(Long id){

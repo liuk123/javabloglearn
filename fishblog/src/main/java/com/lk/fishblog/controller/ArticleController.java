@@ -9,6 +9,7 @@ import com.lk.fishblog.service.ReplyService;
 import com.lk.fishblog.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +39,12 @@ public class ArticleController {
     public Article getArticle(@PathVariable Long id){
 
         Article a = articleService.findById(id);
+        log.info("Coffee {}:", a);
+        return a;
+    }
+    @GetMapping(path="/articlesByAuthor/{id}")
+    public Page<Article> getArticlesByAuthor(@PathVariable Long id){
+        Page<Article> a = articleService.findByAuthor(id,0,10);
         log.info("Coffee {}:", a);
         return a;
     }
