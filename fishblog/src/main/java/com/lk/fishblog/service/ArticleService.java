@@ -38,16 +38,6 @@ public class ArticleService {
                 .build()
         );
     }
-    public String saveA(String title, String content, User auther){
-        Article article = Article
-                    .builder()
-                    .title(title)
-                    .content(content)
-                    .author(auther)
-                    .build();
-        userRepository.save(User.builder().articleList(Collections.singletonList(article)).build());
-        return "success";
-    }
     public void deleteById(Long id){
         articleRepository.deleteById(id);
     }

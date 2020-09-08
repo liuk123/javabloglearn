@@ -1,5 +1,6 @@
 package com.lk.fishblog.controller;
 
+import com.lk.fishblog.common.utils.ResultSet;
 import com.lk.fishblog.controller.request.NewArticleRequest;
 import com.lk.fishblog.model.Article;
 import com.lk.fishblog.model.User;
@@ -29,28 +30,29 @@ public class ArticleController {
 
     @PostMapping(path = "/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public Article addArticle(@RequestBody NewArticleRequest a){
+    public ResultSet addArticle(@RequestBody NewArticleRequest a){
         User author = userService.findById(a.getAuthorId());
         log.info("Coffee {}:", author);
-        return articleService.save(a.getTitle(),a.getContent(), author);
+        articleService.save(a.getTitle(),a.getContent(), author);
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE,"添加成功");
     }
 
     @GetMapping(path="/{id}")
-    public Article getArticle(@PathVariable Long id){
-
+    public ResultSet getArticleById(@PathVariable Long id){
         Article a = articleService.findById(id);
-        log.info("Coffee {}:", a);
-        return a;
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", a);
     }
+
     @GetMapping(path="/articlesByAuthor/{id}")
     public Page<Article> getArticlesByAuthor(@PathVariable Long id){
         Page<Article> a = articleService.findByAuthor(id,0,10);
         log.info("Coffee {}:", a);
         return a;
     }
+
     @DeleteMapping(path = "del/{id}")
-    public Void delArticle(@PathVariable Long id){
+    public ResultSet delArticle(@PathVariable Long id){
         articleService.deleteById(id);
-        return  null;
+        return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功");
     }
 }
