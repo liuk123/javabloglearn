@@ -2,6 +2,8 @@ package com.lk.fishblog.common.utils;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class ResultSet {
     public static final int RESULT_CODE_FALSE = 0;
@@ -11,6 +13,7 @@ public class ResultSet {
     private Integer resultCode = RESULT_CODE_TRUE;
     private String resultMsg;
     private Object data;
+    private List list;
 
     public ResultSet() {
     }

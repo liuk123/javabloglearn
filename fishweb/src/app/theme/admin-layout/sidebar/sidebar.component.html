@@ -1,0 +1,19 @@
+<ul nz-menu nzMode="inline" nzTheme="dark" style="height:100%">
+    <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: menu }"></ng-container>
+    <ng-template #menuTpl let-menu>
+        <ng-container *ngFor="let item of menu">
+            <ng-container [ngSwitch]="item.type">
+                <li nz-submenu [(nzOpen)]="item.open" *ngSwitchCase="'sub'" nzTheme="dark" (nzOpenChange)="openHandler(item.route)" [nzTitle]="item.title"
+                    [nzIcon]="item.icon">
+                    <ul *ngIf="item.children">
+                    <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: item.children }"></ng-container>
+                    </ul>
+                </li>
+                <li nz-menu-item *ngSwitchCase="'router'" [routerLink]="[item.route]">
+                    {{item.title}}</li>
+                <li nz-menu-item *ngSwitchCase="'link'" (click)="open(item.link)">
+                    {{item.title}}</li>
+            </ng-container>
+        </ng-container>
+    </ng-template>
+</ul>

@@ -3,7 +3,7 @@ package com.lk.fishblog.common.utils;
 import lombok.Data;
 
 @Data
-public class PageInfo {
+public class PageInfo extends ResultSet{
     /**
      * 当前页
      */
