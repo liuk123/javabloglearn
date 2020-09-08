@@ -8,6 +8,10 @@
       "icon": "bars",
       "children": [
         {
+          "route": "home",
+          "title": "首页",
+          "type": "router"
+        },{
           "route": "list",
           "title": "博客列表",
           "type": "router"

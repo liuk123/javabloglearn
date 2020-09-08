@@ -1,0 +1,15 @@
+<div class="carousel-panel">
+  <ul>
+    <li class="carousel-item" *ngFor="let item of listData">
+      <div class="carousel-card">
+          <!-- <img [src]="item.imgUrl" [alt]="item.title"> -->
+          <div class="carousel-img" [style]="{'backgroundImage': 'url('+ item.imgUrl+')'}"></div>
+          <div class="carousel-info">
+            <div class="carousel-title">{{item.title}}</div>
+            <div class="carousel-dec">{{item.dec}}</div>
+          </div>
+      </div>
+      
+    </li>
+  </ul>
+</div>
