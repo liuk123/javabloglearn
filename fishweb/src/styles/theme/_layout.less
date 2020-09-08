@@ -2,20 +2,22 @@ html, body, app-root, .nzlayout-site {
     width:100%;
     min-height: 100vh;
 }
+body{
+    background-color: #f7f9fa;
+}
 .nzlayout-site{
     .nzlayout-header{
         position: fixed;
         top:0;
         left:0;
         right:0;
-        height: 3rem;
+        height: @header-height;
         box-shadow: 0 6px 22px -16px rgba(6, 6, 6, 0.4);
     }
     .nzlayout-main-container{
         height: 100vh;
-        padding-top:3rem;
         width:100%;
-        background-color: #f7f9fa;
+        padding-top: @header-height;
     }
 }
 .m-container{
