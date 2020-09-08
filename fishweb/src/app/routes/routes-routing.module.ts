@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { environment } from 'src/environments/environment';
-import { AdminLayoutComponent } from '../theme/admin-layout/admin-layout.component';
+import { WebLayoutComponent } from '../theme/web-layout/web-layout.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: AdminLayoutComponent,
+    component: WebLayoutComponent,
     children: [
       // { path: '', redirectTo: 'demo', pathMatch: 'full'},
       // { 

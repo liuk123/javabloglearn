@@ -1,49 +1,24 @@
 html, body, app-root, .nzlayout-site {
     width:100%;
-    min-height: calc(100vh);
+    min-height: 100vh;
 }
 .nzlayout-site{
-    header{
+    .nzlayout-header{
+        position: fixed;
+        top:0;
+        left:0;
+        right:0;
         height: 3rem;
         box-shadow: 0 6px 22px -16px rgba(6, 6, 6, 0.4);
     }
-    main{
-        height: calc(100vh - 3rem);
+    .nzlayout-main-container{
+        height: 100vh;
+        padding-top:3rem;
         width:100%;
-        display: flex;
-        .nzlayout-sidebar{
-            overflow-y: auto;
-            overflow-x: auto;
-            flex:0 0 15rem;
-        }
-        .nzlayout-main-container{
-            flex: 1 1 auto;
-            overflow-y: auto;
-            background-color: #f7f9fa;
-            padding:0 .5rem;
-            .nzlayout-breadcrumb{
-                padding: .5rem 0;
-            }
-            .nzlayout-container{
-                padding: .5rem;
-                background-color: #fff;
-                height: calc(100% - 2.5rem);
-                overflow-y: auto;
-                position: relative;
-            }
-        }
+        background-color: #f7f9fa;
     }
 }
-
-.save-btn-group{
-    position: absolute;
-    bottom: 0;
-    left:0;
-    right:0;
-    padding:.5rem;
-    background-color: #fff;
-}
-.form-group-panel{
-    height:100%;
-    padding-bottom: 3rem;
+.m-container{
+    margin:0 auto;
+    width:1200px;
 }

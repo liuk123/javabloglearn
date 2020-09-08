@@ -1,6 +1,4 @@
 import { NgModule } from '@angular/core';
-import { UploadService } from './upload.service';
-import { UserService } from './user.service';
 
 export {
   // AuthGuardService
@@ -11,8 +9,7 @@ export class ServicesModule {
     return {
       ngModule: ServicesModule,
       providers: [
-        UploadService,
-        UserService,
+        
       ]
     }
   }
