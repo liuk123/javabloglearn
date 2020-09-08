@@ -5,7 +5,7 @@ import { BlogDetailComponent } from './blog-detail/blog-detail.component';
 import { BlogEditComponent } from './blog-edit/blog-edit.component';
 
 const routes: Routes = [
-    { path: '', redirectTo: 'homepage', pathMatch: 'full'},
+    { path: '', redirectTo: 'list', pathMatch: 'full'},
     {
         path:'list',
         component: BlogListComponent,

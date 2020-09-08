@@ -2,8 +2,14 @@
   <header class="nzlayout-header">
     <app-header [menus]="menus"></app-header>
   </header>
-  <main class="nzlayout-main-container">
-    <!-- <router-outlet></router-outlet> -->
-    <app-breadcrumb [breadcrumbMenus]="breadcrumbMenus"></app-breadcrumb>
+  
+  <main class="nzlayout-container">
+    <div class="m-container">
+      <app-breadcrumb [breadcrumbMenus]="breadcrumbMenus"></app-breadcrumb>
+    </div>
+    <div class="m-container nzlayout-main-container">
+      <router-outlet></router-outlet>
+    </div>
+    
   </main>
 </div>

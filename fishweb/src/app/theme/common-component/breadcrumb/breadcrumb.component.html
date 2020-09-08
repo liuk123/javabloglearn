@@ -4,10 +4,32 @@
   </nz-breadcrumb-item>
 
   <ng-container *ngFor="let breadcrumbItem of breadcrumbMenus">
-    <nz-breadcrumb-item *ngIf="breadcrumbItem?.type == 'router'">
+    <nz-breadcrumb-item *ngIf="breadcrumbItem?.type == 'router'" [nzOverlay]="downMenuA">
       <a [routerLink]="[breadcrumbItem.route]">{{breadcrumbItem.title}}</a>
+
+      <nz-dropdown-menu #downMenuA>
+        <ul nz-menu nzSelectable>
+          <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: breadcrumbItem }"></ng-container>
+          <ng-template #menuTpl let-breadcrumbItem>
+            <ng-container *ngFor="let subBreadcrumb of breadcrumbItem.children">
+              <li nz-submenu *ngIf="subBreadcrumb.type == 'sub' else subMenu" [nzTitle]="subBreadcrumb.title">
+                <ul nz-menu nzSelectable *ngIf="subBreadcrumb.type == 'sub'">
+                  <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: subBreadcrumb }"></ng-container>
+                </ul>
+              </li>
+              <ng-template #subMenu>
+                <li nz-menu-item [routerLink]="[subBreadcrumb.route]">
+                  {{subBreadcrumb.title}}
+                </li>
+              </ng-template>
+            </ng-container>
+
+          </ng-template>
+        </ul>
+      </nz-dropdown-menu>
+
     </nz-breadcrumb-item>
-    
+
     <nz-breadcrumb-item *ngIf="breadcrumbItem?.type == 'sub'" [nzOverlay]="downMenu">
       {{breadcrumbItem.title}}
 
@@ -16,8 +38,7 @@
           <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: breadcrumbItem }"></ng-container>
           <ng-template #menuTpl let-breadcrumbItem>
             <ng-container *ngFor="let subBreadcrumb of breadcrumbItem.children">
-              <li nz-submenu *ngIf="subBreadcrumb.type == 'sub' else subMenu" 
-              [nzTitle]="subBreadcrumb.title">
+              <li nz-submenu *ngIf="subBreadcrumb.type == 'sub' else subMenu" [nzTitle]="subBreadcrumb.title">
                 <ul nz-menu nzSelectable *ngIf="subBreadcrumb.type == 'sub'">
                   <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: subBreadcrumb }"></ng-container>
                 </ul>

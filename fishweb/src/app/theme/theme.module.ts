@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../shared/shared.module';
 import { WebLayoutModule } from './web-layout/web-layout.module';
 
 const SETTINGDRAWER = [];

@@ -17,7 +17,7 @@ const THIRD_MODULES = [
 ]
 //component
 const COMPONENTS = [
- 
+
 ]
 //directive
 const DIRECTIVES = [
