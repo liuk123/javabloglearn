@@ -8,6 +8,7 @@ export class CarouselData{
     public tag:string,
     public imgUrl:string,
     public isMax?:boolean,
+    public color?:string,
 
   ){}  
 }
@@ -21,19 +22,25 @@ export class CarouselComponent implements OnInit {
 
   @Input() listData: CarouselData[] = [];
   isOffsetPanel: boolean = false;
+  isShowMaxDetail: boolean = false;
   timer = null;
   maxData:CarouselData;
+  colors:string[] = [];
   
   constructor(
     private el: ElementRef
   ) { }
 
   ngOnInit(): void {
+    this.colors = this.getColors(this.listData.length);
     this.listData.forEach((v,i)=>{
       v.isMax=(i==0);
+      v.color = this.colors[i];
     })
     this.offsetCarousel();
     this.maxData = this.listData[0];
+
+    
   }
 
   offsetCarousel() {
@@ -81,7 +88,7 @@ export class CarouselComponent implements OnInit {
     let r = 0;
     let colors = [];
     for(let i=0; i<n; i++){
-      r-=Math.PI*2/-300
+      r-=Math.PI*2/-100
       colors.push(
         '#'+ (
                1<<24|

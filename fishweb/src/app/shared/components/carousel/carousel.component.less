@@ -29,17 +29,15 @@
       width: @carousel-item-width;
       height:5rem;
       position: relative;
-      &::before{
+      .introduce-num-background{
         position: absolute;
         top: 50%;
         left: 50%;
         margin-top: -2rem;
         margin-left: -2rem;
-        content:"";
         width:4rem;
         height:4rem;
         border-radius: 50%;
-        background-color:rgba(234, 54, 136, 0.5);
       }
       .introduce-num{
         position: absolute;
@@ -54,36 +52,39 @@
         align-items: center;
         width: 3rem;
         height: 3rem;
-        background-color: #ea3688;
         color:#fff;
-        border: 4px solid rgba(234, 54, 136, 0.5);
+        transition: transform .7s;
         
       }
     }
     .introduce-title{
       position: relative;
       width:18rem;
-      &::before{
+      .item-title-hr{
         position: absolute;
-        content:'';
         width:25rem;
-        border:1px solid #ea3688;
+        border:1px solid;
         top: 41px;
         left: -8rem;
+        transition: width .3s;
       }
       .item-title{
         font-size:1.5rem;
         font-weight: 700;
         overflow: hidden;
+        transition: .5s opacity;
       }
       .item-tag{
         overflow: hidden;
         padding-top:10px;
+        transition: .5s opacity;
       }
     }
     .introduce-desc{
       flex:1 1 auto;
       text-indent: 2rem;
+      padding:.5rem;
+      transition: .5s opacity;
     }
   }
 }
@@ -116,4 +117,16 @@
 .maxItem{
   height:90%!important;
 }
-
+.hidden-introduce{
+  .introduce-num-background,.introduce-num{
+    transform: scale(0,0);
+    
+  }
+  .item-title-hr{
+    width: 4rem!important; 
+  }
+  .introduce-desc,.item-tag,.item-title{
+    opacity: 0;
+  }
+  
+}

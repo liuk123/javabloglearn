@@ -12,17 +12,21 @@
   </ul>
   <div class="slider-left"></div>
   <div class="slider-right"></div>
-  <div class="carousel-introduce">
+  <div class="carousel-introduce" [class]="isOffsetPanel?'hidden-introduce':''">
     <div class="introduce-index">
-      <div class="introduce-num">{{maxData?.index+1}}/{{listData?.length}}</div>
+      <div class="introduce-num-background" [style]="{'backgroundColor': maxData?.color, 'opacity':.5}"></div>
+      <div class="introduce-num" [style.backgroundColor]="maxData?.color">
+        {{maxData?.index+1}}/{{listData?.length}}
+      </div>
     </div>
     <div class="introduce-title">
       
       <div class="item-title">
         {{maxData?.title}}
+        <div class="item-title-hr" [style.borderColor]="maxData?.color"></div>
       </div>
       <div class="item-tag">
-        {{maxData?.tag}}
+        {{maxData?.tag}}{{maxData?.color}}
       </div>
     </div>
     <div class="introduce-desc">{{maxData?.desc}}</div>
