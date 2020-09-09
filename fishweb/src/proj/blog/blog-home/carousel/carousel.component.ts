@@ -1,15 +1,29 @@
-import { Component, OnInit, OnDestroy, HostListener, ElementRef } from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef, Input } from '@angular/core';
+
+export class CarouselData{
+  constructor(
+    public index:string,
+    public title:string,
+    public desc:string,
+    public tag:string,
+    public imgUrl:string,
+    public isMax?:boolean,
+
+  ){}  
+}
 
 @Component({
   selector: 'app-carousel',
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.less']
 })
-export class CarouselComponent implements OnInit, OnDestroy {
+export class CarouselComponent implements OnInit {
 
-  listData: any[] = listData;
+  @Input() listData: CarouselData[] = [];
   isOffsetPanel: boolean = false;
   timer = null;
+  maxData:CarouselData;
+  
   constructor(
     private el: ElementRef
   ) { }
@@ -19,11 +33,14 @@ export class CarouselComponent implements OnInit, OnDestroy {
       v.isMax=(i==0);
     })
     this.offsetCarousel();
+    this.maxData = this.listData[0];
   }
 
   offsetCarousel() {
     this.timer = setInterval(v => {
       // console.log("移动了")
+      if(this.listData.length==0){ return false}
+      this.maxData = this.listData[1];
       this.listData[1].isMax = true;
       this.listData[0].isMax = false;
       this.isOffsetPanel = true;
@@ -60,57 +77,19 @@ export class CarouselComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
-    // this.unsubscribe$.next();
-    // this.unsubscribe$.complete();
+  getColors(n){
+    let r = 0;
+    let colors = [];
+    for(let i=0; i<n; i++){
+      r-=Math.PI*2/-300
+      colors.push(
+        '#'+ (
+               1<<24|
+              Math.cos(r)*127+128<<16 |
+              Math.cos(r+Math.PI*2/3)*127+128<<8 |
+              Math.cos(r+Math.PI*4/3)*127+128).toString(16).slice(1)
+      )
+    }
+    return colors;
   }
-
 }
-
-
-
-let listData = [
-  {
-    
-    index: 0,
-    title: '标题1',
-    dec: '这是一个描述',
-    tag: '生活',
-    imgUrl: 'http://lackk.com/url/?a=now01bg',
-  },
-  {
-    index: 1,
-    title: '标题2',
-    dec: '这是一个描述',
-    tag: '生活',
-    imgUrl: 'http://lackk.com/url/?a=now01bg',
-  },
-  {
-    index: 2,
-    title: '标题3',
-    dec: '这是一个描述',
-    tag: '生活',
-    imgUrl: 'http://lackk.com/url/?a=now01bg',
-  },
-  {
-    index: 3,
-    title: '标题4',
-    dec: '这是一个描述',
-    tag: '生活',
-    imgUrl: 'http://lackk.com/url/?a=now01bg',
-  },
-  {
-    index: 4,
-    title: '标题5',
-    dec: '这是一个描述',
-    tag: '生活',
-    imgUrl: 'http://lackk.com/url/?a=now01bg',
-  },
-  {
-    index: 5,
-    title: '标题6',
-    dec: '这是一个描述',
-    tag: '生活',
-    imgUrl: 'http://lackk.com/url/?a=now01bg',
-  },
-]

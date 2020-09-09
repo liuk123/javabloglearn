@@ -5,9 +5,27 @@
           <div class="carousel-img" [style]="{'backgroundImage': 'url('+ item.imgUrl+')'}"></div>
           <div class="carousel-info" [hidden]="item.isMax">
             <div class="carousel-title">{{item.title}}</div>
-            <div class="carousel-dec">{{item.dec}}</div>
+            <div class="carousel-tag">{{item.tag}}</div>
           </div>
       </div>
     </li>
   </ul>
+  <div class="slider-left"></div>
+  <div class="slider-right"></div>
+  <div class="carousel-introduce">
+    <div class="introduce-index">
+      <div class="introduce-num">{{maxData?.index+1}}/{{listData?.length}}</div>
+    </div>
+    <div class="introduce-title">
+      
+      <div class="item-title">
+        {{maxData?.title}}
+      </div>
+      <div class="item-tag">
+        {{maxData?.tag}}
+      </div>
+    </div>
+    <div class="introduce-desc">{{maxData?.desc}}</div>
+    
+  </div>
 </div>
