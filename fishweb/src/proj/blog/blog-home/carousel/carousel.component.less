@@ -1,25 +1,49 @@
+@carousel-item-width: 300px;
 .carousel-panel{
   width:100%;
   height:500px;
   position: relative;
   background-color:#ddd;
-  ul{
+  overflow: hidden;
+  border:1px solid #ddd;
+  .carousel-sub-panel{
     height:100%;
+    position: absolute;
+    left:0;
+    display: flex;
+    flex-wrap: nowrap;
     .carousel-item{
-      height:100%;
-      width:300px;
-      .carousel-card{
-        height:100%;
-        .carousel-img{
-          width:100%;
-          height: calc(100% - 80px);
-        }
-        .carousel-info{
-          
-        }
-      }
-      
+      height:70%;
+      width:@carousel-item-width;
+      transition: height 2s;
     }
   }
-  
+}
+.carousel-card{
+  height:100%;
+  width:90%;
+  background-color: #fff;
+  border-radius: 1rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  .carousel-img{
+    width:100%;
+    background-size: cover;
+    flex: 1 1 auto;
+  }
+  .carousel-info{
+    padding:.5rem;
+    height: 4rem;
+    .carousel-title{
+      font-size:1.1rem
+    }
+  }
+}
+.offsetOne{
+  left: -@carousel-item-width!important;
+  transition: 1.5s left;
+}
+.maxItem{
+  height:90%!important;
 }

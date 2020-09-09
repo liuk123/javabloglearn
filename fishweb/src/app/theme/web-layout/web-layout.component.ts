@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Menu, BreadcrumbMenu } from 'src/app/core/model/menu.model';
 import { MenuService } from 'src/app/core/services/menu.service';
 import { Subject } from 'rxjs';
@@ -9,7 +9,7 @@ import { Router, NavigationEnd } from '@angular/router';
   selector: 'app-web-layout',
   templateUrl: './web-layout.component.html'
 })
-export class WebLayoutComponent implements OnInit {
+export class WebLayoutComponent implements OnInit, OnDestroy {
 
   menus: Menu[]
   breadcrumbMenus: BreadcrumbMenu[] = [];
@@ -32,5 +32,9 @@ export class WebLayoutComponent implements OnInit {
     });
   }
   ngOnInit(): void {
+  }
+  ngOnDestroy(){
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }
