@@ -10,6 +10,7 @@ import { DragDropService } from './directive/drop-drag/drag-drop.service';
 import { InputNoSpaceDirective } from './directive/input/input-nospace.directive';
 import { InputRequiredDirective } from './directive/input/input-require.directive';
 import { InputTrimDirective } from './directive/input/input-trim.directive';
+import { CarouselComponent } from './components/carousel/carousel.component';
 
 //module
 const THIRD_MODULES = [
@@ -17,7 +18,7 @@ const THIRD_MODULES = [
 ]
 //component
 const COMPONENTS = [
-
+  CarouselComponent
 ]
 //directive
 const DIRECTIVES = [
