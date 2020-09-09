@@ -1,6 +1,6 @@
 <div class="carousel-panel">
   <ul class="carousel-sub-panel" [class]="isOffsetPanel?'offsetOne':''">
-    <li class="carousel-item" *ngFor="let item of listData" [class]="item.isMax? 'maxItem':''">
+    <li class="carousel-item" *ngFor="let item of carouselData" [class]="item.isMax? 'maxItem':''">
       <div class="carousel-card">
           <div class="carousel-img" [style]="{'backgroundImage': 'url('+ item.imgUrl+')'}"></div>
           <div class="carousel-info" [hidden]="item.isMax">
@@ -16,7 +16,7 @@
     <div class="introduce-index">
       <div class="introduce-num-background" [style]="{'backgroundColor': maxData?.color, 'opacity':.5}"></div>
       <div class="introduce-num" [style.backgroundColor]="maxData?.color">
-        {{maxData?.index+1}}/{{listData?.length}}
+        {{maxData?.index+1}}/{{carouselData?.length}}
       </div>
     </div>
     <div class="introduce-title">

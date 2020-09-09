@@ -20,7 +20,7 @@ export class CarouselData{
 })
 export class CarouselComponent implements OnInit {
 
-  @Input() listData: CarouselData[] = [];
+  @Input() carouselData: CarouselData[] = [];
   isOffsetPanel: boolean = false;
   isShowMaxDetail: boolean = false;
   timer = null;
@@ -32,13 +32,13 @@ export class CarouselComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.colors = this.getColors(this.listData.length);
-    this.listData.forEach((v,i)=>{
+    this.colors = this.getColors(this.carouselData.length);
+    this.carouselData.forEach((v,i)=>{
       v.isMax=(i==0);
       v.color = this.colors[i];
     })
     this.offsetCarousel();
-    this.maxData = this.listData[0];
+    this.maxData = this.carouselData[0];
 
     
   }
@@ -46,16 +46,16 @@ export class CarouselComponent implements OnInit {
   offsetCarousel() {
     this.timer = setInterval(v => {
       // console.log("移动了")
-      if(this.listData.length==0){ return false}
-      this.maxData = this.listData[1];
-      this.listData[1].isMax = true;
-      this.listData[0].isMax = false;
+      if(this.carouselData.length==0){ return false}
+      this.maxData = this.carouselData[1];
+      this.carouselData[1].isMax = true;
+      this.carouselData[0].isMax = false;
       this.isOffsetPanel = true;
       let timerOne = setTimeout(v => {
         // console.log("数组变了")
         
-        let val = this.listData.splice(0, 1);
-        this.listData.push(val[0])
+        let val = this.carouselData.splice(0, 1);
+        this.carouselData.push(val[0])
         this.isOffsetPanel = false;
         clearTimeout(timerOne)
         timerOne = null;
