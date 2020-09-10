@@ -14,6 +14,7 @@ import { CarouselComponent } from './components/carousel/carousel.component';
 import { UtilService } from './utils/util';
 import { ListComponent } from './components/list/list.component';
 import { TagsComponent } from './components/tags/tags.component';
+import { BannerComponent } from './components/banner/banner.component';
 
 //module
 const THIRD_MODULES = [
@@ -24,6 +25,7 @@ const COMPONENTS = [
   CarouselComponent,
   ListComponent,
   TagsComponent,
+  BannerComponent,
 ]
 //directive
 const DIRECTIVES = [

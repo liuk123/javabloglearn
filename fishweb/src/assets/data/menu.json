@@ -12,8 +12,8 @@
           "title": "首页",
           "type": "router"
         },{
-          "route": "list",
-          "title": "博客列表",
+          "route": "detail",
+          "title": "详情",
           "type": "router"
         },{
           "route": "edit",
