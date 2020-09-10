@@ -26,7 +26,7 @@ export class CarouselComponent implements OnInit, OnDestroy {
   maxData:CarouselData;
   
   colors:string[] = [];
-  colorCurrent: string = ""
+  colorCurrent: string = "rgb(217, 5, 160)"
   
   constructor(
     private el: ElementRef,
@@ -57,8 +57,7 @@ export class CarouselComponent implements OnInit, OnDestroy {
         let val = this.carouselData.splice(0, 1);
         this.carouselData.push(val[0])
         this.isOffsetPanel = false;
-        this.colorCurrent = this.colors[this.maxData.index]
-        // clearTimeout(timerOne)
+        this.colorCurrent = this.colors[this.maxData.index];
         timerOne = null;
       }, 1500)
     }, 8000)
