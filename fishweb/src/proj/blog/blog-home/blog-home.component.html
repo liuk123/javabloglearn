@@ -1,2 +1,13 @@
-<app-carousel [carouselData]="listData"></app-carousel>
-<app-list></app-list>
+<app-carousel [carouselData]="carouselData"></app-carousel>
+<div style="display: flex;">
+  <div style="width:600px">
+    <app-list [listData]="listData"></app-list>
+  </div>
+  <div style="width:100px;margin: 0 3rem">
+    <app-tags
+      [tagData]="tagData"
+      [title]="'Tag'"
+      [desc]="'热门标签'"
+      [(selectData)]="tagSelectData" ></app-tags>
+  </div>
+</div>

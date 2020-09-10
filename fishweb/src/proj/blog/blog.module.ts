@@ -6,11 +6,12 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { BlogRoutingModule } from './blog-routing.module';
 import { BlogHomeComponent } from './blog-home/blog-home.component';
 import { ListComponent } from './blog-home/list/list.component';
+import { TagsComponent } from './blog-home/tags/tags.component';
 
 
 
 @NgModule({
-  declarations: [BlogListComponent, BlogDetailComponent, BlogEditComponent, BlogHomeComponent, ListComponent],
+  declarations: [BlogListComponent, BlogDetailComponent, BlogEditComponent, BlogHomeComponent, ListComponent, TagsComponent],
   imports: [
     SharedModule,
     BlogRoutingModule,

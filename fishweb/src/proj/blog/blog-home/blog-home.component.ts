@@ -6,14 +6,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./blog-home.component.less']
 })
 export class BlogHomeComponent implements OnInit {
+
+  carouselData=carouselData
   listData=listData
+  tagData=tagData
+  tagSelectData=[];
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
 }
-let listData = [
+let carouselData = [
   {
     
     index: 0,
@@ -56,5 +61,71 @@ let listData = [
     desc: '这是一个描述',
     tag: '生活',
     imgUrl: 'http://lackk.com/url/?a=now01bg',
+  },
+]
+let listData=[
+  {
+    title:'Tatsuro Suzuki 痴迷于黑白风白风格的城市街道街格的城市街道街拍',
+    desc:'Tatsuro Suzuki 主要以拍摄街道人物，通过黑白照片，展现了日本东京城市生活的人生百态。',
+    author:'lackk',
+    imgUrl:'http://lackk.com/wp-content/uploads/2019/08/Tatsuo-Suzuki-09.jpg',
+    content:'Tatsuro Suzuki 主要以拍摄街道人物，通过黑白照片展现了日本东京城市生活的人生百态。像许多街头摄影师一样，铃木从在外面拍摄的机会中获得灵感。那是遇到谁的第一次遇到的时候会突然一瞥的瞬间。',
+    tag:['艺术','图片'],
+  },{
+    title:'Tatsuro Suzuki 痴迷于黑白风白风格的城市街道街格的城市街道街拍',
+    desc:'Tatsuro Suzuki 主要以拍摄街白风格的城市街道街白风格的城市街道街白风格的城市街道街道人物，通过黑白照片，展现了日本东京城市生活的人生百态。',
+    author:'lackk',
+    imgUrl:'http://lackk.com/wp-content/uploads/2019/08/Tatsuo-Suzuki-09.jpg',
+    content:'Tatsuro Suzuki 主要以拍摄街道人物，通过黑白照片展现了日本东京城市生活的人生百态。像许多街头摄影师一样，铃木从在外面拍摄的机会中获得灵感。那是遇到谁的第一次遇到的时候会突然一瞥的瞬间。',
+    tag:['艺术','图片'],
+  },{
+    title:'Tatsuro Suzuki 痴迷于黑白风格的城市街道街拍',
+    desc:'Tatsuro Suzuki 主要以拍摄街道人物，通过黑白照片，展现了日本东京城市生活的人生百态。',
+    author:'lackk',
+    imgUrl:'http://lackk.com/wp-content/uploads/2019/08/Tatsuo-Suzuki-09.jpg',
+    content:'Tatsuro Suzuki 主要以拍摄街道人物，通过黑白照片展现了日本东京城市生活的人生百态。像许多街头摄影师一样，铃木从在外面拍摄的机会中获得灵感。那是遇到谁的第一次遇到的时候会突然一瞥的瞬间。',
+    tag:['艺术','图片'],
+  },{
+    title:'Tatsuro Suzuki 痴迷于黑白风格的城市街道街拍',
+    desc:'Tatsuro Suzuki 主要以拍摄街道人物，通过黑白照片，展现了日本东京城市生活的人生百态。',
+    author:'lackk',
+    imgUrl:'http://lackk.com/wp-content/uploads/2019/08/Tatsuo-Suzuki-09.jpg',
+    content:'Tatsuro Suzuki 主要以拍摄街道人物，通过黑白照片展现了日本东京城市生活的人生百态。像许多街头摄影师一样，铃木从在外面拍摄的机会中获得灵感。那是遇到谁的第一次遇到的时候会突然一瞥的瞬间。',
+    tag:['艺术','图片'],
+  },
+]
+
+let tagData=[
+  {
+    name: "软件",
+    icon: "dribbble"
+  },
+  {
+    name: "图片",
+    icon: "dribbble"
+  },
+  {
+    name: "音乐",
+    icon: "dribbble"
+  },
+  {
+    name: "学习",
+    icon: "dribbble"
+  },
+  {
+    name: "文章",
+    icon: "dribbble"
+  },
+  {
+    name: "创意",
+    icon: "dribbble"
+  },
+  {
+    name: "设计",
+    icon: "dribbble"
+  },
+  {
+    name: "灵感",
+    icon: "dribbble"
   },
 ]

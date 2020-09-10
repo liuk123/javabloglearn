@@ -11,6 +11,7 @@ import { InputNoSpaceDirective } from './directive/input/input-nospace.directive
 import { InputRequiredDirective } from './directive/input/input-require.directive';
 import { InputTrimDirective } from './directive/input/input-trim.directive';
 import { CarouselComponent } from './components/carousel/carousel.component';
+import { UtilService } from './utils/util';
 
 //module
 const THIRD_MODULES = [
@@ -35,7 +36,8 @@ const PIPES = [
 ];
 //service
 const SERVICE = [
-  DragDropService
+  DragDropService,
+  UtilService
 ]
 
 @NgModule({
