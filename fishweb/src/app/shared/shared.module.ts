@@ -12,6 +12,8 @@ import { InputRequiredDirective } from './directive/input/input-require.directiv
 import { InputTrimDirective } from './directive/input/input-trim.directive';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { UtilService } from './utils/util';
+import { ListComponent } from './components/list/list.component';
+import { TagsComponent } from './components/tags/tags.component';
 
 //module
 const THIRD_MODULES = [
@@ -19,7 +21,9 @@ const THIRD_MODULES = [
 ]
 //component
 const COMPONENTS = [
-  CarouselComponent
+  CarouselComponent,
+  ListComponent,
+  TagsComponent,
 ]
 //directive
 const DIRECTIVES = [

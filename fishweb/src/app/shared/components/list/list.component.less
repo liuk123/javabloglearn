@@ -1,7 +1,6 @@
 .art-list{
   padding:1rem;
   margin-bottom:1rem;
-  box-shadow: 0px 18px 13px -26px rgba(9,9,9,.4);
   display: flex;
   justify-content: space-between;
   .art-info{
@@ -12,17 +11,22 @@
       color:#999
     }
     .list-title{
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-weight: 700;
       line-height:1.6rem;
       margin-bottom:.5rem;
-      height: 3rem;
+      max-height: 3rem;
       overflow: hidden;
+      cursor: pointer;
+      &:hover{
+        color:#87d068;
+      }
     }
     .list-desc{
       overflow: hidden;
-      height:3rem;
+      max-height: 3rem;
       font-size:.9rem;
+      text-indent: 2rem;
     }
   }
   .list-img{

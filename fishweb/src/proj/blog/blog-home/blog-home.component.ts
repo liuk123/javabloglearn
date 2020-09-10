@@ -9,8 +9,24 @@ export class BlogHomeComponent implements OnInit {
 
   carouselData=carouselData
   listData=listData
+  listData1=listData1
   tagData=tagData
   tagSelectData=[];
+  data = [
+    {
+      title: 'Ant Design Title 1'
+    },
+    {
+      title: 'Ant Design Title 2'
+    },
+    {
+      title: 'Ant Design Title 3'
+    },
+    {
+      title: 'Ant Design Title 4'
+    }
+  ];
+  current =1
 
   constructor() { }
 
@@ -92,6 +108,18 @@ let listData=[
     imgUrl:'http://lackk.com/wp-content/uploads/2019/08/Tatsuo-Suzuki-09.jpg',
     content:'Tatsuro Suzuki 主要以拍摄街道人物，通过黑白照片展现了日本东京城市生活的人生百态。像许多街头摄影师一样，铃木从在外面拍摄的机会中获得灵感。那是遇到谁的第一次遇到的时候会突然一瞥的瞬间。',
     tag:['艺术','图片'],
+  },
+]
+let listData1=[
+  {
+    title:'快乐就完了',
+    desc:'集众多网站导航优点于一身,可自定义添加网站,设置快捷键,更换背景。',
+  },{
+    title:'快乐就完了',
+    desc:'集众多网站导航优点于一身,可自定义添加网站,设置快捷键,更换背景。',
+  },{
+    title:'快乐就完了',
+    desc:'集众多网站导航优点于一身,可自定义添加网站,设置快捷键,更换背景。',
   },
 ]
 

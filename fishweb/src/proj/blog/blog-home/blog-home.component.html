@@ -1,13 +1,23 @@
-<app-carousel [carouselData]="carouselData"></app-carousel>
-<div style="display: flex;">
-  <div style="width:600px">
+<div class="carousel">
+  <app-carousel [carouselData]="carouselData"></app-carousel>
+</div>
+<div class="m-grid-panel">
+  <div class="m-grid-list">
     <app-list [listData]="listData"></app-list>
+    <nz-pagination [(nzPageIndex)]="current" [nzTotal]="50" [nzSize]="'small'" [nzShowTotal]="totalTemplate"></nz-pagination>
+    <ng-template #totalTemplate let-total>Total {{ total }} items</ng-template>
   </div>
-  <div style="width:100px;margin: 0 3rem">
-    <app-tags
-      [tagData]="tagData"
-      [title]="'Tag'"
-      [desc]="'热门标签'"
-      [(selectData)]="tagSelectData" ></app-tags>
+  <div class="m-grid-tag">
+    <div class="m-bg mt-3">
+      <app-tags
+        [tagData]="tagData"
+        [title]="'Tag'"
+        [desc]="'热门标签'"
+        [(selectData)]="tagSelectData"></app-tags>
+    </div>
+    
+  </div>
+  <div class="m-grid-popular">
+    <app-list [listData]="listData1"></app-list>
   </div>
 </div>

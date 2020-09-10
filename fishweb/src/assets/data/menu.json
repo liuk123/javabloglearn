@@ -2,7 +2,7 @@
   "menu": [
     {
       "route": "blog",
-      "title": "博客",
+      "title": "创意",
       "type": "sub",
       "selected": false,
       "icon": "bars",
@@ -23,7 +23,7 @@
       ]
     },{
       "route": "links",
-      "title": "网站",
+      "title": "设计",
       "type": "sub",
       "selected": true,
       "icon": "bars",
