@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { SHARED_ZORRO_MODULES } from './shared-zorro.module';
+import { SHARED_ZORRO_MODULES } from './shared-zorro';
 import { DragDirective } from './directive/drop-drag/drag.directive';
 import { DropDirective } from './directive/drop-drag/drop.directive';
 import { DragDropService } from './directive/drop-drag/drag-drop.service';
@@ -15,10 +15,13 @@ import { UtilService } from './utils/util';
 import { ListComponent } from './components/list/list.component';
 import { TagsComponent } from './components/tags/tags.component';
 import { BannerComponent } from './components/banner/banner.component';
+import { CkeditorComponent } from './components/ckeditor/ckeditor.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 //module
 const THIRD_MODULES = [
-  ...SHARED_ZORRO_MODULES
+  ...SHARED_ZORRO_MODULES,
+  CKEditorModule
 ]
 //component
 const COMPONENTS = [
@@ -26,6 +29,7 @@ const COMPONENTS = [
   ListComponent,
   TagsComponent,
   BannerComponent,
+  CkeditorComponent,
 ]
 //directive
 const DIRECTIVES = [

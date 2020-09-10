@@ -1,0 +1,11 @@
+<p>
+  <ckeditor
+  [(ngModel)]="editorData"
+  [editor]="Editor"
+  (ready)="onReady($event)"
+  (change)="onChange($event)"
+  [config]="config"></ckeditor>
+</p>
+
+
+<p>{{editorData}}</p>

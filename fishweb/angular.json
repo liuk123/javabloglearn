@@ -36,7 +36,9 @@
               "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
               "src/styles.less"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/@ckeditor/ckeditor5-build-decoupled-document/build/translations/zh-cn.js"
+            ]
           },
           "configurations": {
             "production": {
