@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, ElementRef, Input } from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef, Input, OnDestroy } from '@angular/core';
 import { UtilService } from '../../utils/util';
 
 export class CarouselData{
@@ -9,8 +9,6 @@ export class CarouselData{
     public tag:string,
     public imgUrl:string,
     public isMax?:boolean,
-    public color?:string,
-
   ){}  
 }
 
@@ -19,14 +17,16 @@ export class CarouselData{
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.less']
 })
-export class CarouselComponent implements OnInit {
+export class CarouselComponent implements OnInit, OnDestroy {
 
   @Input() carouselData: CarouselData[] = [];
   isOffsetPanel: boolean = false;
   isShowMaxDetail: boolean = false;
   timer = null;
   maxData:CarouselData;
+  
   colors:string[] = [];
+  colorCurrent: string = ""
   
   constructor(
     private el: ElementRef,
@@ -37,12 +37,13 @@ export class CarouselComponent implements OnInit {
     this.colors = this.util.getColors(this.carouselData.length);
     this.carouselData.forEach((v,i)=>{
       v.isMax=(i==0);
-      v.color = this.colors[i];
+      // v.color = this.colors[i];
     })
     this.offsetCarousel();
     this.maxData = this.carouselData[0];
-
-    
+  }
+  ngOnDestroy(){
+    clearInterval(this.timer)
   }
 
   offsetCarousel() {
@@ -56,6 +57,7 @@ export class CarouselComponent implements OnInit {
         let val = this.carouselData.splice(0, 1);
         this.carouselData.push(val[0])
         this.isOffsetPanel = false;
+        this.colorCurrent = this.colors[this.maxData.index]
         // clearTimeout(timerOne)
         timerOne = null;
       }, 1500)

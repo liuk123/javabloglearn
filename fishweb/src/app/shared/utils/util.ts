@@ -8,7 +8,7 @@ export class UtilService {
     let r = 0;
     let colors = [];
     for(let i=0; i<n; i++){
-      r-=Math.PI*2/-100
+      r-=Math.PI*2/-n
       colors.push(
         '#'+ (
                1<<24|

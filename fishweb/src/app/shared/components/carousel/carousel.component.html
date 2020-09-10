@@ -14,8 +14,8 @@
   <div class="slider-right"></div>
   <div class="carousel-introduce" [class]="isOffsetPanel?'hidden-introduce':''">
     <div class="introduce-index">
-      <div class="introduce-num-background" [style]="{'backgroundColor': maxData?.color, 'opacity':.5}"></div>
-      <div class="introduce-num" [style.backgroundColor]="maxData?.color">
+      <div class="introduce-num-background" [style]="{'backgroundColor': colorCurrent, 'opacity':.5}"></div>
+      <div class="introduce-num" [style.backgroundColor]="colorCurrent">
         {{maxData?.index+1}}/{{carouselData?.length}}
       </div>
     </div>
@@ -23,10 +23,10 @@
       
       <div class="item-title">
         {{maxData?.title}}
-        <div class="item-title-hr" [style.borderColor]="maxData?.color"></div>
+        <div class="item-title-hr" [style.borderColor]="colorCurrent"></div>
       </div>
       <div class="item-tag">
-        {{maxData?.tag}}{{maxData?.color}}
+        {{maxData?.tag}}
       </div>
     </div>
     <div class="introduce-desc">{{maxData?.desc}}</div>
