@@ -18,6 +18,7 @@ export class ArtList{
 export class ListComponent implements OnInit {
 
   @Input() listData:ArtList[] = [];
+  current =1
   constructor() { }
 
   ngOnInit(): void {
