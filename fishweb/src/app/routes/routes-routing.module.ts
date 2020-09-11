@@ -14,7 +14,11 @@ const routes: Routes = [
           import('../../proj/blog/blog.module').then(m=>m.BlogModule),
       },
     ]
-  },
+  },{
+    path: 'login-layout',
+    loadChildren: () => 
+          import('../theme/login-layout/login-layout.module').then(m=>m.LoginLayoutModule),
+  }
 ];
 
 @NgModule({

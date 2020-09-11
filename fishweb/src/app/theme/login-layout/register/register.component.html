@@ -1,0 +1,29 @@
+<div class="m-container">
+  <div style="width:300px">
+    <form nz-form nzLayout="vertical" [formGroup]="form" (ngSubmit)="submitForm(form.value)">
+      <nz-form-item>
+        <nz-form-label>用户名</nz-form-label>
+        <nz-form-control nzErrorTip="Please input your username!">
+          <input nz-input formControlName="userName" placeholder="input placeholder" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label>手机号</nz-form-label>
+        <nz-form-control nzErrorTip="Please input your username!">
+          <input nz-input formControlName="mobile" placeholder="input placeholder" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label>密码</nz-form-label>
+        <nz-form-control nzErrorTip="Please input your username!">
+          <input nz-input formControlName="password" placeholder="input placeholder" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control>
+          <button nz-button nzType="primary">提交</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
