@@ -1,4 +1,39 @@
 
 <div class="m-container">
-  <app-ckeditor></app-ckeditor>
+  <div style="width:600px;">
+    <form nz-form nzLayout="vertical" [formGroup]="form" (ngSubmit)="submitForm(form.value)">
+      <nz-form-item>
+        <nz-form-label>标题</nz-form-label>
+        <nz-form-control nzErrorTip="Please input your username!">
+          <input nz-input formControlName="title" placeholder="input placeholder" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label>tag</nz-form-label>
+        <nz-form-control nzErrorTip="Please input your username!">
+          <nz-select nzMode="tags" nzPlaceHolder="Tag Mode" formControlName="tags">
+            <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired>描述</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Please write something here!">
+          <textarea formControlName="desc" nz-input rows="2" placeholder="write any thing"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired>内容</nz-form-label>
+        <nz-form-control [nzSpan]="null" nzErrorTip="Please write something here!">
+          <app-ckeditor formControlName="content"></app-ckeditor>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control>
+          <button nz-button nzType="primary">提交</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+  
 </div>

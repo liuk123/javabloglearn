@@ -16,7 +16,7 @@ import { ChangeEvent } from '@ckeditor/ckeditor5-angular';
     {
       provide: NG_VALIDATORS,
       useExisting: forwardRef(()=>CkeditorComponent),
-      multi:true//令牌多对一
+      multi:true
     }
   ]
 })
@@ -29,7 +29,8 @@ export class CkeditorComponent implements ControlValueAccessor {
   config = {
     language: 'zh-cn',
     placeholder: 'Type the content here!',
-    toolbar: [ 'heading', '|', 'bold', 'italic' ] }
+    // toolbar: [ 'heading', '|', 'bold', 'italic' ] 
+  }
   private propageteChange=(_:any)=>{};
 
   constructor() { }
@@ -56,16 +57,51 @@ export class CkeditorComponent implements ControlValueAccessor {
     }
   }
 
-
-  
   onReady( editor ) {
     editor.ui.getEditableElement().parentElement.insertBefore(
       editor.ui.view.toolbar.element,
       editor.ui.getEditableElement()
     );    
+    editor.plugins.get( 'FileRepository' ).createUploadAdapter = function( loader ) {
+      return new FileUploadAdapter(loader);
+    };
   }
+
   onChange( { editor }: ChangeEvent ) {
     const data = editor.getData();
     this.propageteChange(data)
   }
+}
+
+
+class FileUploadAdapter {
+	
+	constructor(private loader) {
+	}
+	
+	upload() {
+		return new Promise((resolve, reject) => {
+			const data = new FormData();
+			data.append('file', this.loader.file);
+      
+			var xhr = new XMLHttpRequest();
+			// xhr.setRequestHeader("Content-type","multipart/form-data");
+			xhr.open('post', '/api/uploadpic' );
+			xhr.send(data);
+			xhr.onreadystatechange = function () {
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					let data=JSON.parse(xhr.responseText);
+					if(data.fileName){
+						resolve({
+							default:'/api'+data.fileName
+						});
+					}else {
+						reject(data.msg);
+					}
+				} 
+			};
+		});
+	}
+	abort() {
+	}
 }
