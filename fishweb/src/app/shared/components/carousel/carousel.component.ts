@@ -3,7 +3,7 @@ import { UtilService } from '../../utils/util';
 
 export class CarouselData{
   constructor(
-    public index:string,
+    public index:number,
     public title:string,
     public desc:string,
     public tag:string,
@@ -24,6 +24,8 @@ export class CarouselComponent implements OnInit, OnDestroy {
   isShowMaxDetail: boolean = false;
   timer = null;
   maxData:CarouselData;
+  // trackBycarousel:number;
+  trackByCarousel(index: number, item: CarouselData): number { return item.index; }
   
   colors:string[] = [];
   colorCurrent: string = "rgb(217, 5, 160)"

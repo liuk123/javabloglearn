@@ -1,6 +1,6 @@
 <div class="carousel-panel">
   <ul class="carousel-sub-panel" [class]="isOffsetPanel?'offsetOne':''">
-    <li class="carousel-item" *ngFor="let item of carouselData" [class]="item.isMax? 'maxItem':''">
+    <li class="carousel-item" *ngFor="let item of carouselData; trackBy: trackByCarousel" [class]="item.isMax? 'maxItem':''">
       <div class="carousel-card">
           <div class="carousel-img" [style]="{'backgroundImage': 'url('+ item.imgUrl+')'}"></div>
           <div class="carousel-info" [hidden]="item.isMax">

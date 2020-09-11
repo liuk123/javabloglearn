@@ -12,20 +12,7 @@ export class BlogHomeComponent implements OnInit {
   listData1=listData1
   tagData=tagData
   tagSelectData=[];
-  data = [
-    {
-      title: 'Ant Design Title 1'
-    },
-    {
-      title: 'Ant Design Title 2'
-    },
-    {
-      title: 'Ant Design Title 3'
-    },
-    {
-      title: 'Ant Design Title 4'
-    }
-  ];
+
   current =1
 
   constructor() { }
@@ -67,13 +54,6 @@ let carouselData = [
   {
     index: 4,
     title: '标题5',
-    desc: '这是一个描述',
-    tag: '生活',
-    imgUrl: 'http://lackk.com/url/?a=now01bg',
-  },
-  {
-    index: 5,
-    title: '标题6',
     desc: '这是一个描述',
     tag: '生活',
     imgUrl: 'http://lackk.com/url/?a=now01bg',
