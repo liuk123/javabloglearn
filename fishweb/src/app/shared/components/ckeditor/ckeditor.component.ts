@@ -68,8 +68,8 @@ export class CkeditorComponent implements ControlValueAccessor {
   }
 
   onChange( { editor }: ChangeEvent ) {
-    const data = editor.getData();
-    this.propageteChange(data)
+    // const data = editor.getData();
+    this.propageteChange(this.editorData);
   }
 }
 
