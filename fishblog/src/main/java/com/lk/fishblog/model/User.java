@@ -1,7 +1,6 @@
 package com.lk.fishblog.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.lk.fishblog.common.utils.PageInfo;
 import lombok.*;
 
 import javax.persistence.*;
