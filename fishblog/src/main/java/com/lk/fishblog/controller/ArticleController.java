@@ -19,7 +19,7 @@ import javax.validation.Valid;
 
 
 @RestController
-@RequestMapping("/article")
+@RequestMapping("/api/article")
 @Slf4j
 public class ArticleController {
     @Autowired

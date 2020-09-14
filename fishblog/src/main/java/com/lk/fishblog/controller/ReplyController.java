@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/reply")
+@RequestMapping("/api/reply")
 @Slf4j
 public class ReplyController {
     @Autowired

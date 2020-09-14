@@ -23,10 +23,10 @@ public class FishblogApplication implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(new PerformanceInteceptor())
-				.addPathPatterns("/article/**")
-				.addPathPatterns("/comment/**")
-				.addPathPatterns("/user/**")
-				.addPathPatterns("/reply/**");
+				.addPathPatterns("/api/article/**")
+				.addPathPatterns("/api/comment/**")
+				.addPathPatterns("/api/user/**")
+				.addPathPatterns("/api/reply/**");
 	}
 
 	@Bean

@@ -9,14 +9,14 @@ const routes: Routes = [
         path:'login',
         component: LoginComponent,
         data:{
-            keep:true,
+            keep:false,
         }
     },
     {
         path:'register',
         component: RegisterComponent,
         data:{
-            keep:true,
+            keep:false,
         }
     },
 ];

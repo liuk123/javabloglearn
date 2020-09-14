@@ -23,11 +23,7 @@ export class Result {
     } else if (obj instanceof Result) {
       return obj;
     } else if (objectUtil.isObject(obj)) {
-      Object.keys(obj).forEach(key => {
-        if (key in model) {
-          model[key] = obj[key];
-        }
-      });
+      Object.assign(model,obj);
     }
     return model;
   }
@@ -36,23 +32,23 @@ export class Result {
    * 创建失败时的对象
    * @param message：失败提醒信息
    */
-  static error(message: string): Result {
-    const model = new Result();
-    model.resultCode = 0;
-    model.resultMsg = message;
-    return model;
-  }
+  // static error(message: string): Result {
+  //   const model = new Result();
+  //   model.resultCode = 0;
+  //   model.resultMsg = message;
+  //   return model;
+  // }
 
   /**
    * 创建成功时的对象
    * @param data：参数、数据
    */
-  static success(data: any): Result {
-    const model = new Result();
-    model.resultCode = 1;
-    model.data = data;
-    return model;
-  }
+  // static success(data: any): Result {
+  //   const model = new Result();
+  //   model.resultCode = 1;
+  //   model.data = data;
+  //   return model;
+  // }
 
   /**
    * 是否成功返回

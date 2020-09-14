@@ -28,7 +28,7 @@ const CODEMESSAGE = {
   503: '服务不可用，服务器暂时过载或维护。',
   504: '网关超时。',
 };
-const MAX_RETRY_NUM = 3;
+const MAX_RETRY_NUM = 2;
 
 @Injectable()
 export class DefaultInterceptor implements HttpInterceptor {

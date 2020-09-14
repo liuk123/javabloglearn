@@ -58,7 +58,7 @@ export class MessageUtilService {
     this.message.create('warning', message);
   }
 
-  confirm({ okText = '确定', cancelText = '取消', content = '你已经填写了部分表单，离开会放弃已填写的内容。', title = '确认要离开吗？' } = {}): Observable<any> {
+  confirm({ okText = '确定', cancelText = '取消', content = '您确定要这样操作吗', title = '提示' } = {}): Observable<any> {
     return new Observable(observer => {
       this.modalService.confirm({
         nzTitle: title,
