@@ -20,6 +20,7 @@ public class User extends BaseEntity implements Serializable{
     private String username;
     private String password;
     private Integer role;
+    private Long phone;
 
 //    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //    @JoinTable(
