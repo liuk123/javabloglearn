@@ -16,6 +16,6 @@ public class NewArticleRequest {
     private String title;
     @NotEmpty
     private String content;
-    @NotEmpty
+    @NotNull
     private Long authorId;
 }

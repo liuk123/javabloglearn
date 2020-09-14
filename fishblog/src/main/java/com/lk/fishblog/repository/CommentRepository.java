@@ -6,5 +6,5 @@ import java.util.List;
 
 
 public interface CommentRepository extends BaseRepository<Comment, Long> {
-    List<Comment> findTop3ByArticle_IdOrderByUpdateTimeDescIdAsc(Long id);
+    List<Comment> findTop5ByArticle_IdOrderByUpdateTimeDescIdAsc(Long id);
 }

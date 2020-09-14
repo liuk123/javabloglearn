@@ -31,8 +31,8 @@ public class CommentService {
     public Comment findById(Long id){
         return commentRepository.getOne(id);
     }
-    public List<Comment> findTop3ByArticleId(Long id){
-        return  commentRepository.findTop3ByArticle_IdOrderByUpdateTimeDescIdAsc(id);
+    public List<Comment> findTop5ByArticleId(Long id){
+        return  commentRepository.findTop5ByArticle_IdOrderByUpdateTimeDescIdAsc(id);
     }
 
     public void deleteById(Long id){

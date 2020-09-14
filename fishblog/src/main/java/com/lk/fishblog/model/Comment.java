@@ -22,6 +22,7 @@ public class Comment extends BaseEntity implements Serializable {
     @JoinColumn(name="from_user_id")
     private User fromUser;
 
+    @JsonIgnoreProperties(value = {"content"})
     @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH}, optional=false)
     @JoinColumn(name="article_id")
     private Article article;
@@ -35,7 +36,9 @@ public class Comment extends BaseEntity implements Serializable {
     @Override
     public String toString() {
         return "Comment{" +
+                "id='" + getId() + '\'' +
                 ", content='" + content + '\'' +
+                ", replyList='" + replyList + '\'' +
                 '}';
     }
 }

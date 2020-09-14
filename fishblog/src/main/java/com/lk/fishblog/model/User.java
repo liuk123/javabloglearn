@@ -15,6 +15,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+//@JsonIgnoreProperties(value = {"hibernateLazyInitializer"})
 public class User extends BaseEntity implements Serializable{
     private String username;
     private String password;
@@ -35,7 +36,9 @@ public class User extends BaseEntity implements Serializable{
     @Override
     public String toString() {
         return "User{" +
+                "id='" + getId() + '\'' +
                 ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
                 ", role='" + role + '\'' +
                 '}';
     }

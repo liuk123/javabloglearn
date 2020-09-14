@@ -28,14 +28,16 @@ public class Article extends BaseEntity implements Serializable{
     private User author;
 
     @JsonIgnoreProperties(value = {"article"})
-    @OneToMany(mappedBy = "article",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "article",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     private List<Comment> commentList;
 
     @Override
     public String toString() {
         return "Article{" +
+                "id='" + getId() + '\'' +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
+                ", author='" + author + '\'' +
                 '}';
     }
 }

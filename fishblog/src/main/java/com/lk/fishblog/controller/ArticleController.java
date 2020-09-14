@@ -13,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.MediaType;
+
+import javax.validation.Valid;
 
 
 @RestController
@@ -28,30 +31,31 @@ public class ArticleController {
     @Autowired
     UserService userService;
 
-    @PostMapping(path = "/add")
+    @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResultSet addArticle(@RequestBody NewArticleRequest a){
+    public ResultSet addByJson(@RequestBody @Valid  NewArticleRequest a){
         User author = userService.findById(a.getAuthorId());
         log.info("Coffee {}:", author);
-        articleService.save(a.getTitle(),a.getContent(), author);
-        return new ResultSet(ResultSet.RESULT_CODE_TRUE,"添加成功");
+        Article article = articleService.save(a.getTitle(),a.getContent(), author);
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE,"添加成功", article.getId());
     }
 
     @GetMapping(path="/{id}")
-    public ResultSet getArticleById(@PathVariable Long id){
+    public ResultSet getById(@PathVariable Long id){
         Article a = articleService.findById(id);
+        log.info("id {}:",a.getCommentList());
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", a);
     }
 
-    @GetMapping(path="/articlesByAuthor/{id}")
-    public Page<Article> getArticlesByAuthor(@PathVariable Long id){
+    @GetMapping(path="/getByAuthor/{id}")
+    public Page<Article> getByAuthor(@PathVariable Long id){
         Page<Article> a = articleService.findByAuthor(id,0,10);
         log.info("Coffee {}:", a);
         return a;
     }
 
-    @DeleteMapping(path = "del/{id}")
-    public ResultSet delArticle(@PathVariable Long id){
+    @DeleteMapping(path = "/{id}")
+    public ResultSet delById(@PathVariable Long id){
         articleService.deleteById(id);
         return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功");
     }

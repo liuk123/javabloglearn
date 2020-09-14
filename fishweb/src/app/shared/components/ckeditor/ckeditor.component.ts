@@ -27,12 +27,6 @@ export class CkeditorComponent implements ControlValueAccessor {
   editorData =''
   @Input() isDisabled = false
   config = {
-    language: 'zh-cn',
-    placeholder: 'Type the content here!',
-    // toolbar: [ 'heading', '|', 'bold', 'italic' ] 
-    title: {
-        placeholder: 'My custom placeholder for the title'
-    },
   }
   private propageteChange=(_:any)=>{};
 

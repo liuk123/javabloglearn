@@ -1,5 +1,6 @@
 package com.lk.fishblog.controller;
 
+import com.lk.fishblog.common.utils.ResultSet;
 import com.lk.fishblog.controller.request.NewUserRequest;
 import com.lk.fishblog.model.User;
 import com.lk.fishblog.service.ArticleService;
@@ -9,7 +10,10 @@ import com.lk.fishblog.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/user")
@@ -25,22 +29,23 @@ public class UserController {
     ArticleService articleService;
 
     @GetMapping(path="/{id}")
-    public User getById(@PathVariable Long id){
+    public ResultSet getById(@PathVariable Long id){
         User u = userService.findById(id);
         log.info("Coffee {}:", u);
-        return u;
+        return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", u);
     }
 
-    @PostMapping(path = "/add")
+    @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public User add(@RequestBody NewUserRequest c){
-        return userService.save(c.getUsername(), c.getPassword(), 10);
+    public ResultSet addByJson(@RequestBody @Valid NewUserRequest c){
+        User u = userService.save(c.getUsername(), c.getPassword(), 10);
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "添加成功", u.getId());
     }
 
-    @DeleteMapping(path = "del/{id}")
-    public String del(@PathVariable Long id){
+    @DeleteMapping(path = "/{id}")
+    public ResultSet delById(@PathVariable Long id){
         userService.deleteById(id);
-        return "success";
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功");
     }
 
 }

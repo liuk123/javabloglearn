@@ -3,7 +3,20 @@
     <div class="bank">
       <div class="bankname">快乐就完了</div>
     </div>
-    <div class="header-user-info">123</div>
+    <div class="header-user-info">
+     
+      <button nz-button nz-dropdown [nzDropdownMenu]="menu">用户</button>
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu>
+          <li nz-menu-item [routerLink]="['./user/login']">登录</li>
+          <li nz-menu-item [routerLink]="['./user/register']">注册</li>
+          <li nz-menu-item [routerLink]="['./blog/home']">首页</li>
+          <li nz-menu-item [routerLink]="['./blog/edit']">编辑</li>
+          <li nz-menu-item [routerLink]="['./blog/detail']">详情</li>
+        </ul>
+      </nz-dropdown-menu>
+
+    </div>
     <div class="header-menu">
       <app-menu [menus]="menus"></app-menu>
     </div>

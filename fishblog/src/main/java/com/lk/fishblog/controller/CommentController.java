@@ -1,6 +1,6 @@
 package com.lk.fishblog.controller;
 
-import com.lk.fishblog.controller.request.NewArticleRequest;
+import com.lk.fishblog.common.utils.ResultSet;
 import com.lk.fishblog.controller.request.NewCommentRequest;
 import com.lk.fishblog.model.Article;
 import com.lk.fishblog.model.Comment;
@@ -12,9 +12,10 @@ import com.lk.fishblog.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -31,32 +32,33 @@ public class CommentController {
     ArticleService articleService;
 
     @GetMapping(path="/{id}")
-    public Comment getById(@PathVariable Long id){
-        Comment a = commentService.findById(id);
-        log.info("Coffee {}:", a);
-        return a;
-    }
-    @GetMapping(path="top3/{id}")
-    public List<Comment> getTop3ByArtId(@PathVariable Long id){
-        List<Comment> a = commentService.findTop3ByArticleId(id);
-        log.info("Coffee {}:", a.get(0).getReplyList());
-        return a;
+    public ResultSet getById(@PathVariable Long id){
+        Comment c = commentService.findById(id);
+        log.info("Comment {}:", c);
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", c);
     }
 
+    @GetMapping(path="top5/{id}")
+    public ResultSet getTop5ByArticleId(@PathVariable Long id){
+        List<Comment> c = commentService.findTop5ByArticleId(id);
+        log.info("CommentList {}:", c.get(0).getReplyList());
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", c);
+    }
 
-    @PostMapping(path = "/add")
+    @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public Comment add(@RequestBody NewCommentRequest c){
+    public ResultSet addByJson(@RequestBody @Valid NewCommentRequest c){
         User u = userService.findById(c.getFromUserId());
         log.info("CommentUser {}:", u);
         Article a = articleService.findById(c.getArticleId());
         log.info("CommentArticle {}:", a);
-        return commentService.save(c.getContent(), u, a);
+        Comment comment = commentService.save(c.getContent(), u, a);
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "添加成功", comment);
     }
 
-    @DeleteMapping(path = "del/{id}")
-    public String del(@PathVariable Long id){
+    @DeleteMapping(path = "/{id}")
+    public ResultSet delById(@PathVariable Long id){
         commentService.deleteById(id);
-        return "success";
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功");
     }
 }

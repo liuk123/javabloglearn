@@ -35,6 +35,7 @@ public class Reply extends BaseEntity implements Serializable{
     @Override
     public String toString() {
         return "Reply{" +
+                "id='" + getId() + '\'' +
                 ", content='" + content + '\'' +
                 '}';
     }
