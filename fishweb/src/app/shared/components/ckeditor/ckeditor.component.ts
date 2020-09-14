@@ -30,6 +30,9 @@ export class CkeditorComponent implements ControlValueAccessor {
     language: 'zh-cn',
     placeholder: 'Type the content here!',
     // toolbar: [ 'heading', '|', 'bold', 'italic' ] 
+    title: {
+        placeholder: 'My custom placeholder for the title'
+    },
   }
   private propageteChange=(_:any)=>{};
 
