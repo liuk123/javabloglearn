@@ -3,7 +3,6 @@ package com.lk.fishblog.service;
 import com.lk.fishblog.model.Article;
 import com.lk.fishblog.model.User;
 import com.lk.fishblog.repository.ArticleRepository;
-import com.lk.fishblog.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -20,8 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class ArticleService {
     @Autowired
     ArticleRepository articleRepository;
-    @Autowired
-    UserRepository userRepository;
 
     public Article findById(Long id){
         return articleRepository.getOne(id);

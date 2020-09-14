@@ -31,6 +31,15 @@ public class Article extends BaseEntity implements Serializable{
     @OneToMany(mappedBy = "article",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     private List<Comment> commentList;
 
+    @ManyToMany(cascade={CascadeType.MERGE,CascadeType.REFRESH}, fetch=FetchType.EAGER)
+    @JoinTable(
+            name = "b_article_tag",
+            joinColumns = {
+                    @JoinColumn(name = "article_id") },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "tag_id") })
+    private  List<Tag> tagList;
+
     @Override
     public String toString() {
         return "Article{" +

@@ -6,6 +6,5 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 
 public interface ArticleRepository extends BaseRepository<Article, Long> {
-//    @Query("select ")
     Page<Article> findAllByAuthor_Id(Long id, Pageable pageable);
 }
