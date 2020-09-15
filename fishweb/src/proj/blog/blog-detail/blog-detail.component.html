@@ -5,23 +5,24 @@
     <div class="banner-desc">
       {{article?.author?.username}}
       .
-      <span *ngFor="let item of article?.tagList">{{item.name}}</span>
+      <nz-tag *ngFor="let item of article?.tagList">{{item.name}}</nz-tag>
     </div>
   </div>
 </app-banner>
 <div class="m-container">
   <div style="display: flex;">
-    <div class="art-detail">
-      <div [innerHTML]="article?.content"></div>
+    <div class="art-contaner">
+      <div class="art-detail" [innerHTML]="article?.content"></div>
+      <div class="comment">
+        <app-comment
+          [data]="commentList"
+          [(submitting)]="submitting"
+          (commentEvent)="commentEvent($event)"
+          (replyEvent)="replyEvent($event)"></app-comment>
+      </div>
     </div>
     <div class="art-popular">
   
     </div>
-  </div>
-  <div class="comment">
-    <app-comment
-      [data]="commentList"
-      [(submitting)]="submitting"
-      (commentEvent)="commentEvent($event)"></app-comment>
   </div>
 </div>

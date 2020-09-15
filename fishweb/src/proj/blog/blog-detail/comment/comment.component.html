@@ -6,7 +6,7 @@
     </nz-form-item>
     <nz-form-item>
       <button nz-button nzType="primary" [nzLoading]="submitting" [disabled]="!inputValue" (click)="handleSubmit()">
-        Add Comment
+        评论
       </button>
     </nz-form-item>
   </nz-comment-content>
@@ -17,7 +17,7 @@
     <nz-comment-content>
       <p>{{ comment.content }}</p>
     </nz-comment-content>
-    <nz-comment-action>Reply to</nz-comment-action>
+    <nz-comment-action><span (click)="replySubmit()">Reply to</span></nz-comment-action>
     <ng-container *ngIf="comment?.replyList && comment?.replyList.length">
       <ng-template ngFor let-child [ngForOf]="comment.replyList">
         <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: child }"> </ng-template>

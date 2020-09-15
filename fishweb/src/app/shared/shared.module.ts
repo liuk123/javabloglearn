@@ -17,6 +17,7 @@ import { TagsComponent } from './components/tags/tags.component';
 import { BannerComponent } from './components/banner/banner.component';
 import { CkeditorComponent } from './components/ckeditor/ckeditor.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { TextareaDialogComponent } from './components/textarea-dialog/textarea-dialog.component';
 
 //module
 const THIRD_MODULES = [
@@ -30,6 +31,7 @@ const COMPONENTS = [
   TagsComponent,
   BannerComponent,
   CkeditorComponent,
+  TextareaDialogComponent
 ]
 //directive
 const DIRECTIVES = [

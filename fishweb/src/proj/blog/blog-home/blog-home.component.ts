@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ArticleService } from 'src/app/biz/services/blog/article.service';
 
 @Component({
   selector: 'app-blog-home',
@@ -15,9 +16,12 @@ export class BlogHomeComponent implements OnInit {
 
   current =1
 
-  constructor() { }
+  constructor(
+    private articleSrv: ArticleService
+  ) { }
 
   ngOnInit(): void {
+    
   }
 
 }

@@ -24,3 +24,8 @@ insert into b_reply (create_time, update_time, comment_id, content, from_user_id
 insert into b_reply (create_time, update_time, comment_id, content, from_user_id, to_user_id) values (now(), now(), 2L, '回复内容1', 1L, 1L);
 insert into b_reply (create_time, update_time, comment_id, content, from_user_id, to_user_id) values (now(), now(), 2L, '回复内容1', 1L, 1L);
 insert into b_reply (create_time, update_time, comment_id, content, from_user_id, to_user_id) values (now(), now(), 2L, '回复内容1', 1L, 1L);
+
+insert into b_tag (create_time, update_time, name) values (now(), now(), '创意');
+insert into b_tag (create_time, update_time, name) values (now(), now(), '设计');
+insert into b_tag (create_time, update_time, name) values (now(), now(), '音乐');
+insert into b_tag (create_time, update_time, name) values (now(), now(), '文艺');

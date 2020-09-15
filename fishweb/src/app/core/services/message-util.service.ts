@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Result } from '../model/result.model';
 import { HttpResponseAlertStatus } from '../model/http-response-alert-status.model';
-import { Observable } from 'rxjs';
 import { NzModalService } from 'ng-zorro-antd/modal';
 
 @Injectable({
@@ -56,24 +55,5 @@ export class MessageUtilService {
    */
   warning(message = this.MSG_WARN): void {
     this.message.create('warning', message);
-  }
-
-  confirm({ okText = '确定', cancelText = '取消', content = '您确定要这样操作吗', title = '提示' } = {}): Observable<any> {
-    return new Observable(observer => {
-      this.modalService.confirm({
-        nzTitle: title,
-        nzContent: content,
-        nzOkText: okText,
-        nzCancelText: cancelText,
-        nzOnOk: () => {
-          observer.next(true);
-          observer.complete();
-        },
-        nzOnCancel: () => {
-          observer.next(false);
-          observer.complete();
-        }
-      });
-    });
   }
 }

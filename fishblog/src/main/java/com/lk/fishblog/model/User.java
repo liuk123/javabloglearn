@@ -24,6 +24,7 @@ public class User extends BaseEntity implements Serializable{
 
     @JsonIgnoreProperties(value = {"author"})
     @OneToMany(mappedBy = "author", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    @OrderBy("createTime DESC")
     private List<Article> articleList;
 
     public User(Long id){

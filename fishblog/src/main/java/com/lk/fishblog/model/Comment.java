@@ -31,6 +31,7 @@ public class Comment extends BaseEntity implements Serializable {
 
     @JsonIgnoreProperties(value = {"comment"})
     @OneToMany(mappedBy = "comment",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    @OrderBy("createTime ASC")
     private List<Reply> replyList;
 
     public Comment(Long id){

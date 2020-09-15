@@ -29,6 +29,7 @@ public class Article extends BaseEntity implements Serializable{
 
     @JsonIgnoreProperties(value = {"article"})
     @OneToMany(mappedBy = "article",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    @OrderBy("createTime DESC")
     private List<Comment> commentList;
 
     @ManyToMany(cascade={CascadeType.MERGE,CascadeType.REFRESH}, fetch=FetchType.EAGER)
