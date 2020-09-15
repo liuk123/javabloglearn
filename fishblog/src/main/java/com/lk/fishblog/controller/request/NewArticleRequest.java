@@ -7,6 +7,7 @@ import lombok.ToString;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,6 +17,7 @@ public class NewArticleRequest {
     private String title;
     @NotEmpty
     private String content;
-    @NotNull
     private Long authorId;
+    @NotEmpty
+    private List<Long> tagList;
 }

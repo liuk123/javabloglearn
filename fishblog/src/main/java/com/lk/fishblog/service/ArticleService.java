@@ -1,6 +1,7 @@
 package com.lk.fishblog.service;
 
 import com.lk.fishblog.model.Article;
+import com.lk.fishblog.model.Tag;
 import com.lk.fishblog.model.User;
 import com.lk.fishblog.repository.ArticleRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 @Transactional
@@ -27,12 +32,13 @@ public class ArticleService {
     public Page<Article> findByAuthor(Long id,int page, int size ){
         return this.articleRepository.findAllByAuthor_Id(id, PageRequest.of(page,size));
     }
-    public Article save(String title, String content, User auther){
+    public Article save(String title, String content, List<Tag> tagList, User auther){
         return articleRepository.save(
             Article
                 .builder()
                 .title(title)
                 .content(content)
+                .tagList(new ArrayList<>(tagList))
                 .author(auther)
                 .build()
         );

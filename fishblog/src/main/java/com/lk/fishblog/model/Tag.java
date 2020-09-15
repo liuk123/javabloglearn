@@ -21,6 +21,10 @@ public class Tag extends BaseEntity implements Serializable{
     @ManyToMany(mappedBy = "tagList", cascade = {CascadeType.MERGE,CascadeType.REFRESH}, fetch = FetchType.LAZY)
     private List<Article> articleList;
 
+    public Tag(Long id){
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "Tag{" +

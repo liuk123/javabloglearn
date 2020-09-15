@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/biz/services/user.service';
+import { UserService } from 'src/app/biz/services/user/user.service';
 
 @Component({
   selector: 'app-register',
@@ -29,8 +29,8 @@ export class RegisterComponent implements OnInit {
     this.form.markAllAsTouched();
     this.form.updateValueAndValidity();
     console.log(value);
-    this.srv.addUser(value).subscribe(res=>{
-      if(res.isSuccess){
+    this.srv.register(value).subscribe(res=>{
+      if(res.isSuccess()){
         this.router.navigate(['./blog/home']);
       }
     })

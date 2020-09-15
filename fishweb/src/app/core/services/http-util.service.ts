@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpRequest, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams, HttpRequest, HttpResponse} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {catchError, filter, map} from 'rxjs/operators';
 import {MessageUtilService} from './message-util.service';
@@ -12,11 +12,8 @@ import {Result} from '../model/result.model';
 export class HttpUtilService {
 
   jsonHttpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-    })
+    headers: new HttpHeaders({'Content-Type':  'application/json'})
   }
-
   constructor(private http: HttpClient,
               private messageUtil: MessageUtilService) {
   }
@@ -32,7 +29,8 @@ export class HttpUtilService {
   }
 
   /** POST请求处理（一般用于保存数据） **/
-  post(url: string, data: any = {}, httpOptions: any = this.jsonHttpOptions, status: HttpResponseAlertStatus = HttpResponseAlertStatus.ALL): Observable<Result> {
+  post(url: string, data: any = {}, httpOptions: any = {}, status: HttpResponseAlertStatus = HttpResponseAlertStatus.ALL): Observable<Result> {
+    httpOptions = Object.assign(this.jsonHttpOptions, httpOptions);
     return this.http.post<Result>(url, data, httpOptions).pipe(
       map(restResponse => {
         return this.callback(restResponse, status);
@@ -101,37 +99,14 @@ export class HttpUtilService {
   }
 
   /**
-   * @param operation - name of the operation that failed
-   * @param result - optional value to return as the observable result
+   * 把对象转化成httpparams
+   * @param params obj
    */
-  // handleError<T>(operation = 'operation', result?: T) {
-  //   return (error: any): Observable<T> => {
-  //     // TODO: send the error to remote logging infrastructure
-  //     console.error(error); // log to console instead
-  //     // TODO: better job of transforming error for user consumption
-  //     console.log(`${operation} failed: ${error.message}`);
-  //     // Let the app keep running by returning an empty result.
-  //     return of(result as T);
-  //   };
-  // }
-
-  // /**
-  //  * 获取全部url参数,并转换成对象
-  //  * */
-  // getUrlParams(url) {
-  //   var url = url ? url : window.location.href;
-  //   var _pa = url.substring(url.indexOf('?') + 1),
-  //     _arrS = _pa.split('&'),
-  //     _rs = {};
-  //   for (var i = 0, _len = _arrS.length; i < _len; i++) {
-  //     var pos = _arrS[i].indexOf('=');
-  //     if (pos == -1) {
-  //       continue;
-  //     }
-  //     var name = _arrS[i].substring(0, pos),
-  //       value = decodeURIComponent(_arrS[i].substring(pos + 1));
-  //     _rs[name] = value;
-  //   }
-  //   return _rs;
-  // }
+  encodeParams(params){
+    return Object.keys(params)
+        .filter(key=>params[key])
+        .reduce((sum:HttpParams,key:string)=>{
+            return sum.append(key,params[key]);
+        },new HttpParams());
+  }
 }

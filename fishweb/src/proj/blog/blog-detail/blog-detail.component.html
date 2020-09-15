@@ -1,14 +1,19 @@
 
 <app-banner [bannerUrl]="bannerUrl">
   <div class="banner-inner">
-    <div class="banner-title">每日分享</div>
-    <div class="banner-desc">分享一些不错的资源</div>
+    <div class="banner-title">{{article?.title}}</div>
+    <div class="banner-desc">
+      {{article?.author?.username}}
+      .
+      <span *ngFor="let item of article?.tagList">{{item.name}}</span>
+      
+    </div>
   </div>
 </app-banner>
 <div class="m-container">
   <div style="display: flex;">
     <div class="art-detail">
-
+      <div [innerHTML]="article?.content"></div>
     </div>
     <div class="art-popular">
   

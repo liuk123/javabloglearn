@@ -31,7 +31,7 @@ export class MenuService {
    * @param value 改变面包屑导航
    */
   setTitle(value) {
-    this.breadcrumbStr = value;
+    this.breadcrumbStr = value.slice(0, value.indexOf(";"));
     let links = this.breadcrumbStr.slice(1).split('/');
     this.breadcrumbMenu.length = 0;
     this.setBreadcrumb(links, 0, this.menu);
