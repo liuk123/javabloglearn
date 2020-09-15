@@ -22,14 +22,6 @@ public class User extends BaseEntity implements Serializable{
     private Integer role;
     private Long phone;
 
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinTable(
-//        name = "b_user_article",
-//        joinColumns = {
-//            @JoinColumn(name = "user_id") },
-//        inverseJoinColumns = {
-//            @JoinColumn(name = "article_id") })
-//    private List<Article> articleList;
     @JsonIgnoreProperties(value = {"author"})
     @OneToMany(mappedBy = "author", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     private List<Article> articleList;
@@ -40,6 +32,7 @@ public class User extends BaseEntity implements Serializable{
                 "id='" + getId() + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", phone='" + phone + '\'' +
                 ", role='" + role + '\'' +
                 '}';
     }

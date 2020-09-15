@@ -37,9 +37,11 @@ public class UserController {
 
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResultSet addByJson(@RequestBody @Valid NewUserRequest c){
-        User u = userService.save(c.getUsername(), c.getPassword(), 10);
-        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "添加成功", u.getId());
+    public ResultSet addByJson(@RequestBody @Valid NewUserRequest u){
+        User us = userService.findByUsernameAndPhone(u.getUsername(), u.getPhone());
+        log.info("ex: ",us);
+        User user = userService.save(u.getUsername(), u.getPassword(),u.getPhone(), 10);
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "添加成功", user.getId());
     }
 
     @DeleteMapping(path = "/{id}")

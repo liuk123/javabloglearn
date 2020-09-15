@@ -1,7 +1,7 @@
-insert into b_user (create_time, update_time, username, password, role) values (now(), now(), '小明1', '123456', 1);
-insert into b_user (create_time, update_time, username, password, role) values (now(), now(), '小红2', '123456', 1);
-insert into b_user (create_time, update_time, username, password, role) values (now(), now(), '旺财3', '123456', 1);
-insert into b_user (create_time, update_time, username, password, role) values (now(), now(), '明华4', '123456', 1);
+insert into b_user (create_time, update_time, username, password, phone, role) values (now(), now(), '小明1', '123456', 13255555555, 1);
+insert into b_user (create_time, update_time, username, password, phone, role) values (now(), now(), '小红2', '123456', 13255555555, 1);
+insert into b_user (create_time, update_time, username, password, phone, role) values (now(), now(), '旺财3', '123456', 13255555555, 1);
+insert into b_user (create_time, update_time, username, password, phone, role) values (now(), now(), '明华4', '123456', 13255555555, 1);
 
 insert into b_article (create_time, update_time, content, title, user_id) values (now(), now(), '文章内容123', '文章标题1', 1L);
 insert into b_article (create_time, update_time, content, title, user_id) values (now(), now(), '文章内容123', '文章标题2', 1L);

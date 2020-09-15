@@ -13,14 +13,21 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public User save(String username, String password, Integer role){
+    public User save(String username, String password, Long phone, Integer role){
         return userRepository.save(
-            User.builder().username(username).password(password).role(role).build()
+            User
+                .builder()
+                .username(username)
+                .password(password)
+                .phone(phone)
+                .role(role)
+                .build()
         );
     }
     public User findById(Long id){
         return userRepository.getOne(id);
     }
+    public User findByUsernameAndPhone(String username, Long phone){ return  userRepository.findFirstByUsernameAndPhone(username, phone); }
     public void deleteById(Long id){
         userRepository.deleteById(id);
     }

@@ -8,9 +8,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Getter
 @Setter
 @ToString
-public class NewUserRequest {
+public class NewTagRequest {
     @NotEmpty
-    private String username;
-    private String password;
-    private Long phone;
+    private String name;
 }
