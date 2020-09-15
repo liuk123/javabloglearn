@@ -12,7 +12,7 @@ export class DialogService {
   ) { }
 
   createModal(title,component,params){
-      const modal = this.modal.create({
+      let modal = this.modal.create({
         nzTitle: title,
         nzContent: component,
         nzGetContainer: () => document.body,
