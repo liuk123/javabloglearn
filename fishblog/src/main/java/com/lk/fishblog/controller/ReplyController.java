@@ -40,12 +40,9 @@ public class ReplyController {
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResultSet addByJson(@RequestBody @Valid NewReplyRequest r){
-        User fu = userService.findById(r.getFromUserId());
-        User tu = userService.findById(r.getToUserId());
-        log.info("getByIdFromUser {}:", fu);
-        log.info("getByIdToUser {}:", tu);
-        Comment c = commentService.findById(r.getCommentId());
-        log.info("Comment {}:", c);
+        User fu = new User(r.getFromUserId());
+        User tu = new User(r.getToUserId());
+        Comment c = new Comment(r.getCommentId());
         Reply reply = replyService.save(c.getContent(), c, fu, tu);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "添加成功", reply);
     }

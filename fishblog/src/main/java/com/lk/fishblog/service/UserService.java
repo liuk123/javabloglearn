@@ -27,7 +27,7 @@ public class UserService {
     public User findById(Long id){
         return userRepository.getOne(id);
     }
-    public User findByUsernameAndPhone(String username, Long phone){ return  userRepository.findFirstByUsernameAndPhone(username, phone); }
+    public User findByUsernameOrPhone(String username, Long phone){ return  userRepository.findFirstByUsernameOrPhone(username, phone); }
     public void deleteById(Long id){
         userRepository.deleteById(id);
     }

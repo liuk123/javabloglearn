@@ -33,6 +33,9 @@ public class Comment extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "comment",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     private List<Reply> replyList;
 
+    public Comment(Long id){
+        this.id = id;
+    }
     @Override
     public String toString() {
         return "Comment{" +

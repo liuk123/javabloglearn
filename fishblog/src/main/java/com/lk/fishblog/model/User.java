@@ -26,6 +26,9 @@ public class User extends BaseEntity implements Serializable{
     @OneToMany(mappedBy = "author", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     private List<Article> articleList;
 
+    public User(Long id){
+        this.id = id;
+    }
     @Override
     public String toString() {
         return "User{" +

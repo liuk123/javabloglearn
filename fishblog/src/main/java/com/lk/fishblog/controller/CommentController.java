@@ -48,10 +48,9 @@ public class CommentController {
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResultSet addByJson(@RequestBody @Valid NewCommentRequest c){
-        User u = userService.findById(c.getFromUserId());
-        log.info("CommentUser {}:", u);
-        Article a = articleService.findById(c.getArticleId());
-        log.info("CommentArticle {}:", a);
+        User u = new User(c.getFromUserId());
+        Article a = new Article(c.getArticleId());
+
         Comment comment = commentService.save(c.getContent(), u, a);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "添加成功", comment);
     }

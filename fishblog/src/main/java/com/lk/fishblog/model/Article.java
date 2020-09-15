@@ -40,6 +40,9 @@ public class Article extends BaseEntity implements Serializable{
                     @JoinColumn(name = "tag_id") })
     private  List<Tag> tagList;
 
+    public  Article(Long id){
+        this.id = id;
+    }
     @Override
     public String toString() {
         return "Article{" +
