@@ -14,6 +14,8 @@ public class NewCommentRequest {
     @NotNull
     private Long fromUserId;
     @NotNull
+    private String fromUserName;
+    @NotNull
     private Long articleId;
     @NotEmpty
     private String content;

@@ -6,7 +6,6 @@
       {{article?.author?.username}}
       .
       <span *ngFor="let item of article?.tagList">{{item.name}}</span>
-      
     </div>
   </div>
 </app-banner>
@@ -20,6 +19,9 @@
     </div>
   </div>
   <div class="comment">
-    pinglun
+    <app-comment
+      [data]="commentList"
+      [(submitting)]="submitting"
+      (commentEvent)="commentEvent($event)"></app-comment>
   </div>
 </div>

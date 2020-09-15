@@ -5,11 +5,12 @@ import { BlogEditComponent } from './blog-edit/blog-edit.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { BlogRoutingModule } from './blog-routing.module';
 import { BlogHomeComponent } from './blog-home/blog-home.component';
+import { CommentComponent } from './blog-detail/comment/comment.component';
 
 
 
 @NgModule({
-  declarations: [BlogListComponent, BlogDetailComponent, BlogEditComponent, BlogHomeComponent],
+  declarations: [BlogListComponent, BlogDetailComponent, BlogEditComponent, BlogHomeComponent, CommentComponent],
   imports: [
     SharedModule,
     BlogRoutingModule,

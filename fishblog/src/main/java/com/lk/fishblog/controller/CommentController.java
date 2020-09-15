@@ -48,7 +48,7 @@ public class CommentController {
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResultSet addByJson(@RequestBody @Valid NewCommentRequest c){
-        User u = new User(c.getFromUserId());
+        User u = new User(c.getFromUserId(),c.getFromUserName());
         Article a = new Article(c.getArticleId());
 
         Comment comment = commentService.save(c.getContent(), u, a);
