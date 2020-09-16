@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ArticleService } from 'src/app/biz/services/blog/article.service';
 import { CommentService } from 'src/app/biz/services/blog/comment.service';
-import { DialogService } from 'src/app/core/services/dialog.service';
-import { TextareaDialogComponent } from 'src/app/shared/components/textarea-dialog/textarea-dialog.component';
 
 @Component({
   selector: 'app-blog-detail',
@@ -53,7 +51,17 @@ export class BlogDetailComponent implements OnInit {
     })  
   }
   replyEvent(data){
-    console.log(data)
+    let params={
+      commentId:1,
+      fromUserId:1,
+      toUserId:1,
+      content: data,
+    }
+    this.commentSrv.addReply(params).subscribe(res=>{
+      if(res.isSuccess()){
+        console.log(res.data)
+      }
+    })
   }
   
 }

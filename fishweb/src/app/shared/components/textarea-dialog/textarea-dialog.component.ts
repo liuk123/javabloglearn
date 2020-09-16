@@ -1,21 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NzModalRef } from 'ng-zorro-antd/modal';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-textarea-dialog',
-  templateUrl: './textarea-dialog.component.html',
-  styleUrls: ['./textarea-dialog.component.less']
+  template: '<textarea rows="4" nz-input [(ngModel)]="inputValue"></textarea>',
 })
-export class TextareaDialogComponent implements OnInit {
+export class TextareaDialogComponent{
 
   inputValue="";
-  constructor(private modal: NzModalRef) { }
-
-  ngOnInit(): void {
-  }
-  
-  destroyModal(){
-    
-  }
+  constructor() { }
 
 }

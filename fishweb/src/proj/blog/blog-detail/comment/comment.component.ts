@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DialogService } from 'src/app/core/services/dialog.service';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { TextareaDialogComponent } from 'src/app/shared/components/textarea-dialog/textarea-dialog.component';
 
 @Component({
@@ -17,9 +17,8 @@ export class CommentComponent implements OnInit {
   @Output() submittingChange = new EventEmitter();
 
   inputValue="";
-  
   constructor(
-    private dialogSrv: DialogService,
+    private modal: NzModalService,
   ) { }
 
   ngOnInit(): void {
@@ -29,6 +28,13 @@ export class CommentComponent implements OnInit {
     this.commentEvent.emit(this.inputValue);
   }
   replySubmit(){
-    this.dialogSrv.createModal('回复', TextareaDialogComponent, {});
+    const modal = this.modal.create({
+      nzTitle: '回复',
+      nzContent: TextareaDialogComponent,
+      nzOnOk:()=>{
+        const instance = modal.getContentComponent();
+        this.replyEvent.emit(instance.inputValue);
+      },
+    });
   }
 }
