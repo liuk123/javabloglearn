@@ -35,14 +35,13 @@ export class MenuService {
     let links = this.breadcrumbStr.slice(1).split('/');
     this.breadcrumbMenu.length = 0;
     this.setBreadcrumb(links, 0, this.menu);
-    // this.dealBreadCrumbMenus(this.breadcrumbMenu, 0);
     this.itemSource.next(this.breadcrumbMenu);
   }
 
   setBreadcrumb(links, index, menu) {
     for (let menuItem of menu) {
       if (!objectUtil.isBlank(menuItem.route) &&
-        links[index] == menuItem.route) {
+        links[index] == (menuItem.route.lastIndexOf('/')!=-1?menuItem.route.slice(menuItem.route.lastIndexOf('/')+1): menuItem.route)) {
 
         if (menuItem.type == "router") {
           this.breadcrumbMenu.push({
@@ -104,20 +103,4 @@ export class MenuService {
     }
     return tem;
   }
-
-  // dealBreadCrumbMenus(menuData, index, route?) {
-  //   if (route && menuData[index].type == "router") {
-  //     menuData[index].route = route + '/' + menuData[index].route;
-  //     if (menuData[index].children && menuData[index].children.length > 0) {
-  //       for (let item of menuData[index].children) {
-  //         item.route = route + '/' + item.route
-  //       }
-  //     }
-  //   }
-  //   index++;
-  //   if (menuData.length > index) {
-  //     this.dealBreadCrumbMenus(menuData, index, menuData[index - 1].route)
-  //   }
-  // }
-
 }
