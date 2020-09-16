@@ -9,19 +9,20 @@
 
       <nz-dropdown-menu #downMenuA>
         <ul nz-menu nzSelectable>
-          <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: breadcrumbItem }"></ng-container>
-          <ng-template #menuTpl let-breadcrumbItem>
-            <ng-container *ngFor="let subBreadcrumb of breadcrumbItem.children">
-              <li nz-submenu *ngIf="subBreadcrumb.type == 'sub' else subMenu" [nzTitle]="subBreadcrumb.title">
+          <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: breadcrumbItem.children }"></ng-container>
+          <ng-template #menuTpl let-breadcrumbItemChild>
+            <ng-container *ngFor="let subBreadcrumb of breadcrumbItemChild">
+              <li nz-submenu *ngIf="subBreadcrumb.type == 'sub'" [nzTitle]="subBreadcrumb.title">
                 <ul nz-menu nzSelectable *ngIf="subBreadcrumb.type == 'sub'">
-                  <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: subBreadcrumb }"></ng-container>
+                  <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: subBreadcrumb.children }"></ng-container>
                 </ul>
               </li>
-              <ng-template #subMenu>
-                <li nz-menu-item [routerLink]="[subBreadcrumb.route]">
-                  {{subBreadcrumb.title}}
-                </li>
-              </ng-template>
+              <li nz-menu-item *ngIf="subBreadcrumb.type == 'router'" [routerLink]="[subBreadcrumb.route]">
+                {{subBreadcrumb.title}}
+              </li>
+              <li nz-menu-item *ngIf="subBreadcrumb.type == 'link'" (click)="open(subBreadcrumb.link)">
+                {{subBreadcrumb.title}}
+              </li>
             </ng-container>
 
           </ng-template>
@@ -30,24 +31,26 @@
 
     </nz-breadcrumb-item>
 
+
     <nz-breadcrumb-item *ngIf="breadcrumbItem?.type == 'sub'" [nzOverlay]="downMenu">
       {{breadcrumbItem.title}}
 
       <nz-dropdown-menu #downMenu>
         <ul nz-menu nzSelectable>
-          <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: breadcrumbItem }"></ng-container>
-          <ng-template #menuTpl let-breadcrumbItem>
-            <ng-container *ngFor="let subBreadcrumb of breadcrumbItem.children">
-              <li nz-submenu *ngIf="subBreadcrumb.type == 'sub' else subMenu" [nzTitle]="subBreadcrumb.title">
+          <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: breadcrumbItem.children }"></ng-container>
+          <ng-template #menuTpl let-breadcrumbItemChild>
+            <ng-container *ngFor="let subBreadcrumb of breadcrumbItemChild">
+              <li nz-submenu *ngIf="subBreadcrumb.type == 'sub'" [nzTitle]="subBreadcrumb.title">
                 <ul nz-menu nzSelectable *ngIf="subBreadcrumb.type == 'sub'">
-                  <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: subBreadcrumb }"></ng-container>
+                  <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: subBreadcrumb.children }"></ng-container>
                 </ul>
               </li>
-              <ng-template #subMenu>
-                <li nz-menu-item [routerLink]="[subBreadcrumb.route]">
-                  {{subBreadcrumb.title}}
-                </li>
-              </ng-template>
+              <li  *ngIf="subBreadcrumb.type == 'router'" nz-menu-item [routerLink]="[subBreadcrumb.route]">
+                {{subBreadcrumb.title}}
+              </li>
+              <li  *ngIf="subBreadcrumb.type == 'link'" nz-menu-item (click)="open(subBreadcrumb.link)">
+                {{subBreadcrumb.title}}
+              </li>
             </ng-container>
 
           </ng-template>

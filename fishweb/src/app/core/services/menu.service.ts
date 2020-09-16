@@ -81,6 +81,7 @@ export class MenuService {
         if(currenttitle&&currenttitle != menuItem.title){
           tem.push({
             title: menuItem.title,
+            type: "router",
             route: menuItem.route,
           })
         }
@@ -88,12 +89,14 @@ export class MenuService {
       } else if (menuItem.type == "link") {
           tem.push({
             title: menuItem.title,
+            type: "link",
             link: menuItem.link,
           })
       } else if (menuItem.type == "sub") {
         if(currenttitle&&currenttitle != menuItem.title){
           tem.push({
             title: menuItem.title,
+            type: "sub",
             children: this.addBreadcrumb(menuItem.children)
           })
         }

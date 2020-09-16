@@ -13,5 +13,7 @@ export class BreadcrumbComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  open(url){
+    window.open(url, '_blank');
+  }
 }
