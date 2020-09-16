@@ -35,7 +35,7 @@ export class MenuService {
     let links = this.breadcrumbStr.slice(1).split('/');
     this.breadcrumbMenu.length = 0;
     this.setBreadcrumb(links, 0, this.menu);
-    this.dealBreadCrumbMenus(this.menu, 0);
+    this.dealBreadCrumbMenus(this.breadcrumbMenu, 0);
     // this.menu = this.setMenuOpen(this.menu, this.breadcrumbMenu);
     this.itemSource.next(this.breadcrumbMenu);
   }
