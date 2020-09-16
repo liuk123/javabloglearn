@@ -8,15 +8,15 @@
       "icon": "bars",
       "children": [
         {
-          "route": "home",
+          "route": "blog/home",
           "title": "首页",
           "type": "router"
         },{
-          "route": "detail",
+          "route": "blog/detail",
           "title": "详情",
           "type": "router"
         },{
-          "route": "edit",
+          "route": "blog/edit",
           "title": "写博客",
           "type": "router"
         }

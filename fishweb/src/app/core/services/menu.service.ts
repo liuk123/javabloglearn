@@ -35,8 +35,7 @@ export class MenuService {
     let links = this.breadcrumbStr.slice(1).split('/');
     this.breadcrumbMenu.length = 0;
     this.setBreadcrumb(links, 0, this.menu);
-    this.dealBreadCrumbMenus(this.breadcrumbMenu, 0);
-    // this.menu = this.setMenuOpen(this.menu, this.breadcrumbMenu);
+    // this.dealBreadCrumbMenus(this.breadcrumbMenu, 0);
     this.itemSource.next(this.breadcrumbMenu);
   }
 
@@ -106,37 +105,19 @@ export class MenuService {
     return tem;
   }
 
-  dealBreadCrumbMenus(menuData, index, route?) {
-    if (route && menuData[index].type == "router") {
-      menuData[index].route = route + '/' + menuData[index].route;
-      if (menuData[index].children && menuData[index].children.length > 0) {
-        for (let item of menuData[index].children) {
-          item.route = route + '/' + item.route
-        }
-      }
-    }
-    index++;
-    if (menuData.length > index) {
-      this.dealBreadCrumbMenus(menuData, index, menuData[index - 1].route)
-    }
-  }
-
-  setMenuOpen(menu, breadcrumbMenu) {
-    if (objectUtil.isObject(menu) && menu.type == 'sub') {
-      if (breadcrumbMenu.map(v => { if (v.route) return v.route }).includes(menu.route.slice(menu.route.lastIndexOf('/')))) {
-        menu.open = true;
-      } else {
-        menu.open = false;
-      }
-      if (menu.children) {
-        this.setMenuOpen(menu.children, breadcrumbMenu);
-      }
-    } else if (objectUtil.isArray(menu)) {
-      menu.forEach(v => {
-        this.setMenuOpen(v, breadcrumbMenu);
-      })
-    }
-    return menu;
-  }
+  // dealBreadCrumbMenus(menuData, index, route?) {
+  //   if (route && menuData[index].type == "router") {
+  //     menuData[index].route = route + '/' + menuData[index].route;
+  //     if (menuData[index].children && menuData[index].children.length > 0) {
+  //       for (let item of menuData[index].children) {
+  //         item.route = route + '/' + item.route
+  //       }
+  //     }
+  //   }
+  //   index++;
+  //   if (menuData.length > index) {
+  //     this.dealBreadCrumbMenus(menuData, index, menuData[index - 1].route)
+  //   }
+  // }
 
 }
