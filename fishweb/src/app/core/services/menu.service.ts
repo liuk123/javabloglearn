@@ -35,7 +35,7 @@ export class MenuService {
     let links = this.breadcrumbStr.slice(1).split('/');
     this.breadcrumbMenu.length = 0;
     this.setBreadcrumb(links, 0, this.menu);
-    this.menu = this.setMenuOpen(this.menu, this.breadcrumbMenu);
+    // this.menu = this.setMenuOpen(this.menu, this.breadcrumbMenu);
     this.itemSource.next(this.breadcrumbMenu);
   }
 
@@ -92,10 +92,9 @@ export class MenuService {
           })
       } else if (menuItem.type == "sub") {
         if(currenttitle&&currenttitle != menuItem.title){
-          let a = this.addBreadcrumb(menuItem.children);
           tem.push({
             title: menuItem.title,
-            children: a
+            children: this.addBreadcrumb(menuItem.children)
           })
         }
       }
