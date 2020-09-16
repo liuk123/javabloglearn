@@ -4,6 +4,7 @@ import { MenuService } from 'src/app/core/services/menu.service';
 import { Subject } from 'rxjs';
 import { takeUntil, filter } from 'rxjs/operators';
 import { Router, NavigationEnd } from '@angular/router';
+import { objectUtil } from 'prime-jsutils'
 
 @Component({
   selector: 'app-web-layout',
@@ -29,7 +30,6 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
     ).subscribe((v: NavigationEnd) => {
       menuSrv.setTitle(v.urlAfterRedirects);
       this.breadcrumbMenus = menuSrv.breadcrumbMenu;
-      console.log(this.breadcrumbMenus)
     });
   }
   ngOnInit(): void {
@@ -38,4 +38,6 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
+
+
 }

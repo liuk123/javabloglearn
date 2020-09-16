@@ -31,18 +31,19 @@ export class MenuService {
    * @param value 改变面包屑导航
    */
   setTitle(value) {
-    this.breadcrumbStr = value.indexOf(";")!=-1?value.slice(0, value.indexOf(";")):value;
+    this.breadcrumbStr = value.indexOf(";") != -1 ? value.slice(0, value.indexOf(";")) : value;
     let links = this.breadcrumbStr.slice(1).split('/');
     this.breadcrumbMenu.length = 0;
     this.setBreadcrumb(links, 0, this.menu);
+    this.dealBreadCrumbMenus(this.menu, 0);
     // this.menu = this.setMenuOpen(this.menu, this.breadcrumbMenu);
     this.itemSource.next(this.breadcrumbMenu);
   }
 
   setBreadcrumb(links, index, menu) {
     for (let menuItem of menu) {
-      if (!objectUtil.isBlank(menuItem.route) && 
-      links[index] == menuItem.route) {
+      if (!objectUtil.isBlank(menuItem.route) &&
+        links[index] == menuItem.route) {
 
         if (menuItem.type == "router") {
           this.breadcrumbMenu.push({
@@ -74,26 +75,26 @@ export class MenuService {
     }
   }
 
-  addBreadcrumb(menu, currenttitle?){
+  addBreadcrumb(menu, currenttitle?) {
     let tem = []
-    for(let menuItem of menu){
+    for (let menuItem of menu) {
       if (menuItem.type == "router") {
-        if(currenttitle&&currenttitle != menuItem.title){
+        if (currenttitle && currenttitle != menuItem.title) {
           tem.push({
             title: menuItem.title,
             type: "router",
             route: menuItem.route,
           })
         }
-        
+
       } else if (menuItem.type == "link") {
-          tem.push({
-            title: menuItem.title,
-            type: "link",
-            link: menuItem.link,
-          })
+        tem.push({
+          title: menuItem.title,
+          type: "link",
+          link: menuItem.link,
+        })
       } else if (menuItem.type == "sub") {
-        if(currenttitle&&currenttitle != menuItem.title){
+        if (currenttitle && currenttitle != menuItem.title) {
           tem.push({
             title: menuItem.title,
             type: "sub",
@@ -105,18 +106,33 @@ export class MenuService {
     return tem;
   }
 
-  setMenuOpen(menu,breadcrumbMenu){
-    if(objectUtil.isObject(menu) && menu.type == 'sub'){
-      if(breadcrumbMenu.map(v=>{if(v.route) return v.route}).includes(menu.route.slice(menu.route.lastIndexOf('/')))){
+  dealBreadCrumbMenus(menuData, index, route?) {
+    if (route && menuData[index].type == "router") {
+      menuData[index].route = route + '/' + menuData[index].route;
+      if (menuData[index].children && menuData[index].children.length > 0) {
+        for (let item of menuData[index].children) {
+          item.route = route + '/' + item.route
+        }
+      }
+    }
+    index++;
+    if (menuData.length > index) {
+      this.dealBreadCrumbMenus(menuData, index, menuData[index - 1].route)
+    }
+  }
+
+  setMenuOpen(menu, breadcrumbMenu) {
+    if (objectUtil.isObject(menu) && menu.type == 'sub') {
+      if (breadcrumbMenu.map(v => { if (v.route) return v.route }).includes(menu.route.slice(menu.route.lastIndexOf('/')))) {
         menu.open = true;
-      }else{
+      } else {
         menu.open = false;
       }
-      if(menu.children){
+      if (menu.children) {
         this.setMenuOpen(menu.children, breadcrumbMenu);
       }
-    }else if(objectUtil.isArray(menu)){
-      menu.forEach(v=>{
+    } else if (objectUtil.isArray(menu)) {
+      menu.forEach(v => {
         this.setMenuOpen(v, breadcrumbMenu);
       })
     }
