@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
@@ -27,6 +28,8 @@ public class UserController {
     UserService userService;
     @Autowired
     ArticleService articleService;
+
+
 
     @GetMapping(path="/{id}")
     public ResultSet getById(@PathVariable Long id){
@@ -50,4 +53,8 @@ public class UserController {
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功");
     }
 
+    @GetMapping(path="login")
+    public ResultSet login(HttpServletResponse response,@RequestBody @Valid NewUserRequest u){
+        return userService.login(response,u.getUsername(),u.getPassword());
+    }
 }
