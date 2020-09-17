@@ -29,8 +29,6 @@ public class UserController {
     @Autowired
     ArticleService articleService;
 
-
-
     @GetMapping(path="/{id}")
     public ResultSet getById(@PathVariable Long id){
         User u = userService.findById(id);
@@ -38,23 +36,36 @@ public class UserController {
         return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", u);
     }
 
+    /**
+     * 注册
+     * @param u
+     * @return
+     */
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResultSet addByJson(@RequestBody @Valid NewUserRequest u){
-//        User us = userService.findByUsernameOrPhone(u.getUsername(), u.getPhone());
-//        log.info("ex: ",us);
-        User user = userService.save(u.getUsername(), u.getPassword(),u.getPhone(), 10);
-        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "添加成功", user.getId());
+        return userService.register(u.getUsername(),u.getPassword(),u.getPhone(),10);
     }
 
+    /**
+     * 登录
+     * @param response
+     * @param
+     * @return
+     */
+    @GetMapping(path="/login")
+    public ResultSet login(HttpServletResponse response,@RequestParam String password, @RequestParam Long phone){
+        return userService.login(response,phone,password);
+    }
+
+    /**
+     * 删除
+     * @param id
+     * @return
+     */
     @DeleteMapping(path = "/{id}")
     public ResultSet delById(@PathVariable Long id){
         userService.deleteById(id);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功");
-    }
-
-    @GetMapping(path="login")
-    public ResultSet login(HttpServletResponse response,@RequestBody @Valid NewUserRequest u){
-        return userService.login(response,u.getUsername(),u.getPassword());
     }
 }

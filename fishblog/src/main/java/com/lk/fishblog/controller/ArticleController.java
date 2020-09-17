@@ -1,5 +1,6 @@
 package com.lk.fishblog.controller;
 
+import com.lk.fishblog.common.utils.CookieUtil;
 import com.lk.fishblog.common.utils.ResultSet;
 import com.lk.fishblog.controller.request.NewArticleRequest;
 import com.lk.fishblog.model.Article;
@@ -16,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.MediaType;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,11 +35,16 @@ public class ArticleController {
     ArticleService articleService;
     @Autowired
     UserService userService;
+    @Autowired
+    CookieUtil cookieUtil;
 
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResultSet addByJson(@RequestBody @Valid  NewArticleRequest a){
-        User author = new User(1L);
+    public ResultSet addByJson(HttpServletRequest request, @RequestBody @Valid  NewArticleRequest a){
+        User author =cookieUtil.getLoginUser(request);
+        if(author == null){
+            return new ResultSet(ResultSet.RESULT_CODE_FALSE,"请重新登录");
+        }
         List<Tag> tagList = new ArrayList<>();
         for(Long val: a.getTagList()){
             tagList.add(new Tag(val));

@@ -36,7 +36,7 @@ export class UserService {
    * @param data 
    */
   login(data){
-    const url = `${this.config.url}/api/user/`;    
+    const url = `${this.config.url}/api/user/login`;    
     let params = this.http.encodeParams(data);
     return this.http.get(url,{params});
   }

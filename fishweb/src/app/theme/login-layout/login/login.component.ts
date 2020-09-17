@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
+import { UserService } from 'src/app/biz/services/user/user.service';
 
 @Component({
   selector: 'app-login',
@@ -10,9 +12,11 @@ export class LoginComponent implements OnInit {
 
   form: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+    private srv:UserService,
+    private router:Router) {
     this.form = this.fb.group({
-      userName: [''],
+      phone: [''],
       password: [''],
     });
   }
@@ -21,11 +25,15 @@ export class LoginComponent implements OnInit {
   }
 
   submitForm(value): void {
-    for (const key in this.form.controls) {
-      this.form.controls[key].markAsDirty();
-      this.form.controls[key].updateValueAndValidity();
-    }
+    this.form.markAllAsTouched();
+    this.form.updateValueAndValidity();
     console.log(value);
+    this.srv.login(value).subscribe(res=>{
+      if(res.isSuccess()){
+        this.router.navigate(['./blog/home'])
+      }
+    })
+    
   }
 
 }

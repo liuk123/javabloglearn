@@ -1,4 +1,4 @@
-insert into b_user (create_time, update_time, username, password, phone, role) values (now(), now(), '小明1', '123456', 13255555555, 1);
+insert into b_user (create_time, update_time, username, password, phone, role) values (now(), now(), '小明1', '12', 1, 1);
 insert into b_user (create_time, update_time, username, password, phone, role) values (now(), now(), '小红2', '123456', 13255555555, 1);
 insert into b_user (create_time, update_time, username, password, phone, role) values (now(), now(), '旺财3', '123456', 13255555555, 1);
 insert into b_user (create_time, update_time, username, password, phone, role) values (now(), now(), '明华4', '123456', 13255555555, 1);

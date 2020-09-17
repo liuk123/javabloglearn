@@ -9,8 +9,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Setter
 @ToString
 public class NewUserRequest {
-    @NotEmpty
+
     private String username;
     private String password;
+    @NotEmpty
     private Long phone;
 }

@@ -4,6 +4,7 @@ import com.lk.fishblog.model.User;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -41,4 +42,40 @@ public class CookieUtil {
         }
         return null;
     }
+
+    public User getByToken(HttpServletResponse response, String token) {
+        if (StringUtils.isEmpty(token)) {
+            return null;
+        }
+        User user = JSON.parseObject(redisUtil.get(COOKIE_NAME_TOKEN + "::" + token), User.class);
+        //重置有效期
+        if (user == null) {
+//            throw new GlobalException(CodeMsg.USER_NOT_LOGIN);
+            return null;
+        }
+        if (response != null) {
+            addCookie(response, token, user);
+        }
+        return user;
+    }
+    public User getByToken(String token) {
+        return getByToken(null, token);
+    }
+    public User getLoginUser(HttpServletRequest request) {
+        return getLoginUser(request, null);
+    }
+    public User getLoginUser(HttpServletRequest request, HttpServletResponse response) {
+        String paramToken = request.getParameter(COOKIE_NAME_TOKEN);
+        String cookieToken = getCookieValue(request, COOKIE_NAME_TOKEN);
+        if (StringUtils.isEmpty(cookieToken) && StringUtils.isEmpty(paramToken)) {
+             return null;
+//            throw new GlobalException(CodeMsg.USER_NOT_LOGIN);
+        }
+        String token = StringUtils.isEmpty(paramToken) ? cookieToken : paramToken;
+        if (response == null) {
+            return getByToken(token);
+        }
+        return getByToken(response, token);
+    }
+
 }
