@@ -22,6 +22,12 @@
         }
       ]
     },{
+      "route": "navigation/home",
+      "title": "导航",
+      "type": "router",
+      "selected": false,
+      "icon": "bars"
+    },{
       "route": "links",
       "title": "设计",
       "type": "sub",

@@ -30,6 +30,7 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
     ).subscribe((v: NavigationEnd) => {
       menuSrv.setTitle(v.urlAfterRedirects);
       this.breadcrumbMenus = menuSrv.breadcrumbMenu;
+      console.log(this.breadcrumbMenus)
     });
   }
   ngOnInit(): void {

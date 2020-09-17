@@ -12,6 +12,10 @@ const routes: Routes = [
         path: 'blog',
         loadChildren: () => 
           import('../../proj/blog/blog.module').then(m=>m.BlogModule),
+      },{ 
+        path: 'navigation',
+        loadChildren: () => 
+          import('../../proj/navigation/navigation.module').then(m=>m.NavigationModule),
       },
     ]
   },{
@@ -25,7 +29,7 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(
       routes, {
-        // useHash: environment.useHash,
+        useHash: true,
         scrollPositionRestoration: 'top',
       }
     )],
