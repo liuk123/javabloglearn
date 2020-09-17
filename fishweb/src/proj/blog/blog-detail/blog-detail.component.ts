@@ -37,8 +37,6 @@ export class BlogDetailComponent implements OnInit {
   commentEvent(data){
     let params={
       content: data,
-      fromUserId: 1,
-      fromUserName: '123',
       articleId: this.articleId,
     }
     this.submitting = true;
@@ -53,7 +51,6 @@ export class BlogDetailComponent implements OnInit {
   replyEvent(data){
     let params={
       commentId:1,
-      fromUserId:1,
       toUserId:1,
       content: data,
     }

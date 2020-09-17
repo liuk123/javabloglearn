@@ -41,15 +41,15 @@ public class ArticleController {
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResultSet addByJson(HttpServletRequest request, @RequestBody @Valid  NewArticleRequest a){
-        User author =cookieUtil.getLoginUser(request);
-        if(author == null){
+        User user =cookieUtil.getLoginUser(request);
+        if(user == null){
             return new ResultSet(ResultSet.RESULT_CODE_FALSE,"请重新登录");
         }
         List<Tag> tagList = new ArrayList<>();
         for(Long val: a.getTagList()){
             tagList.add(new Tag(val));
         }
-        Article article = articleService.save(a.getTitle(),a.getContent(), tagList, author);
+        Article article = articleService.save(a.getTitle(),a.getContent(), tagList, user);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE,"添加成功", article.getId());
     }
 

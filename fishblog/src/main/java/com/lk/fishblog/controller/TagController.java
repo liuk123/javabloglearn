@@ -2,9 +2,7 @@ package com.lk.fishblog.controller;
 
 import com.lk.fishblog.common.utils.ResultSet;
 import com.lk.fishblog.controller.request.NewTagRequest;
-import com.lk.fishblog.controller.request.NewUserRequest;
 import com.lk.fishblog.model.Tag;
-import com.lk.fishblog.model.User;
 import com.lk.fishblog.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +23,7 @@ public class TagController {
     ArticleService articleService;
 
     @GetMapping(path="/")
-    public ResultSet getById(){
+    public ResultSet getAllById(){
         List<Tag> t = tagService.findAll();
         log.info("Coffee {}:", t);
         return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", t);

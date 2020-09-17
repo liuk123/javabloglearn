@@ -1,5 +1,6 @@
 package com.lk.fishblog.controller;
 
+import com.lk.fishblog.common.utils.CookieUtil;
 import com.lk.fishblog.common.utils.ResultSet;
 import com.lk.fishblog.controller.request.NewReplyRequest;
 import com.lk.fishblog.model.Comment;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
@@ -29,6 +31,8 @@ public class ReplyController {
     UserService userService;
     @Autowired
     ArticleService articleService;
+    @Autowired
+    CookieUtil cookieUtil;
 
     @GetMapping(path="/{id}")
     public ResultSet getById(@PathVariable Long id){
@@ -39,8 +43,11 @@ public class ReplyController {
 
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResultSet addByJson(@RequestBody @Valid NewReplyRequest r){
-        User fu = new User(r.getFromUserId());
+    public ResultSet addByJson(HttpServletRequest request, @RequestBody @Valid NewReplyRequest r){
+        User fu =cookieUtil.getLoginUser(request);
+        if(fu == null){
+            return new ResultSet(ResultSet.RESULT_CODE_FALSE,"请重新登录");
+        }
         User tu = new User(r.getToUserId());
         Comment c = new Comment(r.getCommentId());
         Reply reply = replyService.save(c.getContent(), c, fu, tu);
