@@ -5,7 +5,6 @@
       "title": "创意",
       "type": "sub",
       "selected": false,
-      "icon": "bars",
       "children": [
         {
           "route": "blog/home",
@@ -25,14 +24,12 @@
       "route": "navigation",
       "title": "导航",
       "type": "router",
-      "selected": false,
-      "icon": "bars"
+      "selected": false
     },{
       "route": "links",
       "title": "设计",
       "type": "sub",
       "selected": true,
-      "icon": "bars",
       "children": [
         {
           "link": "https://ng.ant.design/components/button/zh",
