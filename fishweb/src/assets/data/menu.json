@@ -22,7 +22,7 @@
         }
       ]
     },{
-      "route": "navigation/home",
+      "route": "navigation",
       "title": "导航",
       "type": "router",
       "selected": false,
