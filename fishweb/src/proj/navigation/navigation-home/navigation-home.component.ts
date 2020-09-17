@@ -11,7 +11,7 @@ import { UtilService } from 'src/app/shared';
 export class NavigationHomeComponent implements OnInit {
 
   navs:Navigation[] = []
-  bannerUrl:string = 'https://tvax4.sinaimg.cn/large/6f8a2832gy1gdrcxr3cjpj21kw0xpww8.jpg';
+  bannerUrl:string = 'https://tvax4.sinaimg.cn/large/6f8a2832gy1gdkralzwfoj21e00xc13g.jpg';
 
   searchBoxValue: string = '';
   get searchValue(){

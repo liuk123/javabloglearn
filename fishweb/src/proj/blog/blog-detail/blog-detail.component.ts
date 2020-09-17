@@ -10,7 +10,7 @@ import { CommentService } from 'src/app/biz/services/blog/comment.service';
 })
 export class BlogDetailComponent implements OnInit {
 
-  bannerUrl:string = 'https://tvax4.sinaimg.cn/large/6f8a2832gy1gdrcxr3cjpj21kw0xpww8.jpg';
+  bannerUrl:string = 'https://tvax4.sinaimg.cn/large/6f8a2832gy1gdkralzwfoj21e00xc13g.jpg';
   article:any;
   articleId;
   
