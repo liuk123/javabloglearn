@@ -10,28 +10,25 @@ import { UtilService } from 'src/app/shared';
 })
 export class NavigationHomeComponent implements OnInit {
 
-  columns:Navigation[][] = [[],[],[]];
   navs:Navigation[] = []
   bannerUrl:string = 'https://tvax4.sinaimg.cn/large/6f8a2832gy1gdrcxr3cjpj21kw0xpww8.jpg';
 
-  _searchValue: string = '';
+  searchBoxValue: string = '';
   get searchValue(){
-    return encodeURIComponent(this._searchValue)
+    return encodeURIComponent(this.searchBoxValue)
   }
   set searchValue(v){
-    this._searchValue = v
+    this.searchBoxValue = v
   }
   searchUriData= searchUriData;
 
   constructor(
-    private util: UtilService,
     private http: HttpClient
     ) { }
 
   ngOnInit(): void {
     this.http.get('assets/data/navigation.json').subscribe((res:Navigation[])=>{
       this.navs = res;
-      this.util.columnsArr(res, this.columns);
     })
   }
 

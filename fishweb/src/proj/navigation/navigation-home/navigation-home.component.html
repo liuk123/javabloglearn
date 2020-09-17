@@ -1,7 +1,7 @@
 <app-banner [bannerUrl]="bannerUrl">
   <div class="searchbox">
     <div class="search">
-        <input type="text" class="search-input" [(ngModel)]="_searchValue" (keydown.enter)="search('https://www.baidu.com/s?wd=')">
+        <input type="text" class="search-input" [(ngModel)]="searchBoxValue" (keydown.enter)="search('https://www.baidu.com/s?wd=')">
         <div class="search-close" (click)="searchValue=''" title="清空搜索条件">X</div>
     </div>
     <div class="searchbar">
@@ -15,5 +15,5 @@
 </div>
 </app-banner>
 <div style="margin-top:1rem">
-  <app-navigation-gallery [columns]="columns"></app-navigation-gallery>
+  <app-navigation-gallery [navs]="navs"></app-navigation-gallery>
 </div>

@@ -22,7 +22,7 @@ export class UtilService {
   //把一个对象数组分成三分
   // columns:Navigation[][] = [[],[],[]]
   columnsArr = (data: any[], columns) => {
-    columns = data.reduce((columns, item) => {
+    return data.reduce((columns, item) => {
       let minH = columns[0].reduce((s, v) => s += v.data.length + 2, 0)
       let n = 0
 

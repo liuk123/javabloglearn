@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Navigation, NavigationItem } from 'src/app/biz/model/navigation';
+import { UtilService } from 'src/app/shared';
 
 @Component({
   selector: 'app-navigation-gallery',
@@ -9,8 +10,12 @@ import { Navigation, NavigationItem } from 'src/app/biz/model/navigation';
 })
 export class NavigationGalleryComponent implements OnInit {
 
-  @Input() columns:Navigation[][]
-  constructor(private router: Router) { }
+  @Input() navs: Navigation[]=[];
+  get columns(){
+    return this.util.columnsArr(this.navs, [[],[],[],[]]);
+  }
+  
+  constructor(private router: Router,private util: UtilService) { }
 
   ngOnInit(): void {
   }
