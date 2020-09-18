@@ -11,7 +11,7 @@ export class ArticleService {
     @Inject('CONFIG') private config,
     private http: HttpUtilService,
   ) {
-    this.articleUrl = this.config.url + "/api/article/"
+    this.articleUrl = this.config.url + "/article/"
   }
 
   /**

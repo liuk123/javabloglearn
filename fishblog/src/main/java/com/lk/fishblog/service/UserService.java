@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
@@ -33,8 +34,6 @@ public class UserService {
     public User findById(Long id){
         return userRepository.getOne(id);
     }
-//    public User findFirstByUsername(String username){ return userRepository.findFirstByUsername(username);}
-//    public User findFirstByPhone(String phone){ return  userRepository.findFirstByPhone(phone); }
     public void deleteById(Long id){
         userRepository.deleteById(id);
     }
@@ -59,5 +58,10 @@ public class UserService {
         String token = UUID.randomUUID().toString().replace("-","");
         cookieUtil.addCookie(response,token, user);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "注册成功");
+    }
+
+    public ResultSet getCurrentUserBySession(HttpServletRequest request){
+        User user =cookieUtil.getLoginUser(request);
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "获取用户信息", user);
     }
 }

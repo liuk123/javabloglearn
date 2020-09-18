@@ -83,14 +83,14 @@ class FileUploadAdapter {
       
 			var xhr = new XMLHttpRequest();
 			// xhr.setRequestHeader("Content-type","multipart/form-data");
-			xhr.open('post', '/api/uploadpic' );
+			xhr.open('post', '/uploadpic' );
 			xhr.send(data);
 			xhr.onreadystatechange = function () {
 				if (xhr.readyState == 4 && xhr.status == 200) {
 					let data=JSON.parse(xhr.responseText);
 					if(data.fileName){
 						resolve({
-							default:'/api'+data.fileName
+							default:'/'+data.fileName
 						});
 					}else {
 						reject(data.msg);

@@ -13,11 +13,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/user")
 @Slf4j
 public class UserController {
     @Autowired
@@ -34,6 +35,16 @@ public class UserController {
         User u = userService.findById(id);
         log.info("Coffee {}:", u);
         return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", u);
+    }
+
+    /**
+     * 获取当前登录人信息
+     * @param request
+     * @return
+     */
+    @GetMapping(path="/currentUser")
+    public ResultSet getCurrentUserBySession(HttpServletRequest request){
+        return userService.getCurrentUserBySession(request);
     }
 
     /**

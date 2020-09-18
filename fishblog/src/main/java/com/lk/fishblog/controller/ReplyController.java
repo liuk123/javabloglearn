@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/reply")
+@RequestMapping("/reply")
 @Slf4j
 public class ReplyController {
     @Autowired

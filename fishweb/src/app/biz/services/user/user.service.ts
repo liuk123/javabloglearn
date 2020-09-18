@@ -11,7 +11,7 @@ export class UserService {
     @Inject('CONFIG') private config,
     private http: HttpUtilService,
   ) {
-    this.userUrl = this.config.url + "/api/user/"
+    this.userUrl = this.config.url + "/user/"
   }
 
   /**
@@ -36,7 +36,7 @@ export class UserService {
    * @param data 
    */
   login(data){
-    const url = `${this.config.url}/api/user/login`;    
+    const url = `${this.config.url}/user/login`;    
     let params = this.http.encodeParams(data);
     return this.http.get(url,{params});
   }

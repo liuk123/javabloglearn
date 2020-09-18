@@ -12,8 +12,8 @@ export class CommentService {
     @Inject('CONFIG') private config,
     private http: HttpUtilService,
   ) {
-    this.commentUrl = this.config.url + "/api/comment/"
-    this.replyUrl = this.config.url + "/api/reply/"
+    this.commentUrl = this.config.url + "/comment/"
+    this.replyUrl = this.config.url + "/reply/"
   }
 
   /**

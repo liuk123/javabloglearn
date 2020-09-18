@@ -12,18 +12,20 @@ export class StartupService {
     private menuService: MenuService,
     private http: HttpClient,
     private translate: TranslateService,
+    @Inject('CONFIG') private config,
     @Inject("I18N_TOKEN") private i18n: I18NService,) {}
 
   load(): Promise<any> {
     return new Promise((resolve, reject) => {
       zip(
         this.http.get(`assets/tmp/i18n/${this.i18n.defaultLang}.json`), 
-        this.http.get('assets/data/menu.json')
+        this.http.get('assets/data/menu.json'),
+        this.http.get(`${this.config.url}/user/currentUser`),
       ).pipe(
         // 接收其他拦截器后产生的异常消息
-        catchError(([langData, appData]) => {
+        catchError(([langData, appData, userData]) => {
           resolve(null);
-          return [langData, appData];
+          return [langData, appData, userData];
         }),
       )
       .subscribe(
