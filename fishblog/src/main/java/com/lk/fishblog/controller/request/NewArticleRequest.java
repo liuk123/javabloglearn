@@ -17,7 +17,6 @@ public class NewArticleRequest {
     private String title;
     @NotEmpty
     private String content;
-    private Long authorId;
     @NotEmpty
     private List<Long> tagList;
 }

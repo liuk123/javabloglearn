@@ -26,7 +26,7 @@ export class BlogDetailComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(v=>{
       this.articleId = v.get('id');
-      this.srv.getArticle(v.get('id')).subscribe(res=>{
+      this.srv.getArticle(this.articleId).subscribe(res=>{
         if(res.isSuccess()){
           this.article = res.data;
           this.commentList = res.data.commentList;
@@ -43,20 +43,23 @@ export class BlogDetailComponent implements OnInit {
     this.commentSrv.addComment(params).subscribe(res=>{
       this.submitting = false;
       if(res.isSuccess()){
-        console.log(res.data);
         this.commentList.unshift(res.data);
       }
     })  
   }
   replyEvent(data){
     let params={
-      commentId:1,
-      toUserId:1,
+      commentId:data.commentId,
+      toUserId:data.toUserId,
       content: data,
     }
     this.commentSrv.addReply(params).subscribe(res=>{
       if(res.isSuccess()){
-        console.log(res.data)
+        this.commentList.forEach(v=>{
+          if(v.id==data.commentId && Array.isArray(v.replyList)){
+            v.replyList.push(res.data);
+          }
+        })
       }
     })
   }

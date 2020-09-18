@@ -14,9 +14,7 @@ public class NewReplyRequest {
     @NotNull
     private Long commentId;
     @NotNull
-    private Long fromUserId;
-    @NotNull
     private Long toUserId;
     @NotEmpty
-    private Long content;
+    private String content;
 }

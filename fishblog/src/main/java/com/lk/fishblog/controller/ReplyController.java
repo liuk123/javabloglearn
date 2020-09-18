@@ -50,7 +50,7 @@ public class ReplyController {
         }
         User tu = new User(r.getToUserId());
         Comment c = new Comment(r.getCommentId());
-        Reply reply = replyService.save(c.getContent(), c, fu, tu);
+        Reply reply = replyService.save(r.getContent(), c, fu, tu);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "添加成功", reply);
     }
 

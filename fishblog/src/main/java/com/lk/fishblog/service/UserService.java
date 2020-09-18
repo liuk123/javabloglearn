@@ -19,7 +19,7 @@ public class UserService {
     @Autowired
     CookieUtil cookieUtil;
 
-    public User save(String username, String password, Long phone, Integer role){
+    public User save(String username, String password, String phone, Integer role){
         return userRepository.save(
             User
                 .builder()
@@ -34,12 +34,12 @@ public class UserService {
         return userRepository.getOne(id);
     }
 //    public User findFirstByUsername(String username){ return userRepository.findFirstByUsername(username);}
-//    public User findFirstByPhone(Long phone){ return  userRepository.findFirstByPhone(phone); }
+//    public User findFirstByPhone(String phone){ return  userRepository.findFirstByPhone(phone); }
     public void deleteById(Long id){
         userRepository.deleteById(id);
     }
 
-    public ResultSet login(HttpServletResponse response, Long phone, String password){
+    public ResultSet login(HttpServletResponse response, String phone, String password){
         User user = userRepository.findFirstByPhone(phone);
         if(user == null){
             return new ResultSet(ResultSet.RESULT_CODE_FALSE, "手机号或密码输入有误");
@@ -54,8 +54,10 @@ public class UserService {
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "登录成功", token);
     }
 
-    public ResultSet register(String username, String password,Long phone, Integer role){
+    public ResultSet register(HttpServletResponse response, String username, String password,String phone, Integer role){
         User user = save(username,password,phone,role);
+        String token = UUID.randomUUID().toString().replace("-","");
+        cookieUtil.addCookie(response,token, user);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "注册成功");
     }
 }

@@ -27,13 +27,17 @@ export class CommentComponent implements OnInit {
   handleSubmit(){
     this.commentEvent.emit(this.inputValue);
   }
-  replySubmit(){
+  replySubmit(commentId,toUserId){
     const modal = this.modal.create({
-      nzTitle: '回复',
+      nzTitle: 'reply',
       nzContent: TextareaDialogComponent,
       nzOnOk:()=>{
         const instance = modal.getContentComponent();
-        this.replyEvent.emit(instance.inputValue);
+        this.replyEvent.emit({
+          content: instance.inputValue,
+          commentId,
+          toUserId
+        });
       },
     });
   }

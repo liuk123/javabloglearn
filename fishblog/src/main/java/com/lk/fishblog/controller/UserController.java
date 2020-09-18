@@ -43,8 +43,8 @@ public class UserController {
      */
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResultSet addByJson(@RequestBody @Valid NewUserRequest u){
-        return userService.register(u.getUsername(),u.getPassword(),u.getPhone(),10);
+    public ResultSet addByJson(HttpServletResponse response, @RequestBody @Valid NewUserRequest u){
+        return userService.register(response, u.getUsername(),u.getPassword(),u.getPhone(),10);
     }
 
     /**
@@ -54,7 +54,7 @@ public class UserController {
      * @return
      */
     @GetMapping(path="/login")
-    public ResultSet login(HttpServletResponse response,@RequestParam String password, @RequestParam Long phone){
+    public ResultSet login(HttpServletResponse response,@RequestParam String password, @RequestParam String phone){
         return userService.login(response,phone,password);
     }
 

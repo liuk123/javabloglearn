@@ -20,7 +20,7 @@ public class User extends BaseEntity implements Serializable{
     private String username;
     private String password;
     private Integer role;
-    private Long phone;
+    private String phone;
 
     @JsonIgnoreProperties(value = {"author"})
     @OneToMany(mappedBy = "author", cascade=CascadeType.ALL, fetch=FetchType.LAZY)

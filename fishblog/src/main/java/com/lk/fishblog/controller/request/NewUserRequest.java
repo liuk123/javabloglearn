@@ -13,5 +13,5 @@ public class NewUserRequest {
     private String username;
     private String password;
     @NotEmpty
-    private Long phone;
+    private String phone;
 }

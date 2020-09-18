@@ -16,9 +16,9 @@ export class RegisterComponent implements OnInit {
     private srv:UserService,
     private router:Router) {
     this.form = this.fb.group({
-      username: [''],
-      phone: [''],
-      password: [''],
+      username: [null],
+      phone: [null],
+      password: [null],
     });
   }
 
