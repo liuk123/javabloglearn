@@ -2,7 +2,7 @@
   <div class="searchbox">
     <div class="search">
         <input type="text" class="search-input" [(ngModel)]="searchBoxValue" (keydown.enter)="search('https://www.baidu.com/s?wd=')">
-        <div class="search-close" (click)="searchValue=''" title="清空搜索条件">X</div>
+        <div class="search-close" (click)="searchValue=''" title="清空搜索条件"><i nz-icon nzType="close" nzTheme="outline"></i></div>
     </div>
     <div class="searchbar">
         <div class="item" *ngFor="let item of searchUriData">

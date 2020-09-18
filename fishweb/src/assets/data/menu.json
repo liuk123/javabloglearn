@@ -11,10 +11,6 @@
           "title": "首页",
           "type": "router"
         },{
-          "route": "blog/detail",
-          "title": "详情",
-          "type": "router"
-        },{
           "route": "blog/edit",
           "title": "写博客",
           "type": "router"
