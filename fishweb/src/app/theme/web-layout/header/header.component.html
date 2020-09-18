@@ -8,16 +8,18 @@
     </div>
     <div class="header-user-info">
       <span nz-dropdown [nzDropdownMenu]="menu">
-        user
+        {{userInfo?.username}}
         <i nz-icon nzType="down"></i>
       </span>
       <nz-dropdown-menu #menu="nzDropdownMenu">
         <ul nz-menu>
-          <li nz-menu-item [routerLink]="['./user/login']">登录</li>
-          <li nz-menu-item [routerLink]="['./user/register']">注册</li>
-          <li nz-menu-item [routerLink]="['./blog/home']">首页</li>
-          <li nz-menu-item [routerLink]="['./blog/edit']">编辑</li>
-          <li nz-menu-item [routerLink]="['./blog/detail',{id:1}]">详情</li>
+          <ng-container *ngIf="!userInfo?.phone">
+            <li nz-menu-item [routerLink]="['./user/login']">登录</li>
+            <li nz-menu-item [routerLink]="['./user/register']">注册</li>
+          </ng-container>
+          <ng-container *ngIf="userInfo?.phone">
+            <li nz-menu-item [routerLink]="['./blog/edit']">写文章</li>
+          </ng-container>
         </ul>
       </nz-dropdown-menu>
 

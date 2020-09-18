@@ -5,11 +5,13 @@ import { catchError } from 'rxjs/operators';
 import { MenuService } from './menu.service';
 import { I18NService } from '../i18n/i18n.service';
 import { TranslateService } from '@ngx-translate/core';
+import { CommonService } from './common.service';
 
 @Injectable()
 export class StartupService {
   constructor(
     private menuService: MenuService,
+    private commonService: CommonService,
     private http: HttpClient,
     private translate: TranslateService,
     @Inject('CONFIG') private config,
@@ -29,12 +31,16 @@ export class StartupService {
         }),
       )
       .subscribe(
-        ([langData, appData]) => {
+        ([langData, appData, userData]) => {
           this.menuService.menu = appData.menu;
           
           // setting language data
           this.translate.setTranslation(this.i18n.defaultLang, langData);
           this.translate.setDefaultLang(this.i18n.defaultLang);
+
+          //user
+          console.log(userData);
+          this.commonService.userSource.next(userData.data)
         },
         () => {},
         () => {
