@@ -11,11 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -35,10 +32,10 @@ public class FileController {
         }
         String fileName = file.getOriginalFilename();
         String fileSuffix = fileName.substring(fileName.lastIndexOf("."));
-        String filePath = "D://temp-rainy//";
         fileName = UUID.randomUUID() + fileSuffix;
-
+        String filePath = "D://temp-rainy//";
         File dest = new File(filePath + fileName);
+
         if(!dest.getParentFile().exists()){
             dest.getParentFile().mkdir();
         }
@@ -47,8 +44,7 @@ public class FileController {
         }catch (IOException e){
             e.printStackTrace();
         }
-        String filename = "/temp-rainy/" + fileName;
-        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "上传成功", filename);
+        String path = "/temp-rainy/" + fileName;
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "上传成功", path);
     }
-
 }
