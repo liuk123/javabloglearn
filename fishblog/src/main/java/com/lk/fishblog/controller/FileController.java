@@ -12,8 +12,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/file")
@@ -24,15 +27,28 @@ public class FileController {
     @Autowired
     ArticleService articleService;
 
-    @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResultSet addByJson(@RequestParam MultipartFile file, HttpServletRequest request){
-        Date date = new Date();
+    public ResultSet addByJson(@RequestParam(value = "uploadFile") MultipartFile file, HttpServletRequest request){
+        if(file.isEmpty()){
+            return new ResultSet(ResultSet.RESULT_CODE_FALSE, "文件不可为空");
+        }
         String fileName = file.getOriginalFilename();
-        int pointIndex = fileName.lastIndexOf(".");
-        String fileSuffix = fileName.substring(pointIndex+1);
+        String fileSuffix = fileName.substring(fileName.lastIndexOf("."));
+        String filePath = "D://temp-rainy//";
+        fileName = UUID.randomUUID() + fileSuffix;
 
-        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "添加成功");
+        File dest = new File(filePath + fileName);
+        if(!dest.getParentFile().exists()){
+            dest.getParentFile().mkdir();
+        }
+        try{
+            file.transferTo(dest);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        String filename = "/temp-rainy/" + fileName;
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "上传成功", filename);
     }
 
 }

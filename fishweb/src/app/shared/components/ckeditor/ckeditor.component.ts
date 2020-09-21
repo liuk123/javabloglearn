@@ -10,13 +10,13 @@ import { ChangeEvent } from '@ckeditor/ckeditor5-angular';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(()=>CkeditorComponent),
-      multi:true
+      useExisting: forwardRef(() => CkeditorComponent),
+      multi: true
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: forwardRef(()=>CkeditorComponent),
-      multi:true
+      useExisting: forwardRef(() => CkeditorComponent),
+      multi: true
     }
   ]
 })
@@ -24,47 +24,47 @@ export class CkeditorComponent implements ControlValueAccessor {
 
   public Editor = DecoupledEditor;
 
-  editorData =''
+  editorData = ''
   @Input() isDisabled = false
   config = {
   }
-  private propageteChange=(_:any)=>{};
+  private propageteChange = (_: any) => { };
 
   constructor() { }
 
-  ngOnInit(){
-    
-  }
-
-  writeValue(obj:any):void{
-    this.editorData=obj;
-  }
-  registerOnChange(fn:any):void{
-    this.propageteChange=fn;
-  }
-  registerOnTouched(fn:any):void{
+  ngOnInit() {
 
   }
 
-  validate(c:FormControl):{[key:string]:any}{
-    return this.editorData?null:{
-      editorInvalid:{
-        valid:false
+  writeValue(obj: any): void {
+    this.editorData = obj;
+  }
+  registerOnChange(fn: any): void {
+    this.propageteChange = fn;
+  }
+  registerOnTouched(fn: any): void {
+
+  }
+
+  validate(c: FormControl): { [key: string]: any } {
+    return this.editorData ? null : {
+      editorInvalid: {
+        valid: false
       }
     }
   }
 
-  onReady( editor ) {
+  onReady(editor) {
     editor.ui.getEditableElement().parentElement.insertBefore(
       editor.ui.view.toolbar.element,
       editor.ui.getEditableElement()
-    );    
-    editor.plugins.get( 'FileRepository' ).createUploadAdapter = function( loader ) {
+    );
+    editor.plugins.get('FileRepository').createUploadAdapter = function (loader) {
       return new FileUploadAdapter(loader);
     };
   }
 
-  onChange( { editor }: ChangeEvent ) {
+  onChange({ editor }: ChangeEvent) {
     // const data = editor.getData();
     this.propageteChange(this.editorData);
   }
@@ -72,33 +72,59 @@ export class CkeditorComponent implements ControlValueAccessor {
 
 
 class FileUploadAdapter {
-	
-	constructor(private loader) {
-	}
-	
-	upload() {
-		return new Promise((resolve, reject) => {
-			const data = new FormData();
-			data.append('file', this.loader.file);
-      
-			var xhr = new XMLHttpRequest();
-			// xhr.setRequestHeader("Content-type","multipart/form-data");
-			xhr.open('post', '/uploadpic' );
-			xhr.send(data);
-			xhr.onreadystatechange = function () {
-				if (xhr.readyState == 4 && xhr.status == 200) {
-					let data=JSON.parse(xhr.responseText);
-					if(data.fileName){
-						resolve({
-							default:'/'+data.fileName
-						});
-					}else {
-						reject(data.msg);
-					}
-				} 
-			};
-		});
-	}
-	abort() {
-	}
+  xhr = new XMLHttpRequest();
+  constructor(private loader) {
+  }
+
+  upload() {
+
+    return this.loader.file.then(file => new Promise((resolve, reject) => {
+      this._initRequest();
+      this._initListeners(resolve, reject, file);
+      this._sendRequest(file);
+    }))
+  }
+  abort() {
+    if (this.xhr) {
+      this.xhr.abort();
+    }
+  }
+
+  _initRequest() {
+    const xhr = this.xhr;
+    xhr.open('POST', '/file/', true);
+  }
+
+  _initListeners(resolve, reject, file) {
+    const xhr = this.xhr;
+    const loader = this.loader;
+    const genericErrorText = `Couldn't upload file: ${file.name}.`;
+
+    xhr.addEventListener('error', () => reject(genericErrorText));
+    xhr.addEventListener('abort', () => reject());
+    xhr.addEventListener('load', () => {
+      const response = xhr.response;
+
+      if (!response || response.error) {
+        return reject(response && response.error ? response.error.message : genericErrorText);
+      }
+      resolve({
+        default: response.url
+      });
+    });
+
+    if (xhr.upload) {
+      xhr.upload.addEventListener('progress', evt => {
+        if (evt.lengthComputable) {
+          loader.uploadTotal = evt.total;
+          loader.uploaded = evt.loaded;
+        }
+      });
+    }
+  }
+  _sendRequest( file ) {
+    const data = new FormData();
+    data.append( 'uploadFile', file );
+    this.xhr.send( data );
+  }
 }

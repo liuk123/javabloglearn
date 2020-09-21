@@ -28,7 +28,8 @@ public class FishblogApplication implements WebMvcConfigurer {
 				.addPathPatterns("/article/**")
 				.addPathPatterns("/comment/**")
 				.addPathPatterns("/user/**")
-				.addPathPatterns("/reply/**");
+				.addPathPatterns("/reply/**")
+				.addPathPatterns("/file/**");
 	}
 
 	@Bean
