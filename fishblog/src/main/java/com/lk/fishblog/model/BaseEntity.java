@@ -17,8 +17,8 @@ public class BaseEntity {
     public Long id;
     @Column(updatable = false)
     @CreationTimestamp
-    private Date createTime;
+    public Date createTime;
     @UpdateTimestamp
-    private Date updateTime;
+    public Date updateTime;
 
 }
