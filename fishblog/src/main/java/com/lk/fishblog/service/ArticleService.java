@@ -28,11 +28,11 @@ public class ArticleService {
     public Article findById(Long id){
         return articleRepository.getOne(id);
     }
-    @Cacheable
+//    @Cacheable
     public Page<Article> findByAuthor(Long id, int pageNum, int pageSize){
         return this.articleRepository.findAllByAuthor_Id(id, PageRequest.of(pageNum, pageSize));
     }
-    @Cacheable
+//    @Cacheable
     public Page<Article> findAll(int pageNum, int pageSize){
         return this.articleRepository.findAllBy(PageRequest.of(pageNum, pageSize));
     }
