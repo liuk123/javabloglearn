@@ -1,6 +1,7 @@
 package com.lk.fishblog.controller;
 
 import com.lk.fishblog.common.utils.CookieUtil;
+import com.lk.fishblog.common.utils.PageInfo;
 import com.lk.fishblog.common.utils.ResultSet;
 import com.lk.fishblog.controller.request.NewArticleRequest;
 import com.lk.fishblog.model.Article;
@@ -60,8 +61,26 @@ public class ArticleController {
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", a);
     }
 
+    @GetMapping(path="/")
+    public PageInfo<Article> getAll(@RequestParam Integer pageNum, @RequestParam Integer pageSize){
+        Page<Article> a = articleService.findAll(pageNum, pageSize);
+        PageInfo<Article> page = new PageInfo(a);
+
+//        page.setResultCode(ResultSet.RESULT_CODE_TRUE);
+//        page.setResultMsg("查询成功");
+//        if(a.isEmpty()){
+//            return page;
+//        }
+//        page.setPageNum(a.getNumber());
+//        page.setPageSize(a.getSize());
+//        page.setPages(a.getTotalPages());
+//        page.setTotal(a.getTotalElements());
+//        page.setList(a.getContent());
+        return page;
+    }
+
     @GetMapping(path="/getByAuthor/{id}")
-    public Page<Article> getByAuthor(@PathVariable Long id){
+    public Page<Article> getByAuthor(@PathVariable Long id, @RequestParam Integer pageNum, @RequestParam Integer pageSize){
         Page<Article> a = articleService.findByAuthor(id,0,10);
         log.info("Coffee {}:", a);
         return a;

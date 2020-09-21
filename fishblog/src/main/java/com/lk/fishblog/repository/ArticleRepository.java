@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface ArticleRepository extends BaseRepository<Article, Long> {
     Page<Article> findAllByAuthor_Id(Long id, Pageable pageable);
+    Page<Article> findAllBy(Pageable pageable);
 }

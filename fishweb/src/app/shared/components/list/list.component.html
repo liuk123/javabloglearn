@@ -1,7 +1,7 @@
 <div class="art-list m-shadow" *ngFor="let item of listData">
   <div class="art-info">
     <div class="list-author">{{item.author}}</div>
-    <div class="list-title">{{item.title}}</div>
+    <div class="list-title" (click)="open(item.id)">{{item.title}}</div>
     <div class="list-desc">{{item.desc}}</div>
     <div class="tag">
       <nz-tag [nzColor]="'#87d068'" *ngFor="let cell of item.tag">{{cell}}</nz-tag>

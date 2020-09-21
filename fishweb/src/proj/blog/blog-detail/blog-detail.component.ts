@@ -26,7 +26,7 @@ export class BlogDetailComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(v=>{
       this.articleId = v.get('id');
-      this.srv.getArticle(this.articleId).subscribe(res=>{
+      this.srv.getArticleById(this.articleId).subscribe(res=>{
         if(res.isSuccess()){
           this.article = res.data;
           this.commentList = res.data.commentList;

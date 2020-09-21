@@ -10,10 +10,9 @@ public class ResultSet {
     public static final int RESULT_CODE_TRUE = 1;
     public static final int RESULT_CODE_ERROR = -1;
 
-    private Integer resultCode = RESULT_CODE_TRUE;
-    private String resultMsg;
+    public Integer resultCode = RESULT_CODE_TRUE;
+    public String resultMsg;
     private Object data;
-    private List list;
 
     public ResultSet() {
     }

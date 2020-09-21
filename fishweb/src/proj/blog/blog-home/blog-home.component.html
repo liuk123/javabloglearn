@@ -4,7 +4,7 @@
   </div>
   <div class="m-grid-panel">
     <div class="m-grid-list">
-      <app-list [listData]="listData"></app-list>
+      <app-list [listData]="listData" (OpenEvent)="open($event)"></app-list>
       <nz-pagination [(nzPageIndex)]="current" [nzTotal]="50" [nzSize]="'small'" [nzShowTotal]="totalTemplate"></nz-pagination>
       <ng-template #totalTemplate let-total>Total {{ total }} items</ng-template>
     </div>

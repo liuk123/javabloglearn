@@ -1,7 +1,9 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 
 export class ArtList{
   constructor(
+    public id: string,
     public title: string,
     public desc: string,
     public author: string,
@@ -19,9 +21,13 @@ export class ArtList{
 export class ListComponent implements OnInit {
 
   @Input() listData:ArtList[] = [];
-  constructor() { }
+  @Output() OpenEvent: EventEmitter<string> = new EventEmitter();
+  constructor(
+  ) { }
 
   ngOnInit(): void {
   }
-
+  open(id){
+    this.OpenEvent.emit(id);
+  }
 }

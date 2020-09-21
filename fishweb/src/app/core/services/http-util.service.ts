@@ -104,7 +104,7 @@ export class HttpUtilService {
    */
   encodeParams(params){
     return Object.keys(params)
-        .filter(key=>params[key])
+        .filter(key=>params[key] !== null && params[key] !== undefined)
         .reduce((sum:HttpParams,key:string)=>{
             return sum.append(key,params[key]);
         },new HttpParams());

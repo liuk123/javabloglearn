@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ArticleService } from 'src/app/biz/services/blog/article.service';
 
 @Component({
@@ -14,14 +15,23 @@ export class BlogHomeComponent implements OnInit {
   tagData=tagData
   tagSelectData=[];
 
-  current =1
+  current = 1;
 
   constructor(
-    private articleSrv: ArticleService
+    private articleSrv: ArticleService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-    
+    this.articleSrv.getArticles({pageNum: 0, pageSize: 10}).subscribe(res=>{
+      if(res.isSuccess()){
+        this.listData = res.list;
+      }
+    })
+  }
+
+  open(id){
+    this.router.navigate(['./blog/detail',{id}]);
   }
 
 }
@@ -63,6 +73,7 @@ let carouselData = [
     imgUrl: 'http://lackk.com/url/?a=now01bg',
   },
 ]
+
 let listData=[
   {
     title:'Tatsuro Suzuki 痴迷于黑白风白风格的城市街道街格的城市街道街拍',
@@ -94,6 +105,7 @@ let listData=[
     tag:['艺术','图片'],
   },
 ]
+
 let listData1=[
   {
     title:'快乐就完了',
