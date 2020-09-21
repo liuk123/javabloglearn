@@ -22,6 +22,8 @@ public class Article extends BaseEntity implements Serializable{
     @Basic(fetch = FetchType.LAZY)
     private String content;
 
+    private String desc;
+
     @JsonIgnoreProperties(value = { "articleList", "password" })
     @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH}, optional=false)
     @JoinColumn(name="user_id")

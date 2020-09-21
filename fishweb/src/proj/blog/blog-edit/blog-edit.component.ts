@@ -32,7 +32,7 @@ export class BlogEditComponent implements OnInit {
   submitForm(v){
     this.form.markAllAsTouched();
     this.form.updateValueAndValidity();
-    console.log(v);
+    
     this.srv.save(v).subscribe(res=>{
       if(res.isSuccess()){
         this.router.navigate(['./blog/detail', {id: res.data}]);

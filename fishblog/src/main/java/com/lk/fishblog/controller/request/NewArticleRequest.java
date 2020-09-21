@@ -18,5 +18,7 @@ public class NewArticleRequest {
     @NotEmpty
     private String content;
     @NotEmpty
+    private String desc;
+    @NotEmpty
     private List<Long> tagList;
 }

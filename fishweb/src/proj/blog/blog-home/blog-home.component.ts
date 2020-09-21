@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ArtList } from 'src/app/biz/model/article';
 import { ArticleService } from 'src/app/biz/services/blog/article.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { ArticleService } from 'src/app/biz/services/blog/article.service';
 export class BlogHomeComponent implements OnInit {
 
   carouselData=carouselData
-  listData;
+  listData: ArtList[];
   listData1=listData1
   tagData=tagData
   tagSelectData=[];
