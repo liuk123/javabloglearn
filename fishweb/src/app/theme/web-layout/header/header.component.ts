@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Menu } from 'src/app/core/model/menu.model';
-import { userInfo } from 'src/app/core/model/user.model';
+import { User } from 'src/app/core/model/user.model';
 import { CommonService } from 'src/app/core/services/common.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { CommonService } from 'src/app/core/services/common.service';
 export class HeaderComponent implements OnInit {
 
   @Input() menus: Menu[];
-  userInfo: userInfo;
+  userInfo: User;
   constructor(
     private commonSrv: CommonService
   ) { }

@@ -1,6 +1,6 @@
 <div class="art-list m-shadow" *ngFor="let item of listData">
   <div class="art-info">
-    <div class="list-author">{{item.author}}</div>
+    <div class="list-author">{{item?.author?.username}}</div>
     <div class="list-title" (click)="open(item.id)">{{item.title}}</div>
     <div class="list-desc">{{item.desc}}</div>
     <div class="tag">

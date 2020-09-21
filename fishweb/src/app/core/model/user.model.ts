@@ -1,8 +1,9 @@
-export class userInfo{
+export class User{
   constructor(
-    public username?: String,
-    public password?: String,
+    public id?: string,
+    public username?: string,
+    public password?: string,
     public role?: number,
-    public phone?: String,
+    public phone?: number,
   ){}
 }
