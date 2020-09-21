@@ -50,14 +50,14 @@ public class UserService {
         String token = UUID.randomUUID().toString().replace("-","");
         cookieUtil.addCookie(response,token, user);
 
-        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "登录成功", token);
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "登录成功", user);
     }
 
     public ResultSet register(HttpServletResponse response, String username, String password,String phone, Integer role){
         User user = save(username,password,phone,role);
         String token = UUID.randomUUID().toString().replace("-","");
         cookieUtil.addCookie(response,token, user);
-        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "注册成功");
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "注册成功", user);
     }
 
     public ResultSet getCurrentUserBySession(HttpServletRequest request){
