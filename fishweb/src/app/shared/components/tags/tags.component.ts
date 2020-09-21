@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { UtilService } from 'src/app/shared/utils/util';
 export class Tags{
   constructor(
@@ -10,7 +10,8 @@ export class Tags{
 @Component({
   selector: 'app-tags',
   templateUrl: './tags.component.html',
-  styleUrls: ['./tags.component.less']
+  styleUrls: ['./tags.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TagsComponent implements OnInit {
 

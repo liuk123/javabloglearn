@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, ElementRef, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef, Input, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { UtilService } from '../../utils/util';
 
 export class CarouselData{
@@ -15,7 +15,8 @@ export class CarouselData{
 @Component({
   selector: 'app-carousel',
   templateUrl: './carousel.component.html',
-  styleUrls: ['./carousel.component.less']
+  styleUrls: ['./carousel.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CarouselComponent implements OnInit, OnDestroy {
 
@@ -24,7 +25,6 @@ export class CarouselComponent implements OnInit, OnDestroy {
   isShowMaxDetail: boolean = false;
   timer = null;
   maxData:CarouselData;
-  // trackBycarousel:number;
   trackByCarousel(index: number, item: CarouselData): number { return item.index; }
   
   colors:string[] = [];
@@ -33,13 +33,13 @@ export class CarouselComponent implements OnInit, OnDestroy {
   constructor(
     private el: ElementRef,
     private util: UtilService,
+    private cf: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
     this.colors = this.util.getColors(this.carouselData.length);
     this.carouselData.forEach((v,i)=>{
       v.isMax=(i==0);
-      // v.color = this.colors[i];
     })
     this.offsetCarousel();
     this.maxData = this.carouselData[0];
@@ -55,14 +55,16 @@ export class CarouselComponent implements OnInit, OnDestroy {
       this.carouselData[1].isMax = true;
       this.carouselData[0].isMax = false;
       this.isOffsetPanel = true;
+      this.cf.markForCheck();
       let timerOne = setTimeout(v => {
         let val = this.carouselData.splice(0, 1);
         this.carouselData.push(val[0])
         this.isOffsetPanel = false;
         this.colorCurrent = this.colors[this.maxData.index];
         timerOne = null;
+        this.cf.markForCheck();
       }, 1500)
-    }, 8000)
+    }, 5000)
   }
 
   @HostListener("mouseenter", ['$event'])

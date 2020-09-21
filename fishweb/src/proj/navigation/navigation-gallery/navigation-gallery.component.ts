@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Navigation, NavigationItem } from 'src/app/biz/model/navigation';
 import { UtilService } from 'src/app/shared';
@@ -6,7 +6,8 @@ import { UtilService } from 'src/app/shared';
 @Component({
   selector: 'app-navigation-gallery',
   templateUrl: './navigation-gallery.component.html',
-  styleUrls: ['./navigation-gallery.component.less']
+  styleUrls: ['./navigation-gallery.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavigationGalleryComponent implements OnInit {
 
@@ -14,8 +15,10 @@ export class NavigationGalleryComponent implements OnInit {
   get columns(){
     return this.util.columnsArr(this.navs, [[],[],[],[]]);
   }
-  
-  constructor(private router: Router,private util: UtilService) { }
+
+  constructor(
+    private router: Router,
+    private util: UtilService) { }
 
   ngOnInit(): void {
   }

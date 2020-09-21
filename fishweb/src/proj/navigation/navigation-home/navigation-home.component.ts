@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Navigation } from 'src/app/biz/model/navigation';
 
 @Component({
   selector: 'app-navigation-home',
   templateUrl: './navigation-home.component.html',
-  styleUrls: ['./navigation-home.component.less']
+  styleUrls: ['./navigation-home.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavigationHomeComponent implements OnInit {
 
@@ -22,15 +23,18 @@ export class NavigationHomeComponent implements OnInit {
   searchUriData=[];
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private cf: ChangeDetectorRef
     ) { }
 
   ngOnInit(): void {
     this.http.get('assets/data/navigation.json').subscribe((res:Navigation[])=>{
       this.navs = res;
+      this.cf.markForCheck()
     })
     this.http.get('assets/data/search.json').subscribe((res:[])=>{
       this.searchUriData = res;
+      this.cf.markForCheck()
     })
   }
 

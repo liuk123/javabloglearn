@@ -5,7 +5,7 @@
         <div class="panel-header">{{navigation.title}}</div>
         <div class="panel-body">
           <ul>
-            <li *ngFor="let item of navigation.data" class="nav-list" (click)="open(item)">
+            <li *ngFor="let item of navigation?.data" class="nav-list" (click)="open(item)">
               <img [src]="'https://www.google.cn/s2/favicons?domain='+item.url" alt="ico" class="ico-img">
               <div>
                 <span class="nav-name">{{item.name}}</span>
