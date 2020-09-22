@@ -35,7 +35,7 @@ public class FileController {
             return new ResultSet(ResultSet.RESULT_CODE_FALSE, "文件不可为空");
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
-        String realPath = "../" + UPLOAD_PATH_PREFIX;
+        String realPath = UPLOAD_PATH_PREFIX;
         String format = sdf.format(new Date());
         //存放上传文件的文件夹
         File realFile = new File(realPath + format);

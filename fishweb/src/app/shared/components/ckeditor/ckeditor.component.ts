@@ -103,13 +103,13 @@ class FileUploadAdapter {
     xhr.addEventListener('error', () => reject(genericErrorText));
     xhr.addEventListener('abort', () => reject());
     xhr.addEventListener('load', () => {
-      const response = xhr.response;
+      const response = JSON.parse(xhr.response);
 
       if (!response || response.error) {
         return reject(response && response.error ? response.error.message : genericErrorText);
       }
       resolve({
-        default: response.url
+        default: response.data
       });
     });
 
