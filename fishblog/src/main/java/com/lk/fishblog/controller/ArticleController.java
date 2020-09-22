@@ -63,12 +63,17 @@ public class ArticleController {
 
     @GetMapping(path="/")
     public PageInfo<Article> getAll(@RequestParam Integer pageNum, @RequestParam Integer pageSize, @RequestParam List<Long> tags){
-        List<Tag> tagList = new ArrayList<>();
-        for(Long val: tags){
-            tagList.add(new Tag(val));
-        }
 
-        Page<Article> a = articleService.findAll(pageNum, pageSize, tagList);
+        Page<Article> a;
+        if(tags.isEmpty()){
+            a = articleService.findAll(pageNum-1, pageSize);
+        }else{
+            List<Tag> tagList = new ArrayList<>();
+            for(Long val: tags){
+                tagList.add(new Tag(val));
+            }
+            a = articleService.findByTaglist(pageNum, pageSize, tagList);
+        }
         PageInfo<Article> page = new PageInfo(a);
         return page;
     }

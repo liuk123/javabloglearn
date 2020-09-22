@@ -7,11 +7,11 @@
       <app-list [listData]="listPageData?.list" (OpenEvent)="open($event)"></app-list>
       <nz-pagination
         [(nzPageIndex)]="listPageData.pageNum"
-        [nzTotal]="listPageData.pageTotal"
+        [nzTotal]="listPageData.total"
         [nzSize]="'small'"
         [nzShowTotal]="totalTemplate"
         (nzPageIndexChange)="load($event)"></nz-pagination>
-      <ng-template #totalTemplate let-total>Total {{ total }} items</ng-template>
+      <ng-template #totalTemplate let-total>Total {{ listPageData.total }} items</ng-template>
     </div>
     <div class="m-grid-tag">
       <div class="m-bg mt-3">

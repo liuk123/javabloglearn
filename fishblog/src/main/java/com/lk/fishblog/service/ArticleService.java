@@ -33,9 +33,11 @@ public class ArticleService {
         return this.articleRepository.findAllByAuthor_Id(id, PageRequest.of(pageNum, pageSize));
     }
 //    @Cacheable
-    public Page<Article> findAll(int pageNum, int pageSize, List<Tag> tagList){
-
+    public Page<Article> findByTaglist(int pageNum, int pageSize, List<Tag> tagList){
         return this.articleRepository.findDistinctByTagListIn(tagList, PageRequest.of(pageNum, pageSize));
+    }
+    public Page<Article> findAll(int pageNum, int pageSize){
+        return this.articleRepository.findAll(PageRequest.of(pageNum, pageSize));
     }
     public Article save(String title, String content, String desc, List<Tag> tagList, User auther){
         return articleRepository.save(
