@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ArtList } from 'src/app/biz/model/article';
 import { ArticleService } from 'src/app/biz/services/blog/article.service';
+import { PageInfo } from 'src/app/core/model/models.api';
 
 @Component({
   selector: 'app-blog-home',
@@ -11,12 +12,11 @@ import { ArticleService } from 'src/app/biz/services/blog/article.service';
 export class BlogHomeComponent implements OnInit {
 
   carouselData=carouselData
-  listData: ArtList[];
+  listPageData: PageInfo<ArtList[]>= new PageInfo();
   listData1=listData1
+  
   tagData=tagData
   tagSelectData=[];
-
-  current = 1;
 
   constructor(
     private articleSrv: ArticleService,
@@ -24,9 +24,18 @@ export class BlogHomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.articleSrv.getArticles({pageNum: 0, pageSize: 10}).subscribe(res=>{
+    this.load(1);  
+  }
+
+  load(n){
+    let params={
+      pageNum: n,
+      pageSize: this.listPageData.pageSize,
+      tags: this.tagSelectData
+    }
+    this.articleSrv.getArticles(params).subscribe(res=>{
       if(res.isSuccess()){
-        this.listData = res.list;
+        this.listPageData = res;
       }
     })
   }
@@ -101,34 +110,42 @@ let listData1=[
 
 let tagData=[
   {
+    id: 1,
     name: "软件",
     icon: "dribbble"
   },
   {
+    id: 2,
     name: "图片",
     icon: "dribbble"
   },
   {
+    id: 3,
     name: "音乐",
     icon: "dribbble"
   },
   {
+    id: 4,
     name: "学习",
     icon: "dribbble"
   },
   {
+    id: 5,
     name: "文章",
     icon: "dribbble"
   },
   {
+    id: 6,
     name: "创意",
     icon: "dribbble"
   },
   {
+    id: 7,
     name: "设计",
     icon: "dribbble"
   },
   {
+    id: 8,
     name: "灵感",
     icon: "dribbble"
   },

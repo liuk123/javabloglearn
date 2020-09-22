@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy
 import { UtilService } from 'src/app/shared/utils/util';
 export class Tags{
   constructor(
+    public id: number,
     public name: string,
     public icon: string,
     public color?: string,
@@ -29,6 +30,14 @@ export class TagsComponent implements OnInit {
       this.tagData.forEach((v, i)=>{
         v.color= this.util.getColors(this.tagData.length)[i]
       })
+    }
+  }
+  selectTags(id){
+    let i = this.selectData.indexOf(id)
+    if(i==-1){
+      this.selectData.push(id);
+    }else{
+      this.selectData.splice(i,1);
     }
   }
 

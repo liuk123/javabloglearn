@@ -51,7 +51,7 @@ export class BlogDetailComponent implements OnInit {
     let params={
       commentId:data.commentId,
       toUserId:data.toUserId,
-      content: data,
+      content: data.content,
     }
     this.commentSrv.addReply(params).subscribe(res=>{
       if(res.isSuccess()){

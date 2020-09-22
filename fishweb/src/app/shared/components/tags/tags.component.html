@@ -2,7 +2,7 @@
   <div class="tag-title">{{title}}</div>
   <div class="tag-desc">{{desc}}</div>
   <ul>
-    <li class="tag-list" *ngFor="let item of tagData">
+    <li class="tag-list" *ngFor="let item of tagData" [class.sel-bg]="selectData.indexOf(item.id)!=-1" (click)="selectTags(item.id)">
       <i nz-icon class="icon" [style.color]="item.color" [nzType]="item.icon" nzTheme="outline"></i>
       <div class="tag-name">{{item.name}}</div>
     </li>
