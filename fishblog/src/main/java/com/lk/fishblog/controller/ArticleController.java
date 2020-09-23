@@ -72,9 +72,10 @@ public class ArticleController {
             for(Long val: tags){
                 tagList.add(new Tag(val));
             }
-            a = articleService.findByTaglist(pageNum, pageSize, tagList);
+            a = articleService.findByTaglist(pageNum-1, pageSize, tagList);
         }
         PageInfo<Article> page = new PageInfo(a);
+        page.setPageSize(pageSize);
         return page;
     }
 

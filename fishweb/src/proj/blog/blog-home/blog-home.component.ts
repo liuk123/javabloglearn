@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ArtList } from 'src/app/biz/model/article';
 import { ArticleService } from 'src/app/biz/services/blog/article.service';
 import { PageInfo } from 'src/app/core/model/models.api';
+import { UtilService } from 'src/app/shared';
 
 @Component({
   selector: 'app-blog-home',
@@ -20,7 +21,8 @@ export class BlogHomeComponent implements OnInit {
 
   constructor(
     private articleSrv: ArticleService,
-    private router: Router
+    private router: Router,
+    private util: UtilService,
   ) { }
 
   ngOnInit(): void {
@@ -44,6 +46,10 @@ export class BlogHomeComponent implements OnInit {
     this.router.navigate(['./blog/detail',{id}]);
   }
 
+  selectEvent = this.util.debounce((data)=>{
+    this.tagSelectData = data;
+    this.load(1);
+  })
 }
 let carouselData = [
   {

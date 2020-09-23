@@ -19,8 +19,8 @@ export class TagsComponent implements OnInit {
   @Input() tagData: Tags[]=[];
   @Input() title: string = "";
   @Input() desc: string = "";
-  @Input() selectData: Tags[] = [];
-  @Output() selectDataChange: EventEmitter<any[]> = new EventEmitter();
+  selectData: Tags[] = [];
+  @Output() selectEvent: EventEmitter<any[]> = new EventEmitter();
   constructor(
     private util: UtilService
   ) { }
@@ -39,6 +39,7 @@ export class TagsComponent implements OnInit {
     }else{
       this.selectData.splice(i,1);
     }
+    this.selectEvent.emit(this.selectData);
   }
 
 }

@@ -1,7 +1,7 @@
 <div class="m-container">
-  <div class="carousel">
+  <!-- <div class="carousel">
     <app-carousel [carouselData]="carouselData"></app-carousel>
-  </div>
+  </div> -->
   <div class="m-grid-panel">
     <div class="m-grid-list">
       <app-list [listData]="listPageData?.list" (OpenEvent)="open($event)"></app-list>
@@ -19,7 +19,7 @@
           [tagData]="tagData"
           [title]="'Tag'"
           [desc]="'热门标签'"
-          [(selectData)]="tagSelectData"></app-tags>
+          (selectEvent)="selectEvent($event)"></app-tags>
       </div>
       
     </div>

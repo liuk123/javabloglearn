@@ -37,4 +37,20 @@ export class UtilService {
       return columns
     }, columns)
   }
+
+  debounce(callback,time=1500){
+    let timer = null;
+    function wrapper(data){
+      let self = this;
+      let args = arguments;
+      function exec(){
+        callback.apply(self, args)
+      }
+      if(timer!=null){
+        clearTimeout(timer);
+      }
+      timer = setTimeout(exec,time);
+    }
+    return wrapper;
+  }
 }
