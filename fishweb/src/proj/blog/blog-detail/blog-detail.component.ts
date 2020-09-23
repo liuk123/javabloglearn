@@ -51,13 +51,19 @@ export class BlogDetailComponent implements OnInit {
     let params={
       commentId:data.commentId,
       toUserId:data.toUserId,
+      toUsername: data.toUsername,
       content: data.content,
     }
     this.commentSrv.addReply(params).subscribe(res=>{
       if(res.isSuccess()){
         this.commentList.forEach(v=>{
-          if(v.id==data.commentId && Array.isArray(v.replyList)){
-            v.replyList.push(res.data);
+          if(v.id==data.commentId){
+            if(Array.isArray(v.replyList)){
+              v.replyList.push(res.data);
+            }else{
+              v.replyList=[res.data];
+            }
+            
           }
         })
       }

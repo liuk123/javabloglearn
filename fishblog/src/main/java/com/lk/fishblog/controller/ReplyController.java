@@ -48,7 +48,7 @@ public class ReplyController {
         if(fu == null){
             return new ResultSet(ResultSet.RESULT_CODE_FALSE,"请重新登录");
         }
-        User tu = new User(r.getToUserId());
+        User tu = new User(r.getToUserId(), r.getToUsername());
         Comment c = new Comment(r.getCommentId());
         Reply reply = replyService.save(r.getContent(), c, fu, tu);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "添加成功", reply);

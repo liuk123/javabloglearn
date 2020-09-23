@@ -38,7 +38,7 @@ export class UtilService {
     }, columns)
   }
 
-  debounce(callback,time=1500){
+  debounce(callback,time=800){
     let timer = null;
     function wrapper(data){
       let self = this;

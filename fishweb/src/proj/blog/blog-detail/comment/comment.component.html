@@ -11,20 +11,20 @@
     </nz-form-item>
   </nz-comment-content>
 </nz-comment>
-<ng-template #commentTemplateRef let-comment="comment">
+<ng-template #commentTemplateRef let-comment="comment" let-commentId="commentId">
   <nz-comment [nzAuthor]="comment?.toUser? comment?.fromUser?.username +'-->' +comment?.toUser?.username:comment?.fromUser?.username">
     <nz-avatar nz-comment-avatar nzIcon="user" nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
     <nz-comment-content>
       <p>{{ comment.content }}</p>
     </nz-comment-content>
-    <nz-comment-action><span (click)="replySubmit(comment.id, comment?.fromUser?.id)">Reply to</span></nz-comment-action>
+    <nz-comment-action><span (click)="replySubmit(commentId, comment?.fromUser?.id, comment?.fromUser?.username)">Reply to</span></nz-comment-action>
     <ng-container *ngIf="comment?.replyList && comment?.replyList.length">
       <ng-template ngFor let-child [ngForOf]="comment.replyList">
-        <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: child }"> </ng-template>
+        <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: child, commentId: commentId }"> </ng-template>
       </ng-template>
     </ng-container>
   </nz-comment>
 </ng-template>
 <div *ngFor="let commentItem of data">
-  <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: commentItem }"> </ng-template>
+  <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: commentItem, commentId: commentItem.id }"> </ng-template>
 </div>

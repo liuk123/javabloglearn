@@ -27,7 +27,7 @@ export class CommentComponent implements OnInit {
   handleSubmit(){
     this.commentEvent.emit(this.inputValue);
   }
-  replySubmit(commentId,toUserId){
+  replySubmit(commentId,toUserId,toUsername){
     const modal = this.modal.create({
       nzTitle: 'reply',
       nzContent: TextareaDialogComponent,
@@ -36,7 +36,8 @@ export class CommentComponent implements OnInit {
         this.replyEvent.emit({
           content: instance.inputValue,
           commentId,
-          toUserId
+          toUserId,
+          toUsername,
         });
       },
     });

@@ -15,6 +15,8 @@ public class NewReplyRequest {
     private Long commentId;
     @NotNull
     private Long toUserId;
+    @NotNull
+    private String toUsername;
     @NotEmpty
     private String content;
 }
