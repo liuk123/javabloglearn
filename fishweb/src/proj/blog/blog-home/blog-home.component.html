@@ -3,7 +3,7 @@
     <app-carousel [carouselData]="carouselData"></app-carousel>
   </div> -->
   <div class="m-grid-panel">
-    <div class="m-grid-list">
+    <div class="m-grid-left">
       <app-list [listData]="listPageData?.list" (OpenEvent)="open($event)"></app-list>
       <nz-pagination
         [(nzPageIndex)]="listPageData.pageNum"
@@ -13,18 +13,23 @@
         (nzPageIndexChange)="load($event)"></nz-pagination>
       <ng-template #totalTemplate let-total>Total {{ listPageData.total }} items</ng-template>
     </div>
-    <div class="m-grid-tag">
-      <div class="m-bg mt-3">
-        <app-tags
-          [tagData]="tagData"
-          [title]="'Tag'"
-          [desc]="'热门标签'"
-          (selectEvent)="selectEvent($event)"></app-tags>
-      </div>
-      
-    </div>
-    <div class="m-grid-popular">
-      <app-list [listData]="listData1"></app-list>
+    <div class="m-grid-right">
+      <nz-affix [nzOffsetTop]="60">
+        <div style="display: flex;">
+          <div class="m-grid-tag">
+            <div class="m-bg mt-3">
+              <app-tags
+                [tagData]="tagData"
+                [title]="'Tag'"
+                [desc]="'热门标签'"
+                (selectEvent)="selectEvent($event)"></app-tags>
+            </div>
+          </div>
+          <div class="m-grid-popular">
+            <app-list [listData]="listData1"></app-list>
+          </div>
+        </div>
+      </nz-affix>
     </div>
   </div>
 </div>

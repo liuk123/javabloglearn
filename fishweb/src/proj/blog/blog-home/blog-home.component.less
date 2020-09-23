@@ -1,15 +1,19 @@
 .m-grid-panel{
   display: flex;
-  .m-grid-list{
+  .m-grid-left{
     width:660px;
   }
-  .m-grid-tag{
-    width:240px;
-    padding: 0 3rem;
+  .m-grid-right{
+    flex:0 0 auto;
+    .m-grid-tag{
+      width:240px;
+      padding: 0 3rem;
+    }
+    .m-grid-popular{
+      width:300px;
+    }
   }
-  .m-grid-popular{
-    width:300px;
-  }
+  
 }
 .carousel{
   margin-top:1rem;
