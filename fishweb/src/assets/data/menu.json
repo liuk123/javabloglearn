@@ -2,20 +2,9 @@
   "menu": [
     {
       "route": "blog",
-      "title": "创意",
-      "type": "sub",
-      "selected": false,
-      "children": [
-        {
-          "route": "blog/home",
-          "title": "首页",
-          "type": "router"
-        },{
-          "route": "blog/edit",
-          "title": "写博客",
-          "type": "router"
-        }
-      ]
+      "title": "首页",
+      "type": "router",
+      "selected": false
     },{
       "route": "navigation",
       "title": "导航",
@@ -23,7 +12,7 @@
       "selected": false
     },{
       "route": "links",
-      "title": "设计",
+      "title": "优质网站",
       "type": "sub",
       "selected": true,
       "children": [
