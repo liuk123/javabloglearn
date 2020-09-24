@@ -16,6 +16,10 @@ const routes: Routes = [
         path: 'navigation',
         loadChildren: () => 
           import('../../proj/navigation/navigation.module').then(m=>m.NavigationModule),
+      },{ 
+        path: 'person',
+        loadChildren: () => 
+          import('../../proj/person/person.module').then(m=>m.PersonModule),
       },
     ]
   },{
