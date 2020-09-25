@@ -12,5 +12,4 @@ public interface ArticleRepository extends BaseRepository<Article, Long> {
     Page<Article> findAllByAuthor_Id(Long id, Pageable pageable);
     Page<Article> findAllBy(List<Long> tagList, Pageable pageable);
     Page<Article> findDistinctByTagListIn(List<Tag> tagList, Pageable pageable);
-
 }

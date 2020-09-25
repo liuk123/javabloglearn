@@ -4,6 +4,7 @@ import { BlogListComponent } from './blog-list/blog-list.component';
 import { BlogDetailComponent } from './blog-detail/blog-detail.component';
 import { BlogEditComponent } from './blog-edit/blog-edit.component';
 import { BlogHomeComponent } from './blog-home/blog-home.component';
+import { MyBlogComponent } from './my-blog/my-blog.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -29,6 +30,12 @@ const routes: Routes = [
     },{
         path:'edit',
         component: BlogEditComponent,
+        data:{
+            keep:true,
+        }
+    },{
+        path:'operate',
+        component: MyBlogComponent,
         data:{
             keep:true,
         }

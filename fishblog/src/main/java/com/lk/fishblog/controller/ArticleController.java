@@ -81,7 +81,7 @@ public class ArticleController {
 
     @GetMapping(path="/getByAuthor/{id}")
     public PageInfo<Article> getByAuthor(@PathVariable Long id, @RequestParam Integer pageNum, @RequestParam Integer pageSize){
-        Page<Article> a = articleService.findByAuthor(id, pageNum, pageSize);
+        Page<Article> a = articleService.findByAuthor(id, pageNum-1, pageSize);
         PageInfo<Article> page = new PageInfo(a);
         return page;
     }

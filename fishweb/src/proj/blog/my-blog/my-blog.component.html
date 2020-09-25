@@ -1,0 +1,9 @@
+<div class="m-container">
+  <nz-tabset>
+    <nz-tab nzTitle="文章">
+      <app-operate-list
+        (loadMoreEvent)="loadMoreEvent($event)"
+        [page]="page"></app-operate-list>
+    </nz-tab>
+  </nz-tabset>
+</div>

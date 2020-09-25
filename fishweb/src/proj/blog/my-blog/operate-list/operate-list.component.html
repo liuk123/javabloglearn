@@ -1,0 +1,23 @@
+<nz-list class="demo-loadmore-list" [nzLoading]="initLoading">
+  <nz-list-item *ngFor="let item of page?.list">
+    <ng-container *ngIf="!item?.loading">
+      <nz-list-item-meta
+        nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+        [nzDescription]="'更新时间：'+ (item.data.updateTime|date)"
+      >
+        <nz-list-item-meta-title>
+          <a>{{ item.data.title }}</a>
+        </nz-list-item-meta-title>
+      </nz-list-item-meta>
+      content
+      <ul nz-list-item-actions>
+        <nz-list-item-action><a (click)="edit(item)">编辑</a></nz-list-item-action>
+        <nz-list-item-action><a (click)="edit(item)">删除</a></nz-list-item-action>
+      </ul>
+    </ng-container>
+    <nz-skeleton *ngIf="item.loading" [nzAvatar]="true" [nzActive]="true" [nzTitle]="false" [nzLoading]="true"> </nz-skeleton>
+  </nz-list-item>
+  <div class="loadmore" nz-list-load-more>
+    <button nz-button *ngIf="isShowMoreBtn" (click)="onLoadMore()">loading more</button>
+  </div>
+</nz-list>

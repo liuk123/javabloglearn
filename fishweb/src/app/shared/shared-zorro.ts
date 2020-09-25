@@ -38,7 +38,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzCascaderModule } from 'ng-zorro-antd/cascader';
 import { NzCommentModule } from 'ng-zorro-antd/comment';
-
+import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 export const SHARED_ZORRO_MODULES = [
   NzButtonModule,
   NzMessageModule,
@@ -57,7 +57,7 @@ export const SHARED_ZORRO_MODULES = [
   NzModalModule,
   NzTableModule,
   // NzDrawerModule,
-  // NzTabsModule,
+  NzTabsModule,
   NzInputModule,
   NzDatePickerModule,
   NzTimePickerModule,
@@ -80,4 +80,5 @@ export const SHARED_ZORRO_MODULES = [
   // NzUploadModule,
   NzCascaderModule,
   NzCommentModule,
+  NzSkeletonModule,
 ];

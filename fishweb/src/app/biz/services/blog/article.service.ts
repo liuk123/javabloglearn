@@ -33,4 +33,9 @@ export class ArticleService {
     let params = this.http.encodeParams(data);
     return this.http.get(url, {params});
   }
+  getArticlesByAuthorId(id,data){
+    const url = `${this.articleUrl}/getByAuthor/${id}`;
+    let params = this.http.encodeParams(data);
+    return this.http.get(url,{params});
+  }
 }
