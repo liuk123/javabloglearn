@@ -3,7 +3,10 @@
     <nz-tab nzTitle="文章">
       <app-operate-list
         (loadMoreEvent)="loadMoreEvent($event)"
-        [page]="page"></app-operate-list>
+        [page]="page"
+        (editEvent)="editEvent($event)"
+        (delEvent)="delEvent($event)"
+        (openEvent)="openEvent($event)"></app-operate-list>
     </nz-tab>
   </nz-tabset>
 </div>

@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { PageInfo } from 'src/app/core/model/models.api';
 
 @Component({
   selector: 'app-operate-list',
@@ -21,6 +20,9 @@ export class OperateListComponent implements OnInit {
     return this._page;
   }
   @Output() loadMoreEvent = new EventEmitter<null>()
+  @Output() editEvent = new EventEmitter<number>()
+  @Output() delEvent = new EventEmitter<number>()
+  @Output() openEvent = new EventEmitter<number>()
   constructor() { }
 
   ngOnInit(): void {
@@ -29,8 +31,14 @@ export class OperateListComponent implements OnInit {
   onLoadMore(){
     this.loadMoreEvent.emit(this.page.pageNum+1);
   }
-  edit(item: any): void {
-    // this.msg.success(item.email);
+  edit(id: any): void {
+    this.editEvent.emit(id)
+  }
+  del(id){
+    this.delEvent.emit(id)
+  }
+  open(id){
+    this.openEvent.emit(id)
   }
 
 }

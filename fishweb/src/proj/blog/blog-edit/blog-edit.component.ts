@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleService } from 'src/app/biz/services/blog/article.service';
 
 @Component({
@@ -15,18 +15,35 @@ export class BlogEditComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private srv: ArticleService,
-    private router: Router
-  ) { }
-
-  ngOnInit(): void {
-    this.form = this.fb.group({
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+  ) {
+    this.form  = this.fb.group({
+      id: [null],
       title: [null],
       desc: [null],
       tagList: [null],
       content: [null]
     })
-
     this.listOfOption = listOfOption;
+  }
+
+  ngOnInit(): void {
+    this.activatedRoute.paramMap.subscribe(v=>{
+      if(v.get('id') != null){
+        this.srv.getArticleById(v.get('id')).subscribe(res=>{
+          if(res.isSuccess()){
+            this.form.patchValue({
+              id: res.data.id,
+              title: res.data.title,
+              desc: res.data.desc,
+              tagList: res.data.tagList.map(v=>v.id),
+              content: res.data.content,
+            })
+          }
+        })
+      }
+    })
   }
 
   submitForm(v){

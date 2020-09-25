@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ArticleService } from 'src/app/biz/services/blog/article.service';
 import { PageInfo } from 'src/app/core/model/models.api';
 import { CommonService } from 'src/app/core/services/common.service';
@@ -15,7 +16,8 @@ export class MyBlogComponent implements OnInit {
   userInfo;
   constructor(
     private srv: ArticleService,
-    private commonSrv:CommonService) { }
+    private commonSrv:CommonService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.commonSrv.userSource.subscribe(v=>{
@@ -38,5 +40,14 @@ export class MyBlogComponent implements OnInit {
         this.page.pageNum = res.pageNum;
       }
     })
+  }
+  editEvent(id){
+    this.router.navigate(['./blog/edit',{id}]);
+  }
+  delEvent(id){
+
+  }
+  openEvent(id){
+    this.router.navigate(['./blog/detail',{id}]);
   }
 }
