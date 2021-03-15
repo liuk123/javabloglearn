@@ -45,7 +45,7 @@ public class ArticleService {
                 .builder()
                 .title(title)
                 .content(content)
-                .desc(desc)
+                .des(desc)
                 .tagList(new ArrayList<>(tagList))
                 .author(auther)
                 .build()

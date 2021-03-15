@@ -22,7 +22,7 @@ public class Article extends BaseEntity implements Serializable{
     @Basic(fetch = FetchType.LAZY)
     private String content;
 
-    private String desc;
+    private String des;
 
     @JsonIgnoreProperties(value = { "articleList", "password" })
     @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH}, optional=false)
