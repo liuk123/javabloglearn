@@ -46,7 +46,7 @@ public class ArticleService {
                 .title(title)
                 .content(content)
                 .descItem(descItem)
-                .tagList(new ArrayList<>(tagList))
+                .tagList(tagList)
                 .author(auther)
                 .build()
         );
@@ -54,5 +54,6 @@ public class ArticleService {
     public void deleteById(Long id){
         articleRepository.deleteById(id);
     }
+
 
 }
