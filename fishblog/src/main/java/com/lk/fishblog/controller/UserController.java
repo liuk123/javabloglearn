@@ -68,6 +68,16 @@ public class UserController {
     public ResultSet login(HttpServletResponse response,@RequestParam String password, @RequestParam String phone){
         return userService.login(response,phone,password);
     }
+    /**
+     * 退出
+     * @param req
+     * @param
+     * @return
+     */
+    @GetMapping(path="/logout")
+    public ResultSet logout(HttpServletRequest req){
+        return userService.logout(req);
+    }
 
     /**
      * 删除

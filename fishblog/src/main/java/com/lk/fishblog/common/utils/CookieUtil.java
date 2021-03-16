@@ -28,15 +28,21 @@ public class CookieUtil {
         cookie.setPath("/");
         response.addCookie(cookie);
     }
-
-    public String getCookieValue(HttpServletRequest request, String cookiName) {
+    public void removeCookie(HttpServletRequest request) {
+        String paramToken = request.getParameter(COOKIE_NAME_TOKEN);
+        String cookieToken = getCookieValue(request, COOKIE_NAME_TOKEN);
+        if (!StringUtils.isEmpty(cookieToken) || !StringUtils.isEmpty(paramToken)) {
+            String token = StringUtils.isEmpty(paramToken) ? cookieToken : paramToken;
+            redisUtil.del(COOKIE_NAME_TOKEN + "::" + token);
+        }
+    }
+    public String getCookieValue(HttpServletRequest request, String cookieName) {
         Cookie[] cookies = request.getCookies();
         if (cookies == null || cookies.length <= 0) {
              return null;
-//            throw new GlobalException(CodeMsg.TOKEN_INVALID);
         }
         for (Cookie cookie : cookies) {
-            if (cookie.getName().equals(cookiName)) {
+            if (cookie.getName().equals(cookieName)) {
                 return cookie.getValue();
             }
         }
@@ -50,7 +56,6 @@ public class CookieUtil {
         User user = JSON.parseObject(redisUtil.get(COOKIE_NAME_TOKEN + "::" + token), User.class);
         //重置有效期
         if (user == null) {
-//            throw new GlobalException(CodeMsg.USER_NOT_LOGIN);
             return null;
         }
         if (response != null) {
@@ -69,7 +74,6 @@ public class CookieUtil {
         String cookieToken = getCookieValue(request, COOKIE_NAME_TOKEN);
         if (StringUtils.isEmpty(cookieToken) && StringUtils.isEmpty(paramToken)) {
              return null;
-//            throw new GlobalException(CodeMsg.USER_NOT_LOGIN);
         }
         String token = StringUtils.isEmpty(paramToken) ? cookieToken : paramToken;
         if (response == null) {
