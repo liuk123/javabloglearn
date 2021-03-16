@@ -18,7 +18,7 @@ import java.util.List;
 public class Tag extends BaseEntity implements Serializable{
     private String name;
 
-    @ManyToMany(mappedBy = "tagList", cascade = {CascadeType.MERGE,CascadeType.REFRESH}, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "tagList", cascade = {CascadeType.MERGE,CascadeType.REFRESH,CascadeType.REMOVE}, fetch=FetchType.LAZY)
     private List<Article> articleList;
 
     public Tag(Long id){

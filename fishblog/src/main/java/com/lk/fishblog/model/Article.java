@@ -34,7 +34,7 @@ public class Article extends BaseEntity implements Serializable{
     @OrderBy("createTime DESC")
     private List<Comment> commentList;
 
-    @ManyToMany(cascade={CascadeType.MERGE,CascadeType.REFRESH}, fetch=FetchType.EAGER)
+    @ManyToMany(cascade={CascadeType.MERGE,CascadeType.REFRESH,CascadeType.REMOVE}, fetch=FetchType.EAGER)
     @JoinTable(
             name = "b_article_tag",
             joinColumns = {
