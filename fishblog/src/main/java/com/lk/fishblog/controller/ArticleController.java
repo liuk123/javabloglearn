@@ -50,7 +50,7 @@ public class ArticleController {
         for(Long val: a.getTagList()){
             tagList.add(new Tag(val));
         }
-        Article article = articleService.save(a.getTitle(),a.getContent(), a.getDesc(), tagList, user);
+        Article article = articleService.save(a.getTitle(),a.getContent(), a.getDescItem(), tagList, user);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE,"添加成功", article.getId());
     }
 

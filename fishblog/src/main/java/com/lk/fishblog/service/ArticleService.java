@@ -39,13 +39,13 @@ public class ArticleService {
     public Page<Article> findAll(int pageNum, int pageSize){
         return this.articleRepository.findAll(PageRequest.of(pageNum, pageSize));
     }
-    public Article save(String title, String content, String desc, List<Tag> tagList, User auther){
+    public Article save(String title, String content, String descItem, List<Tag> tagList, User auther){
         return articleRepository.save(
             Article
                 .builder()
                 .title(title)
                 .content(content)
-                .des(desc)
+                .descItem(descItem)
                 .tagList(new ArrayList<>(tagList))
                 .author(auther)
                 .build()
