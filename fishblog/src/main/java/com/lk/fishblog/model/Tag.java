@@ -1,5 +1,6 @@
 package com.lk.fishblog.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
@@ -19,6 +20,7 @@ import java.util.List;
 public class Tag extends BaseEntity implements Serializable{
     private String name;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "tagList", cascade = {CascadeType.MERGE,CascadeType.REFRESH,CascadeType.REMOVE}, fetch=FetchType.LAZY)
     private List<Article> articleList;
 
@@ -26,15 +28,15 @@ public class Tag extends BaseEntity implements Serializable{
         this.id = id;
     }
 
-    public List<Article> getArticleList(){
-        List<Article> articles = new ArrayList<>();
-        if(null!=this.articleList){
-            for(Article val: this.articleList){
-                articles.add(new Article(val.getId(), val.getTitle(),val.getDescItem()));
-            }
-        }
-        return articles;
-    }
+//    public List<Article> getArticleList(){
+//        List<Article> articles = new ArrayList<>();
+//        if(null!=this.articleList){
+//            for(Article val: this.articleList){
+//                articles.add(new Article(val.getId(), val.getTitle(),val.getDescItem()));
+//            }
+//        }
+//        return articles;
+//    }
 
     @Override
     public String toString() {

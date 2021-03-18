@@ -46,34 +46,34 @@ public class Article extends BaseEntity implements Serializable{
         this.id = id;
     }
 
-    public Article(long id, String title, String descItem){
-        this.id=id;
-        this.title=title;
-        this.descItem = descItem;
-    }
-    public Article(long id, String title, String descItem, List<Tag> tagList){
-        this.id=id;
-        this.title=title;
-        this.descItem = descItem;
-        this.tagList = tagList;
-    }
-    public User getAuthor() {
-        if(null != author){
-            return new User(author.getId(),author.getUsername(),author.getPhone());
-        }else{
-            return new User();
-        }
-
-    }
-    public List<Comment> getCommentList(){
-        List<Comment> comments = new ArrayList<>();
-        if(null!=this.commentList){
-            for(Comment val: this.commentList){
-                comments.add(new Comment(val.getId(), val.getFromUser(), val.getContent(), val.getReplyList()));
-            }
-        }
-        return comments;
-    }
+//    public Article(long id, String title, String descItem){
+//        this.id=id;
+//        this.title=title;
+//        this.descItem = descItem;
+//    }
+//    public Article(long id, String title, String descItem, List<Tag> tagList){
+//        this.id=id;
+//        this.title=title;
+//        this.descItem = descItem;
+//        this.tagList = tagList;
+//    }
+//    public User getAuthor() {
+//        if(null != author){
+//            return new User(author.getId(),author.getUsername(),author.getPhone());
+//        }else{
+//            return new User();
+//        }
+//
+//    }
+//    public List<Comment> getCommentList(){
+//        List<Comment> comments = new ArrayList<>();
+//        if(null!=this.commentList){
+//            for(Comment val: this.commentList){
+//                comments.add(new Comment(val.getId(), val.getFromUser(), val.getContent(), val.getReplyList()));
+//            }
+//        }
+//        return comments;
+//    }
 
     @Override
     public String toString() {

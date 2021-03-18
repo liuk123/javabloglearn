@@ -1,5 +1,6 @@
 package com.lk.fishblog.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
@@ -22,6 +23,7 @@ public class Comment extends BaseEntity implements Serializable {
     @JoinColumn(name="from_user_id")
     private User fromUser;
 
+    @JsonIgnore
     @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH}, optional=false)
     @JoinColumn(name="article_id")
     private Article article;
@@ -35,41 +37,42 @@ public class Comment extends BaseEntity implements Serializable {
     public Comment(Long id){
         this.id = id;
     }
-    public Comment(Long id, User fromUser ){
-        this.id = id;
-        this.fromUser = fromUser;
-    }
-    public Comment(Long id, User fromUser, String content, List<Reply> replyList ){
-        this.id = id;
-        this.fromUser = fromUser;
-        this.content = content;
-        this.replyList = replyList;
-    }
-    public User getFromUser(){
-        if(null!=fromUser){
-            return new User(fromUser.getId(),fromUser.getUsername(),fromUser.getPhone());
-        }else{
-            return new User();
-        }
 
-    }
-    public Article getArticle(){
-        if(null!=article){
-            return new Article(article.getId(), article.getTitle(),article.getDescItem());
-        }else{
-            return new Article();
-        }
-
-    }
-    public List<Reply> getReplyList(){
-        List<Reply> replys = new ArrayList<>();
-        if(null!=this.replyList){
-            for(Reply val: this.replyList){
-                replys.add(new Reply(val.getId(), val.getComment(), val.getFromUser(), val.getToUser(), val.getContent()));
-            }
-        }
-        return replys;
-    }
+//    public Comment(Long id, User fromUser ){
+//        this.id = id;
+//        this.fromUser = fromUser;
+//    }
+//    public Comment(Long id, User fromUser, String content, List<Reply> replyList ){
+//        this.id = id;
+//        this.fromUser = fromUser;
+//        this.content = content;
+//        this.replyList = replyList;
+//    }
+//    public User getFromUser(){
+//        if(null!=fromUser){
+//            return new User(fromUser.getId(),fromUser.getUsername(),fromUser.getPhone());
+//        }else{
+//            return new User();
+//        }
+//
+//    }
+//    public Article getArticle(){
+//        if(null!=article){
+//            return new Article(article.getId(), article.getTitle(),article.getDescItem());
+//        }else{
+//            return new Article();
+//        }
+//
+//    }
+//    public List<Reply> getReplyList(){
+//        List<Reply> replys = new ArrayList<>();
+//        if(null!=this.replyList){
+//            for(Reply val: this.replyList){
+//                replys.add(new Reply(val.getId(), val.getComment(), val.getFromUser(), val.getToUser(), val.getContent()));
+//            }
+//        }
+//        return replys;
+//    }
     @Override
     public String toString() {
         return "Comment{" +
