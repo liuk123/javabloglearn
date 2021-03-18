@@ -58,7 +58,12 @@ public class Article extends BaseEntity implements Serializable{
         this.tagList = tagList;
     }
     public User getAuthor() {
-        return new User(author.getId(),author.getUsername(),author.getPhone());
+        if(null != author){
+            return new User(author.getId(),author.getUsername(),author.getPhone());
+        }else{
+            return new User();
+        }
+
     }
     public List<Comment> getCommentList(){
         List<Comment> comments = new ArrayList<>();

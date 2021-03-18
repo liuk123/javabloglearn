@@ -38,13 +38,27 @@ public class Reply extends BaseEntity implements Serializable{
         this.content = content;
     }
     public Comment getComment(){
-        return new Comment(this.comment.getId(),this.comment.getFromUser());
+        if(null!=comment){
+            return new Comment(comment.getId(), comment.getFromUser());
+        }else {
+            return new Comment();
+        }
     }
     public User getFromUser(){
-        return new User(this.fromUser.getId(),this.fromUser.getUsername(),this.fromUser.getPhone());
+        if(null!=fromUser){
+            return new User(fromUser.getId(),fromUser.getUsername(),fromUser.getPhone());
+        }else{
+            return new User();
+        }
+
     }
     public User getToUser(){
-        return new User(this.toUser.getId(),this.toUser.getUsername(),this.toUser.getPhone());
+        if(null!=toUser){
+            return new User(this.toUser.getId(),this.toUser.getUsername(),this.toUser.getPhone());
+        }else{
+            return new User();
+        }
+
     }
     @Override
     public String toString() {

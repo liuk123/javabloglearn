@@ -46,10 +46,20 @@ public class Comment extends BaseEntity implements Serializable {
         this.replyList = replyList;
     }
     public User getFromUser(){
-        return new User(fromUser.getId(),fromUser.getUsername(),fromUser.getPhone());
+        if(null!=fromUser){
+            return new User(fromUser.getId(),fromUser.getUsername(),fromUser.getPhone());
+        }else{
+            return new User();
+        }
+
     }
     public Article getArticle(){
-        return new Article(article.getId(), article.getTitle(),article.getDescItem());
+        if(null!=article){
+            return new Article(article.getId(), article.getTitle(),article.getDescItem());
+        }else{
+            return new Article();
+        }
+
     }
     public List<Reply> getReplyList(){
         List<Reply> replys = new ArrayList<>();
