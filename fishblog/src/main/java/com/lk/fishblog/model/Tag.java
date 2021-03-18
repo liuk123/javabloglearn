@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,6 +24,16 @@ public class Tag extends BaseEntity implements Serializable{
 
     public Tag(Long id){
         this.id = id;
+    }
+
+    public List<Article> getArticleList(){
+        List<Article> articles = new ArrayList<>();
+        if(null!=this.articleList){
+            for(Article val: this.articleList){
+                articles.add(new Article(val.getId(), val.getTitle(),val.getDescItem()));
+            }
+        }
+        return articles;
     }
 
     @Override

@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,15 +22,12 @@ public class Article extends BaseEntity implements Serializable{
     @Lob
     @Basic(fetch = FetchType.LAZY)
     private String content;
-
     private String descItem;
 
-    @JsonIgnoreProperties(value = { "articleList", "password" })
     @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH}, optional=false)
     @JoinColumn(name="user_id")
     private User author;
 
-    @JsonIgnoreProperties(value = {"article"})
     @OneToMany(mappedBy = "article",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     @OrderBy("createTime DESC")
     private List<Comment> commentList;
@@ -43,9 +41,35 @@ public class Article extends BaseEntity implements Serializable{
                     @JoinColumn(name = "tag_id") })
     private  List<Tag> tagList;
 
+
     public  Article(Long id){
         this.id = id;
     }
+
+    public Article(long id, String title, String descItem){
+        this.id=id;
+        this.title=title;
+        this.descItem = descItem;
+    }
+    public Article(long id, String title, String descItem, List<Tag> tagList){
+        this.id=id;
+        this.title=title;
+        this.descItem = descItem;
+        this.tagList = tagList;
+    }
+    public User getAuthor() {
+        return new User(author.getId(),author.getUsername(),author.getPhone());
+    }
+    public List<Comment> getCommentList(){
+        List<Comment> comments = new ArrayList<>();
+        if(null!=this.commentList){
+            for(Comment val: this.commentList){
+                comments.add(new Comment(val.getId(), val.getFromUser(), val.getContent(), val.getReplyList()));
+            }
+        }
+        return comments;
+    }
+
     @Override
     public String toString() {
         return "Article{" +

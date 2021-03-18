@@ -20,18 +20,32 @@ public class Reply extends BaseEntity implements Serializable{
     @JoinColumn(name="comment_id")
     private Comment comment;
 
-    @JsonIgnoreProperties(value = { "articleList", "password" })
     @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH}, optional=false)
     @JoinColumn(name="from_user_id")
     private User fromUser;
 
-    @JsonIgnoreProperties(value = { "articleList", "password" })
     @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH}, optional=false)
     @JoinColumn(name="to_user_id")
     private User toUser;
 
     private String content;
 
+    public Reply(Long id, Comment comment, User fromUser, User toUser, String content){
+        this.id = id;
+        this.comment=comment;
+        this.fromUser = fromUser;
+        this.toUser = toUser;
+        this.content = content;
+    }
+    public Comment getComment(){
+        return new Comment(this.comment.getId(),this.comment.getFromUser());
+    }
+    public User getFromUser(){
+        return new User(this.fromUser.getId(),this.fromUser.getUsername(),this.fromUser.getPhone());
+    }
+    public User getToUser(){
+        return new User(this.toUser.getId(),this.toUser.getUsername(),this.toUser.getPhone());
+    }
     @Override
     public String toString() {
         return "Reply{" +
