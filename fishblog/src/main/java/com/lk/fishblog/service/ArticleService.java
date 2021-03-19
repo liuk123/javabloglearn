@@ -39,11 +39,12 @@ public class ArticleService {
     public Page<Article> findAll(int pageNum, int pageSize){
         return this.articleRepository.findAll(PageRequest.of(pageNum, pageSize));
     }
-    public Article save(String title, String content, String descItem, List<Tag> tagList, User auther){
+    public Article save(Long id, String title, String content, String descItem, List<Tag> tagList, User auther){
         return articleRepository.save(
             Article
                 .builder()
                 .title(title)
+                .id(id)
                 .content(content)
                 .descItem(descItem)
                 .tagList(tagList)
@@ -54,6 +55,4 @@ public class ArticleService {
     public void deleteById(Long id){
         articleRepository.deleteById(id);
     }
-
-
 }

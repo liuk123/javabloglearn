@@ -19,18 +19,18 @@ import java.util.List;
 @AllArgsConstructor
 public class Comment extends BaseEntity implements Serializable {
 
-    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH}, optional=false)
+    @ManyToOne(cascade = {}, optional=false)
     @JoinColumn(name="from_user_id")
     private User fromUser;
 
     @JsonIgnore
-    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH}, optional=false)
+    @ManyToOne(cascade = {}, optional=false)
     @JoinColumn(name="article_id")
     private Article article;
 
     private String content;
 
-    @OneToMany(mappedBy = "comment",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "comment",cascade={CascadeType.REMOVE, CascadeType.REFRESH}, fetch=FetchType.LAZY)
     @OrderBy("createTime ASC")
     private List<Reply> replyList;
 
@@ -38,41 +38,6 @@ public class Comment extends BaseEntity implements Serializable {
         this.id = id;
     }
 
-//    public Comment(Long id, User fromUser ){
-//        this.id = id;
-//        this.fromUser = fromUser;
-//    }
-//    public Comment(Long id, User fromUser, String content, List<Reply> replyList ){
-//        this.id = id;
-//        this.fromUser = fromUser;
-//        this.content = content;
-//        this.replyList = replyList;
-//    }
-//    public User getFromUser(){
-//        if(null!=fromUser){
-//            return new User(fromUser.getId(),fromUser.getUsername(),fromUser.getPhone());
-//        }else{
-//            return new User();
-//        }
-//
-//    }
-//    public Article getArticle(){
-//        if(null!=article){
-//            return new Article(article.getId(), article.getTitle(),article.getDescItem());
-//        }else{
-//            return new Article();
-//        }
-//
-//    }
-//    public List<Reply> getReplyList(){
-//        List<Reply> replys = new ArrayList<>();
-//        if(null!=this.replyList){
-//            for(Reply val: this.replyList){
-//                replys.add(new Reply(val.getId(), val.getComment(), val.getFromUser(), val.getToUser(), val.getContent()));
-//            }
-//        }
-//        return replys;
-//    }
     @Override
     public String toString() {
         return "Comment{" +

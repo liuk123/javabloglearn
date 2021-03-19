@@ -36,27 +36,7 @@ public class User extends BaseEntity implements Serializable{
         this.id = id;
         this.username = username;
     }
-//    public User(Long id, String username, String phone){
-//        this.id = id;
-//        this.username = username;
-//        this.phone = phone;
-//    }
-//    public User(Long id, String username, String phone, String password, Integer role){
-//        this.id = id;
-//        this.username = username;
-//        this.password = password;
-//        this.phone = phone;
-//        this.role = role;
-//    }
-//    public List<Article> getArticleList(){
-//        List<Article> articles = new ArrayList<>();
-//        if(null != this.articleList){
-//            for(Article val: this.articleList){
-//                articles.add(new Article(val.getId(), val.getTitle(),val.getDescItem(),val.getTagList()));
-//            }
-//        }
-//        return articles;
-//    }
+
     @Override
     public String toString() {
         return "User{" +

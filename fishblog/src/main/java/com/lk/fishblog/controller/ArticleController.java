@@ -39,6 +39,10 @@ public class ArticleController {
     @Autowired
     CookieUtil cookieUtil;
 
+    /**
+     * 添加文章
+     * @param a 文章
+     */
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResultSet addByJson(HttpServletRequest request, @RequestBody @Valid  NewArticleRequest a){
@@ -50,10 +54,33 @@ public class ArticleController {
         for(Long val: a.getTagList()){
             tagList.add(new Tag(val));
         }
-        Article article = articleService.save(a.getTitle(),a.getContent(), a.getDescItem(), tagList, user);
+        Article article = articleService.save(a.getId(),a.getTitle(),a.getContent(), a.getDescItem(), tagList, user);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE,"添加成功", article.getId());
     }
 
+    /**
+     * 更新文章
+     * @param a 文章
+     */
+//    @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public ResultSet updateByJson(HttpServletRequest request, @RequestBody @Valid  NewArticleRequest a){
+//        User user =cookieUtil.getLoginUser(request);
+//        if(user == null){
+//            return new ResultSet(ResultSet.RESULT_CODE_FALSE,"请重新登录");
+//        }
+//        List<Tag> tagList = new ArrayList<>();
+//        for(Long val: a.getTagList()){
+//            tagList.add(new Tag(val));
+//        }
+//        Article article = articleService.save(a.getTitle(),a.getContent(), a.getDescItem(), tagList, user);
+//        return new ResultSet(ResultSet.RESULT_CODE_TRUE,"添加成功", article.getId());
+//    }
+
+    /**
+     * 文章详情
+     * @param id 文章id
+     */
     @GetMapping(path="/{id}")
     public ResultSet getById(@PathVariable Long id){
         Article a = articleService.findById(id);
@@ -61,6 +88,12 @@ public class ArticleController {
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", a);
     }
 
+    /**
+     * 列表
+     * @param pageNum 页码
+     * @param pageSize 页数
+     * @param tags 类别
+     */
     @GetMapping(path="/")
     public PageInfo<Article> getAll(@RequestParam Integer pageNum, @RequestParam Integer pageSize, @RequestParam List<Long> tags){
 
@@ -79,6 +112,12 @@ public class ArticleController {
         return page;
     }
 
+    /**
+     * 文章列表
+     * @param id 用户id
+     * @param pageNum 页码
+     * @param pageSize 页数
+     */
     @GetMapping(path="/getByAuthor/{id}")
     public PageInfo<Article> getByAuthor(@PathVariable Long id, @RequestParam Integer pageNum, @RequestParam Integer pageSize){
         Page<Article> a = articleService.findByAuthor(id, pageNum-1, pageSize);
@@ -86,6 +125,10 @@ public class ArticleController {
         return page;
     }
 
+    /**
+     * 删除文章
+     * @param id 文章id
+     */
     @DeleteMapping(path = "/{id}")
     public ResultSet delById(@PathVariable Long id){
         articleService.deleteById(id);
