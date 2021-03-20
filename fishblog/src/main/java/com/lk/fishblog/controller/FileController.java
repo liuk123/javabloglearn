@@ -5,6 +5,7 @@ import com.lk.fishblog.service.ArticleService;
 import com.lk.fishblog.service.TagService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,9 @@ public class FileController {
     final
     ArticleService articleService;
 
-    public final static String UPLOAD_PATH_PREFIX = "uploadFile/";
+    @Value("${upload.path}")
+    private String uploadPath;
+//    public final static String UPLOAD_PATH_PREFIX = "uploadFile/";
 
     public FileController(ArticleService articleService) {
         this.articleService = articleService;
@@ -39,7 +42,7 @@ public class FileController {
             return new ResultSet(ResultSet.RESULT_CODE_FALSE, "文件不可为空");
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
-        String realPath = UPLOAD_PATH_PREFIX;
+        String realPath = uploadPath;
         String format = sdf.format(new Date());
         File realFile = new File(realPath + format);
 
@@ -70,7 +73,7 @@ public class FileController {
             return new ResultSet(ResultSet.RESULT_CODE_FALSE, "文件不可为空");
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
-        String realPath = UPLOAD_PATH_PREFIX;
+        String realPath = uploadPath;
         String format = sdf.format(new Date());
         File realFile = new File(realPath + format);
 
@@ -100,7 +103,8 @@ public class FileController {
 
     @GetMapping(path = "/download")
     public String downLoad(HttpServletResponse response, @RequestParam String filePath) throws UnsupportedEncodingException {
-        File file = new File(filePath);
+        String realPath = uploadPath;
+        File file = new File(realPath + "/" + filePath);
         if(file.exists()){ //判断文件父目录是否存在
             response.reset();
             response.setContentType("application/octet-stream;charset=utf-8");
