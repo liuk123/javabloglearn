@@ -2,3 +2,5 @@
 fishblog/src/main/resources/application.properties
 .idea
 .mvn
+
+/uploadFile/
