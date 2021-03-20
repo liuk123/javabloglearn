@@ -59,25 +59,6 @@ public class ArticleController {
     }
 
     /**
-     * 更新文章
-     * @param a 文章
-     */
-//    @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public ResultSet updateByJson(HttpServletRequest request, @RequestBody @Valid  NewArticleRequest a){
-//        User user =cookieUtil.getLoginUser(request);
-//        if(user == null){
-//            return new ResultSet(ResultSet.RESULT_CODE_FALSE,"请重新登录");
-//        }
-//        List<Tag> tagList = new ArrayList<>();
-//        for(Long val: a.getTagList()){
-//            tagList.add(new Tag(val));
-//        }
-//        Article article = articleService.save(a.getTitle(),a.getContent(), a.getDescItem(), tagList, user);
-//        return new ResultSet(ResultSet.RESULT_CODE_TRUE,"添加成功", article.getId());
-//    }
-
-    /**
      * 文章详情
      * @param id 文章id
      */

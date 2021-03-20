@@ -22,24 +22,21 @@ import java.util.UUID;
 @Slf4j
 public class FileController {
     @Autowired
-    TagService tagService;
-    @Autowired
     ArticleService articleService;
 
     public final static String UPLOAD_PATH_PREFIX = "uploadFile/";
 
-    @PostMapping(path = "/", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(path = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResultSet addByJson(@RequestParam(value = "uploadFile") MultipartFile file, HttpServletRequest request){
+    public ResultSet addFile(@RequestParam(value = "uploadFile") MultipartFile file, HttpServletRequest request){
         if(file.isEmpty()){
             return new ResultSet(ResultSet.RESULT_CODE_FALSE, "文件不可为空");
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
         String realPath = UPLOAD_PATH_PREFIX;
         String format = sdf.format(new Date());
-        //存放上传文件的文件夹
-        File realFile = new File(realPath + format);
 
+        File realFile = new File(realPath + format);
         String fileName = file.getOriginalFilename();
         String fileSuffix = fileName.substring(fileName.lastIndexOf("."));
         fileName = UUID.randomUUID() + fileSuffix;
@@ -58,4 +55,6 @@ public class FileController {
 
         return new ResultSet(ResultSet.RESULT_CODE_FALSE, "上传失败");
     }
+
+
 }
