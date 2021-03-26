@@ -111,7 +111,11 @@ public class ArticleController {
      * @param id 文章id
      */
     @DeleteMapping(path = "/{id}")
-    public ResultSet delById(@PathVariable Long id){
+    public ResultSet delById(HttpServletRequest request, @PathVariable Long id){
+        User user =cookieUtil.getLoginUser(request);
+        if(user == null){
+            return new ResultSet(ResultSet.RESULT_CODE_FALSE,"请重新登录");
+        }
         articleService.deleteById(id);
         return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功");
     }
