@@ -47,6 +47,8 @@ public class ReplyController {
         User fu =cookieUtil.getLoginUser(request);
         if(fu == null){
             return new ResultSet(ResultSet.RESULT_CODE_FALSE,"请重新登录");
+        }else if(fu.getRole()<10){
+            return new ResultSet(ResultSet.RESULT_CODE_FALSE,"没有权限");
         }
         User tu = new User(r.getToUserId(), r.getToUsername());
         Comment c = new Comment(r.getCommentId());

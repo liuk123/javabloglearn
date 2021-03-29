@@ -49,7 +49,10 @@ public class ArticleController {
         User user =cookieUtil.getLoginUser(request);
         if(user == null){
             return new ResultSet(ResultSet.RESULT_CODE_FALSE,"请重新登录");
+        }else if(user.getRole()<100){
+            return new ResultSet(ResultSet.RESULT_CODE_FALSE,"没有权限");
         }
+
         List<Tag> tagList = new ArrayList<>();
         for(Long val: a.getTagList()){
             tagList.add(new Tag(val));
@@ -115,6 +118,10 @@ public class ArticleController {
         User user =cookieUtil.getLoginUser(request);
         if(user == null){
             return new ResultSet(ResultSet.RESULT_CODE_FALSE,"请重新登录");
+        }
+        Article a = articleService.findById(id);
+        if(user.getRole()<1000 || a.getAuthor().getId() != user.getId()){
+            return new ResultSet(ResultSet.RESULT_CODE_FALSE,"没有权限");
         }
         articleService.deleteById(id);
         return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功");

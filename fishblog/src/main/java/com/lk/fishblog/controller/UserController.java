@@ -85,8 +85,8 @@ public class UserController {
      * @return
      */
     @DeleteMapping(path = "/{id}")
-    public ResultSet delById(@PathVariable Long id){
-        userService.deleteById(id);
+    public ResultSet delById(@PathVariable Long id, HttpServletRequest req){
+        userService.deleteById(id, req);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功");
     }
 }

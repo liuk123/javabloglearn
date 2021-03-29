@@ -29,7 +29,6 @@ public class FileController {
 
     @Value("${upload.path}")
     private String uploadPath;
-//    public final static String UPLOAD_PATH_PREFIX = "uploadFile/";
 
     public FileController(ArticleService articleService) {
         this.articleService = articleService;

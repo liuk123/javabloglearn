@@ -55,6 +55,8 @@ public class CommentController {
         User user =cookieUtil.getLoginUser(request);
         if(user == null){
             return new ResultSet(ResultSet.RESULT_CODE_FALSE,"请重新登录");
+        }else if(user.getRole()<10){
+            return new ResultSet(ResultSet.RESULT_CODE_FALSE,"没有权限");
         }
         Article a = new Article(c.getArticleId());
         Comment comment = commentService.save(c.getContent(), user, a);

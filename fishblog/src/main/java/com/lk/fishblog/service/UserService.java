@@ -35,8 +35,16 @@ public class UserService {
     public User findById(Long id){
         return userRepository.getOne(id);
     }
-    public void deleteById(Long id){
+    public ResultSet deleteById(Long id, HttpServletRequest request){
+        User user = cookieUtil.getLoginUser(request);
+        if(null == user){
+            return new ResultSet(ResultSet.RESULT_CODE_FALSE, "请重新登录");
+        }
+        if(user.getRole() < 10000){
+            return new ResultSet(ResultSet.RESULT_CODE_FALSE, "没有权限删除用户");
+        }
         userRepository.deleteById(id);
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功");
     }
     public ResultSet logout(HttpServletRequest request){
         cookieUtil.removeCookie(request);
