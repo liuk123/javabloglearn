@@ -66,22 +66,37 @@ public class ArticleController {
 //图片从缓存文件夹移入正式文件夹
         List<String> urlList = regUtil.extractUrls(a.getContent());
         for(String url: urlList){
-            System.out.println("url:"+url);
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
-            String format = sdf.format(new Date());
-            String realPath = uploadPath;
-            File newFile = new File(realPath + format);
-            File oldFile = new File(url.substring(url.indexOf(uploadTemPath),url.lastIndexOf(')')));
-
-            fileUtil.moveFile(oldFile.getAbsolutePath(), newFile.getAbsolutePath());
+            if(url.contains(uploadTemPath)){
+                System.out.println("url:"+url);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
+                String format = sdf.format(new Date());
+                String realPath = uploadPath;
+                File newFile = new File(realPath + format);
+                File oldFile = new File(url.substring(url.indexOf(uploadTemPath),url.lastIndexOf(')')));
+                fileUtil.moveFile(oldFile.getAbsolutePath(), newFile.getAbsolutePath());
+            }
         }
-//图片地址替换
+//文章中图片地址替换
         a.setContent(a.getContent().replaceAll(uploadTemPath,uploadPath));
+//修改文章时，删除多余图片
+        if(null != a.getId()){
+            Article oldA = articleService.findById(a.getId());
+            if(null != oldA){
+                List<String> urlOldList = regUtil.extractUrls(oldA.getContent());
+                for(String oldUrl: urlOldList){
+                    if(!urlList.contains(oldUrl)){
+                        File oldFile = new File(oldUrl.substring(oldUrl.indexOf(uploadPath),oldUrl.lastIndexOf(')')));
+                        fileUtil.delFile(oldFile.getAbsolutePath());
+                    }
+                }
+            }
+        }
 
         List<Tag> tagList = new ArrayList<>();
         for(Long val: a.getTagList()){
             tagList.add(new Tag(val));
         }
+
         Article article = articleService.save(a.getId(),a.getTitle(),a.getContent(), a.getDescItem(), tagList, user);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE,"添加成功", article.getId());
     }
