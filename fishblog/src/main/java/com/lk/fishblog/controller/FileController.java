@@ -1,6 +1,9 @@
 package com.lk.fishblog.controller;
 
 import com.lk.fishblog.common.utils.ResultSet;
+import com.lk.fishblog.model.Article;
+import com.lk.fishblog.model.Tag;
+import com.lk.fishblog.model.User;
 import com.lk.fishblog.service.ArticleService;
 import com.lk.fishblog.service.TagService;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -29,6 +33,8 @@ public class FileController {
 
     @Value("${upload.path}")
     private String uploadPath;
+    @Value("${upload.temPath}")
+    private String uploadTemPath;
 
     public FileController(ArticleService articleService) {
         this.articleService = articleService;
@@ -41,7 +47,7 @@ public class FileController {
             return new ResultSet(ResultSet.RESULT_CODE_FALSE, "文件不可为空");
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
-        String realPath = uploadPath;
+        String realPath = uploadTemPath;
         String format = sdf.format(new Date());
         File realFile = new File(realPath + format);
 
@@ -72,7 +78,7 @@ public class FileController {
             return new ResultSet(ResultSet.RESULT_CODE_FALSE, "文件不可为空");
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
-        String realPath = uploadPath;
+        String realPath = uploadTemPath;
         String format = sdf.format(new Date());
         File realFile = new File(realPath + format);
 
@@ -144,5 +150,26 @@ public class FileController {
             }
         }
         return null;
+    }
+
+    /**
+     * 删除文件(需要优化)
+     * @param urls 文件路径
+     */
+    @DeleteMapping(path = "/")
+    public ResultSet delById(@RequestParam String[] urls){
+        List<String> s = new ArrayList<>();
+        List<String> r = new ArrayList<>();
+        for(String url:urls){
+            File file = new File("" + url);
+            if(file.delete()){
+                System.out.println(url);
+                s.add(url);
+            }else{
+                System.out.println("url error" + url);
+                r.add(url);
+            };
+        }
+        return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功", r);
     }
 }
