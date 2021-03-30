@@ -55,7 +55,7 @@ public class FileUtil {
             e.printStackTrace();
         }
     }
-    public void delFile(String srcPathStr, String desPathStr) {
+    public void delFile(String srcPathStr) {
         try{
             File file = new File(srcPathStr);
             if(file.delete()){

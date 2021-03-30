@@ -159,7 +159,7 @@ public class FileController {
     public ResultSet delById(@RequestParam String[] urls){
         List<String> r = new ArrayList<>();
         for(String url:urls){
-            fileUtil.delFile(url, uploadPath);
+            fileUtil.delFile(url);
         }
         return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功");
     }

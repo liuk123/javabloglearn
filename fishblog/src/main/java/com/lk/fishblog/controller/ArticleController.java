@@ -145,9 +145,16 @@ public class ArticleController {
             return new ResultSet(ResultSet.RESULT_CODE_FALSE,"请重新登录");
         }
         Article a = articleService.findById(id);
-        if(user.getRole()<1000 || a.getAuthor().getId() != user.getId()){
+        if(!a.getAuthor().getId().equals(user.getId()) && user.getRole()<1000){
             return new ResultSet(ResultSet.RESULT_CODE_FALSE,"没有权限");
         }
+
+        List<String> urlList = regUtil.extractUrls(a.getContent());
+        for(String url: urlList){
+            File oldFile = new File(url.substring(url.indexOf(uploadPath),url.lastIndexOf(')')));
+            fileUtil.delFile(oldFile.getAbsolutePath());
+        }
+
         articleService.deleteById(id);
         return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功");
     }
