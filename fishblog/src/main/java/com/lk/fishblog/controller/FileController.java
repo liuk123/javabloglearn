@@ -1,11 +1,8 @@
 package com.lk.fishblog.controller;
 
+import com.lk.fishblog.common.utils.FileUtil;
 import com.lk.fishblog.common.utils.ResultSet;
-import com.lk.fishblog.model.Article;
-import com.lk.fishblog.model.Tag;
-import com.lk.fishblog.model.User;
 import com.lk.fishblog.service.ArticleService;
-import com.lk.fishblog.service.TagService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +27,8 @@ import java.util.UUID;
 public class FileController {
     final
     ArticleService articleService;
+    @Autowired
+    FileUtil fileUtil;
 
     @Value("${upload.path}")
     private String uploadPath;
@@ -61,7 +60,7 @@ public class FileController {
         }
         try{
             file.transferTo(newFile);
-            String filePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/uploadFile/" + format + fileName;
+            String filePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/"+ uploadTemPath + format + fileName;
             return new ResultSet(ResultSet.RESULT_CODE_TRUE, "上传成功", filePath);
         }catch (IOException e){
             e.printStackTrace();
@@ -95,7 +94,7 @@ public class FileController {
                 }
                 try{
                     file.transferTo(newFile);
-                    String filePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/uploadFile/" + format + fileName;
+                    String filePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/"+uploadTemPath + format + fileName;
 
                 }catch (IOException e){
                     e.printStackTrace();
@@ -158,18 +157,10 @@ public class FileController {
      */
     @DeleteMapping(path = "/")
     public ResultSet delById(@RequestParam String[] urls){
-        List<String> s = new ArrayList<>();
         List<String> r = new ArrayList<>();
         for(String url:urls){
-            File file = new File("" + url);
-            if(file.delete()){
-                System.out.println(url);
-                s.add(url);
-            }else{
-                System.out.println("url error" + url);
-                r.add(url);
-            };
+            fileUtil.delFile(url, uploadPath);
         }
-        return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功", r);
+        return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功");
     }
 }

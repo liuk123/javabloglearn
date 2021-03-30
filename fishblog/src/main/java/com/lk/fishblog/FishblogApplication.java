@@ -41,9 +41,12 @@ public class FishblogApplication implements WebMvcConfigurer {
 
 	@Value("${upload.path}")
 	private String uploadPath;
+	@Value("${upload.temPath}")
+	private String uploadTemPath;
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/"+uploadPath+"**").addResourceLocations("file:D:/code/java/javabloglearn/fishblog/" + uploadPath);
+		registry.addResourceHandler("/"+uploadTemPath+"**").addResourceLocations("file:D:/code/java/javabloglearn/fishblog/" + uploadTemPath);
 	}
 //	@Bean
 //	public Jackson2ObjectMapperBuilderCustomizer jacksonBuilderCustomizer() {

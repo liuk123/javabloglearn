@@ -1,8 +1,6 @@
 package com.lk.fishblog.controller;
 
-import com.lk.fishblog.common.utils.CookieUtil;
-import com.lk.fishblog.common.utils.PageInfo;
-import com.lk.fishblog.common.utils.ResultSet;
+import com.lk.fishblog.common.utils.*;
 import com.lk.fishblog.controller.request.NewArticleRequest;
 import com.lk.fishblog.model.Article;
 import com.lk.fishblog.model.Tag;
@@ -13,6 +11,7 @@ import com.lk.fishblog.service.ReplyService;
 import com.lk.fishblog.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +19,10 @@ import org.springframework.http.MediaType;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -38,6 +40,15 @@ public class ArticleController {
     UserService userService;
     @Autowired
     CookieUtil cookieUtil;
+    @Autowired
+    RegUtil regUtil;
+    @Autowired
+    FileUtil fileUtil;
+
+    @Value("${upload.path}")
+    private String uploadPath;
+    @Value("${upload.temPath}")
+    private String uploadTemPath;
 
     /**
      * 添加文章
@@ -52,6 +63,20 @@ public class ArticleController {
         }else if(user.getRole()<100){
             return new ResultSet(ResultSet.RESULT_CODE_FALSE,"没有权限");
         }
+//图片从缓存文件夹移入正式文件夹
+        List<String> urlList = regUtil.extractUrls(a.getContent());
+        for(String url: urlList){
+            System.out.println("url:"+url);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
+            String format = sdf.format(new Date());
+            String realPath = uploadPath;
+            File newFile = new File(realPath + format);
+            File oldFile = new File(url.substring(url.indexOf(uploadTemPath),url.lastIndexOf(')')));
+
+            fileUtil.moveFile(oldFile.getAbsolutePath(), newFile.getAbsolutePath());
+        }
+//图片地址替换
+        a.setContent(a.getContent().replaceAll(uploadTemPath,uploadPath));
 
         List<Tag> tagList = new ArrayList<>();
         for(Long val: a.getTagList()){
