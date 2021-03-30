@@ -53,6 +53,12 @@ public class Article implements Serializable{
     public  Article(Long id){
         this.id = id;
     }
+    public  Article(String content){
+        this.content = content;
+    }
+    public  Article(User author ){
+        this.author = author;
+    }
 
     @Override
     public String toString() {
