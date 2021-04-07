@@ -12,7 +12,11 @@ import java.util.regex.Pattern;
 
 @Component
 public class FileUtil {
-
+    /**
+     * 复制文件
+     * @param srcPathStr 原始
+     * @param desPathStr 目标
+     */
     public void copyFile(String srcPathStr, String desPathStr) {
         //获取源文件的名称
         String newFileName = srcPathStr.substring(srcPathStr.lastIndexOf("/")+1); //目标文件地址
@@ -38,6 +42,11 @@ public class FileUtil {
         }
     }
 
+    /**
+     * 移动文件
+     * @param srcPathStr 原始
+     * @param desPathStr 目标
+     */
     public void moveFile(String srcPathStr, String desPathStr) {
         try{
             File file = new File(srcPathStr);
@@ -55,6 +64,11 @@ public class FileUtil {
             e.printStackTrace();
         }
     }
+
+    /**
+     * 删除
+     * @param srcPathStr 文件路径
+     */
     public void delFile(String srcPathStr) {
         try{
             File file = new File(srcPathStr);

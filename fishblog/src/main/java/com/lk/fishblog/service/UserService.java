@@ -5,6 +5,7 @@ import com.lk.fishblog.common.utils.ResultSet;
 import com.lk.fishblog.model.User;
 import com.lk.fishblog.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -59,7 +60,8 @@ public class UserService {
             return new ResultSet(ResultSet.RESULT_CODE_FALSE, "手机号或密码输入有误");
         }
         String pwd = user.getPassword();
-        if(!password.equals(pwd)){
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        if(!encoder.matches(password, pwd)){
             return new ResultSet(ResultSet.RESULT_CODE_FALSE, "手机号或密码输入有误");
         }
         String token = UUID.randomUUID().toString().replace("-","");

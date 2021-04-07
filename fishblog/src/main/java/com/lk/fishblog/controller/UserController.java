@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,7 +56,9 @@ public class UserController {
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResultSet addByJson(HttpServletResponse response, @RequestBody @Valid NewUserRequest u){
-        return userService.register(response, u.getUsername(),u.getPassword(),u.getPhone(),10);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        System.out.println(encoder.encode(u.getPassword()));
+        return userService.register(response, u.getUsername(),encoder.encode(u.getPassword()),u.getPhone(),10);
     }
 
     /**

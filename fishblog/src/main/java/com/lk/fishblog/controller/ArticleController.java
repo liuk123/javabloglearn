@@ -80,7 +80,7 @@ public class ArticleController {
         a.setContent(a.getContent().replaceAll(uploadTemPath,uploadPath));
 //修改文章时，删除多余图片
         if(null != a.getId()){
-            Article oldA = articleService.findContentById(a.getId());
+            Article oldA = articleService.findById(a.getId());
             if(null != oldA){
                 List<String> urlOldList = regUtil.extractUrls(oldA.getContent());
                 for(String oldUrl: urlOldList){
@@ -159,7 +159,7 @@ public class ArticleController {
         if(user == null){
             return new ResultSet(ResultSet.RESULT_CODE_FALSE,"请重新登录");
         }
-        Article a = articleService.findAuthorById(id);
+        Article a = articleService.findById(id);
         if(!a.getAuthor().getId().equals(user.getId()) && user.getRole()<1000){
             return new ResultSet(ResultSet.RESULT_CODE_FALSE,"没有权限");
         }

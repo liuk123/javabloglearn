@@ -55,10 +55,10 @@ public class ArticleService {
     public void deleteById(Long id){
         articleRepository.deleteById(id);
     }
-    public Article findContentById(Long id){
-        return articleRepository.findContentById(id);
-    }
-    public Article findAuthorById(Long id){
-        return articleRepository.findAuthorById(id);
-    }
+//    public Article findContentById(Long id){
+//        return articleRepository.findContentById(id);
+//    }
+//    public Article findAuthorById(Long id){
+//        return articleRepository.findAuthorById(id);
+//    }
 }

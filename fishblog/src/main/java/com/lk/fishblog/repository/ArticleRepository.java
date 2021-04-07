@@ -12,8 +12,8 @@ public interface ArticleRepository extends BaseRepository<Article, Long> {
     Page<Article> findAllByAuthor_Id(Long id, Pageable pageable);
     Page<Article> findDistinctByTagListIn(List<Tag> tagList, Pageable pageable);
 
-    @Query(value = "SELECT new Article(a.content) FROM Article a WHERE a.id=?1")
-    Article findContentById(Long id);
-    @Query(value = "SELECT new Article(a.author) FROM Article a WHERE a.id=?1")
-    Article findAuthorById(Long id);
+//    @Query(value = "SELECT new Article(a.content) FROM Article a WHERE a.id=?1")
+//    Article findContentById(Long id);
+//    @Query(value = "SELECT new Article(a.author) FROM Article a WHERE a.id=?1")
+//    Article findAuthorById(Long id);
 }
