@@ -54,6 +54,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .authenticationProvider(authenticationProvider())
 
+            .httpBasic()
+            //未登录时，进行json格式的提示
+            .authenticationEntryPoint((request,response,authException) -> {
+                response.setContentType("application/json;charset=utf-8");
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                PrintWriter out = response.getWriter();
+                Map<String,Object> map = new HashMap<String,Object>();
+                map.put("resultCode",0);
+                map.put("resultMessage","未登录");
+                out.write(objectMapper.writeValueAsString(map));
+                out.flush();
+                out.close();
+            })
+
+            .and()
             .formLogin() //使用自带的登录
             .usernameParameter("username")
             .passwordParameter("password")
@@ -80,10 +95,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             //登录成功，返回json
 //            .successHandler(new MyAuthenticationSuccessHandler("www.baidu.com"))
             .successHandler((request,response,authentication) -> {
-                Map<String,Object> map = new HashMap();
+                Map<String,Object> map = new HashMap<String,Object>();
                 map.put("resultCode",1);
                 map.put("resultMessage","登录成功");
-                map.put("data",authentication);
+                map.put("data",authentication.getPrincipal());
                 response.setContentType("application/json;charset=utf-8");
                 PrintWriter out = response.getWriter();
                 out.write(objectMapper.writeValueAsString(map));
@@ -103,20 +118,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             //失效时间，默认为两周，这里设为60秒
             .tokenValiditySeconds(60)
 
-            .and()
-            .httpBasic()
-            //未登录时，进行json格式的提示
-            .authenticationEntryPoint((request,response,authException) -> {
-                response.setContentType("application/json;charset=utf-8");
-                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                PrintWriter out = response.getWriter();
-                Map<String,Object> map = new HashMap<String,Object>();
-                map.put("resultCode",0);
-                map.put("resultMessage","未登录");
-                out.write(objectMapper.writeValueAsString(map));
-                out.flush();
-                out.close();
-            })
             .and()
             .exceptionHandling()
             //没有权限，返回json
@@ -155,7 +156,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()//权限
             .antMatchers(securityProperties.getMatchers()).permitAll()//不拦截这些请求
             .regexMatchers(securityProperties.getRegexMatchers()).permitAll()
-            .regexMatchers(HttpMethod.GET, "/article").hasAnyAuthority("normal")
+//            .regexMatchers(HttpMethod.GET, "/article").hasAnyAuthority("normal")
             .anyRequest()
             .authenticated();
 

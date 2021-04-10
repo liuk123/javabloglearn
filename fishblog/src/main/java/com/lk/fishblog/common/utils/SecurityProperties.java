@@ -22,6 +22,6 @@ public class SecurityProperties {
 
     };
     // 默认登录页
-    private String loginPageHtml = "signin";
+//    private String loginPageHtml = "signin";
 
 }

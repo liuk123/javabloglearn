@@ -1,6 +1,7 @@
 package com.lk.fishblog.controller;
 
 import com.lk.fishblog.common.utils.CookieUtil;
+import com.lk.fishblog.common.utils.MyUserDetails;
 import com.lk.fishblog.common.utils.ResultSet;
 import com.lk.fishblog.controller.request.NewCommentRequest;
 import com.lk.fishblog.model.Article;
@@ -14,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,15 +53,16 @@ public class CommentController {
 
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResultSet addByJson(HttpServletRequest request, @RequestBody @Valid NewCommentRequest c){
-        User user =cookieUtil.getLoginUser(request);
-        if(user == null){
-            return new ResultSet(ResultSet.RESULT_CODE_FALSE,"请重新登录");
-        }else if(user.getRole()<10){
-            return new ResultSet(ResultSet.RESULT_CODE_FALSE,"没有权限");
-        }
+    public ResultSet addByJson(HttpServletRequest request, @RequestBody @Valid NewCommentRequest c, Authentication authentication){
+        MyUserDetails user = (MyUserDetails) authentication.getPrincipal();
+//        User user =cookieUtil.getLoginUser(request);
+//        if(user == null){
+//            return new ResultSet(ResultSet.RESULT_CODE_FALSE,"请重新登录");
+//        }else if(user.getRole()<10){
+//            return new ResultSet(ResultSet.RESULT_CODE_FALSE,"没有权限");
+//        }
         Article a = new Article(c.getArticleId());
-        Comment comment = commentService.save(c.getContent(), user, a);
+        Comment comment = commentService.save(c.getContent(), new User(user.getId(),user.getUsername()), a);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "添加成功", comment);
     }
 

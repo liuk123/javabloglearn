@@ -60,10 +60,10 @@ public class UserController {
      */
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResultSet addByJson(HttpServletResponse response, @RequestBody @Valid NewUserRequest u){
+    public ResultSet addByJson(@RequestBody @Valid NewUserRequest u){
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         System.out.println(encoder.encode(u.getPassword()));
-        return userService.register(response, u.getUsername(),encoder.encode(u.getPassword()),u.getPhone(),10);
+        return userService.register(u.getUsername(),encoder.encode(u.getPassword()),u.getPhone(),10);
     }
 
     /**
@@ -82,10 +82,10 @@ public class UserController {
      * @param
      * @return
      */
-    @GetMapping(path="/logout")
-    public ResultSet logout(HttpServletRequest req){
-        return userService.logout(req);
-    }
+//    @GetMapping(path="/logout")
+//    public ResultSet logout(HttpServletRequest req){
+//        return userService.logout(req);
+//    }
 
     /**
      * 删除
