@@ -14,12 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.MediaType;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.File;
+import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -56,13 +58,14 @@ public class ArticleController {
      */
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResultSet addByJson(HttpServletRequest request, @RequestBody @Valid  NewArticleRequest a){
-        User user =cookieUtil.getLoginUser(request);
-        if(user == null){
-            return new ResultSet(ResultSet.RESULT_CODE_FALSE,"请重新登录");
-        }else if(user.getRole()<100){
-            return new ResultSet(ResultSet.RESULT_CODE_FALSE,"没有权限");
-        }
+    public ResultSet addByJson(HttpServletRequest request, @RequestBody @Valid  NewArticleRequest a, Authentication authentication){
+        MyUserDetails user = (MyUserDetails) authentication.getPrincipal();
+//        User user =cookieUtil.getLoginUser(request);
+//        if(user == null){
+//            return new ResultSet(ResultSet.RESULT_CODE_FALSE,"请重新登录");
+//        }else if(user.getRole()<100){
+//            return new ResultSet(ResultSet.RESULT_CODE_FALSE,"没有权限");
+//        }
 //图片从缓存文件夹移入正式文件夹
         List<String> urlList = regUtil.extractUrls(a.getContent());
         for(String url: urlList){
@@ -97,7 +100,7 @@ public class ArticleController {
             tagList.add(new Tag(val));
         }
 
-        Article article = articleService.save(a.getId(),a.getTitle(),a.getContent(), a.getDescItem(), tagList, user);
+        Article article = articleService.save(a.getId(),a.getTitle(),a.getContent(), a.getDescItem(), tagList, new User(user.getId(),user.getUsername()));
         return new ResultSet(ResultSet.RESULT_CODE_TRUE,"添加成功", article.getId());
     }
 

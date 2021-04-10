@@ -1,5 +1,6 @@
 package com.lk.fishblog.controller;
 
+import com.lk.fishblog.common.utils.MyUserDetails;
 import com.lk.fishblog.common.utils.ResultSet;
 import com.lk.fishblog.controller.request.NewUserRequest;
 import com.lk.fishblog.model.User;
@@ -11,12 +12,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/user")
@@ -40,12 +43,14 @@ public class UserController {
 
     /**
      * 获取当前登录人信息
-     * @param request
+     * @param authentication
      * @return
      */
     @GetMapping(path="/currentUser")
-    public ResultSet getCurrentUserBySession(HttpServletRequest request){
-        return userService.getCurrentUserBySession(request);
+    public ResultSet getCurrentUserBySession(Authentication authentication){
+//        return userService.getCurrentUserBySession(request);
+        MyUserDetails u = (MyUserDetails) authentication.getPrincipal();
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "获取用户信息", new User(u.getId(),u.getUsername()));
     }
 
     /**
