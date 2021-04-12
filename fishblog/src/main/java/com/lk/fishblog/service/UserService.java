@@ -31,7 +31,7 @@ public class UserService {
                 .username(username)
                 .password(password)
                 .phone(phone)
-                .role(role)
+//                .role(role)
                 .build()
         );
     }

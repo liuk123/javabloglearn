@@ -158,14 +158,14 @@ public class ArticleController {
      */
     @DeleteMapping(path = "/{id}")
     public ResultSet delById(HttpServletRequest request, @PathVariable Long id){
-        User user =cookieUtil.getLoginUser(request);
-        if(user == null){
-            return new ResultSet(ResultSet.RESULT_CODE_FALSE,"请重新登录");
-        }
+//        User user =cookieUtil.getLoginUser(request);
+//        if(user == null){
+//            return new ResultSet(ResultSet.RESULT_CODE_FALSE,"请重新登录");
+//        }
         Article a = articleService.findById(id);
-        if(!a.getAuthor().getId().equals(user.getId()) && user.getRole()<1000){
-            return new ResultSet(ResultSet.RESULT_CODE_FALSE,"没有权限");
-        }
+//        if(!a.getAuthor().getId().equals(user.getId()) && user.getRole()<1000){
+//            return new ResultSet(ResultSet.RESULT_CODE_FALSE,"没有权限");
+//        }
 
         List<String> urlList = regUtil.extractUrls(a.getContent());
         for(String url: urlList){

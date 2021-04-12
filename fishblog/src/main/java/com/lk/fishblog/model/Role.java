@@ -20,10 +20,19 @@ public class Role extends BaseEntity implements Serializable{
     private String description;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "roleList", cascade = {CascadeType.REFRESH}, fetch=FetchType.LAZY)
-    private List<Article> userList;
+    @ManyToMany(mappedBy = "roleList", cascade = {}, fetch=FetchType.LAZY)
+    private List<User> userList;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "roleList", cascade = {CascadeType.REFRESH}, fetch=FetchType.LAZY)
-    private List<Article> menuList;
+    @ManyToMany(mappedBy = "roleList", cascade = {}, fetch=FetchType.LAZY)
+    private List<Menu> menuList;
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id='" + getId() + '\'' +
+                ", username='" + name + '\'' +
+                ", password='" + description + '\'' +
+                '}';
+    }
 }

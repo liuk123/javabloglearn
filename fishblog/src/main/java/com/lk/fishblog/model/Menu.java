@@ -25,12 +25,28 @@ public class Menu extends BaseEntity implements Serializable{
     private String link;
     private String permission;
 
-    @ManyToMany(cascade={}, fetch= FetchType.EAGER)
+    @ManyToMany(cascade={}, fetch= FetchType.LAZY)
     @JoinTable(
             name = "b_menu_role",
             joinColumns = {
                     @JoinColumn(name = "menu_id") },
             inverseJoinColumns = {
                     @JoinColumn(name = "role_id") })
-    private List<Tag> roleList;
+    private List<Role> roleList;
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id='" + getId() + '\'' +
+                ", username='" + title + '\'' +
+                ", password='" + type + '\'' +
+                ", password='" + icon + '\'' +
+                ", password='" + disabled + '\'' +
+                ", password='" + selected + '\'' +
+                ", password='" + open + '\'' +
+                ", password='" + route + '\'' +
+                ", password='" + link + '\'' +
+                ", password='" + permission + '\'' +
+                '}';
+    }
 }
