@@ -28,6 +28,15 @@ public class User extends BaseEntity implements Serializable{
     @OrderBy("createTime DESC")
     private List<Article> articleList;
 
+    @ManyToMany(cascade={}, fetch=FetchType.EAGER)
+    @JoinTable(
+            name = "b_user_role",
+            joinColumns = {
+                    @JoinColumn(name = "user_id") },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "role_id") })
+    private List<Tag> roleList;
+
 
     public User(Long id){
         this.id = id;

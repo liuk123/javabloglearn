@@ -35,11 +35,11 @@ public class MyCustomUserService implements UserDetailsService {
         MyUserDetails myUserDetail = new MyUserDetails();
         myUserDetail.setUsername(username);
         myUserDetail.setId(u.getId());
-//        myUserDetail.setPassword(u.getPassword());
+        myUserDetail.setPassword(u.getPassword());
         myUserDetail.setAuthorities(AuthorityUtils.commaSeparatedStringToAuthorityList(
                 "normal"
         ));
-        myUserDetail.setPassword(new BCryptPasswordEncoder().encode(u.getPassword()) );
+//        myUserDetail.setPassword(new BCryptPasswordEncoder().encode(u.getPassword()) );
 
         return myUserDetail;
     }

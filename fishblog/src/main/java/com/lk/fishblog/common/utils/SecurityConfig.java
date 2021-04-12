@@ -69,6 +69,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             })
 
             .and()
+            .authorizeRequests()//权限
+            .antMatchers(securityProperties.getMatchers()).permitAll()//不拦截这些请求
+            .regexMatchers(securityProperties.getRegexMatchers()).permitAll()
+//            .regexMatchers(HttpMethod.GET, "/article").hasAnyAuthority("normal")
+            .antMatchers("/user/**").permitAll()
+            .anyRequest()
+            .authenticated()
+
+            .and()
             .formLogin() //使用自带的登录
             .usernameParameter("username")
             .passwordParameter("password")
@@ -150,15 +159,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 out.write(objectMapper.writeValueAsString(map));
                 out.flush();
                 out.close();
-            })
-
-            .and()
-            .authorizeRequests()//权限
-            .antMatchers(securityProperties.getMatchers()).permitAll()//不拦截这些请求
-            .regexMatchers(securityProperties.getRegexMatchers()).permitAll()
-//            .regexMatchers(HttpMethod.GET, "/article").hasAnyAuthority("normal")
-            .anyRequest()
-            .authenticated();
+            });
 
         //开启跨域访问
         http.cors().disable();

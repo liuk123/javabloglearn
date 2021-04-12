@@ -4,3 +4,4 @@ fishblog/src/main/resources/application.properties
 .mvn
 
 /uploadFile/
+*.log
