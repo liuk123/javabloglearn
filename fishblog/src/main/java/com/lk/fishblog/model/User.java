@@ -27,7 +27,7 @@ public class User extends BaseEntity implements Serializable{
     @OrderBy("createTime DESC")
     private List<Article> articleList;
 
-    @ManyToMany(cascade={}, fetch=FetchType.LAZY)
+    @ManyToMany(cascade={}, fetch=FetchType.EAGER)
     @JoinTable(
             name = "b_user_role",
             joinColumns = {

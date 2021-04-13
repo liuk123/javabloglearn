@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MyUserDetails implements UserDetails {
     private static final long serialVersionUID = 1L;
@@ -18,15 +19,9 @@ public class MyUserDetails implements UserDetails {
 
     private List<Role> roleInfo;
 
-    public List<Role> getRoleInfo() {
-        return roleInfo;
-    }
-
-    public void setRoleInfo(List<Role> roleInfo) {
-        this.roleInfo = roleInfo;
-    }
-
     private Collection<? extends GrantedAuthority> authorities;
+
+
 
     public Long getId() {
         return id;
@@ -42,6 +37,10 @@ public class MyUserDetails implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<String> getRoles() {
+        return authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
     }
 
     public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
