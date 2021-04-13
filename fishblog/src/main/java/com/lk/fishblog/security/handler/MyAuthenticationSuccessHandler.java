@@ -1,6 +1,6 @@
-package com.lk.fishblog.common.utils;
+package com.lk.fishblog.security.handler;
 
-import com.lk.fishblog.common.utils.MyUserDetails;
+import com.lk.fishblog.security.MyUserDetails;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 

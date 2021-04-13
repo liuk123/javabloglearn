@@ -1,9 +1,11 @@
-package com.lk.fishblog.common.utils;
+package com.lk.fishblog.security;
 
+import com.lk.fishblog.model.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
 public class MyUserDetails implements UserDetails {
     private static final long serialVersionUID = 1L;
@@ -13,6 +15,16 @@ public class MyUserDetails implements UserDetails {
     private String username;
     //登录密码
     private String password;
+
+    private List<Role> roleInfo;
+
+    public List<Role> getRoleInfo() {
+        return roleInfo;
+    }
+
+    public void setRoleInfo(List<Role> roleInfo) {
+        this.roleInfo = roleInfo;
+    }
 
     private Collection<? extends GrantedAuthority> authorities;
 

@@ -1,4 +1,4 @@
-package com.lk.fishblog.common.utils;
+package com.lk.fishblog.security;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;

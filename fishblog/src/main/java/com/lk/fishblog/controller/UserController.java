@@ -1,6 +1,6 @@
 package com.lk.fishblog.controller;
 
-import com.lk.fishblog.common.utils.MyUserDetails;
+import com.lk.fishblog.security.MyUserDetails;
 import com.lk.fishblog.common.utils.ResultSet;
 import com.lk.fishblog.controller.request.NewUserRequest;
 import com.lk.fishblog.model.User;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.security.Principal;
 
 @RestController
 @RequestMapping("/user")

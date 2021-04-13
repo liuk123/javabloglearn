@@ -1,4 +1,4 @@
-package com.lk.fishblog.common.utils;
+package com.lk.fishblog.security.config;
 
 import java.io.PrintWriter;
 import java.util.HashMap;
@@ -6,8 +6,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.lk.fishblog.service.MyCustomUserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.lk.fishblog.security.MyCustomUserService;
+import com.lk.fishblog.security.MyPasswordEncoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -19,7 +19,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;

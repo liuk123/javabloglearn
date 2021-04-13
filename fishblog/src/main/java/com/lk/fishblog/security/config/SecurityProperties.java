@@ -1,4 +1,4 @@
-package com.lk.fishblog.common.utils;
+package com.lk.fishblog.security.config;
 
 import lombok.Data;
 import lombok.Getter;

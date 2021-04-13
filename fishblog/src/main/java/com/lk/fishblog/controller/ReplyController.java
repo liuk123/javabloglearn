@@ -1,7 +1,7 @@
 package com.lk.fishblog.controller;
 
 import com.lk.fishblog.common.utils.CookieUtil;
-import com.lk.fishblog.common.utils.MyUserDetails;
+import com.lk.fishblog.security.MyUserDetails;
 import com.lk.fishblog.common.utils.ResultSet;
 import com.lk.fishblog.controller.request.NewReplyRequest;
 import com.lk.fishblog.model.Comment;

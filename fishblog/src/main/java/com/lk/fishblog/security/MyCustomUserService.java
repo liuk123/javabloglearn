@@ -1,6 +1,6 @@
-package com.lk.fishblog.service;
+package com.lk.fishblog.security;
 
-import com.lk.fishblog.common.utils.MyUserDetails;
+import com.lk.fishblog.security.MyUserDetails;
 import com.lk.fishblog.model.User;
 import com.lk.fishblog.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,6 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 /**
  * 登录专用类
