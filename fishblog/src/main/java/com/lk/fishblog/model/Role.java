@@ -31,8 +31,8 @@ public class Role extends BaseEntity implements Serializable{
     public String toString() {
         return "Role{" +
                 "id='" + getId() + '\'' +
-                ", username='" + name + '\'' +
-                ", password='" + description + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 }
