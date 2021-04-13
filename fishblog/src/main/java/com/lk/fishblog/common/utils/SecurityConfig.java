@@ -56,17 +56,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
             .httpBasic()
             //未登录时，进行json格式的提示
-            .authenticationEntryPoint((request,response,authException) -> {
-                response.setContentType("application/json;charset=utf-8");
-                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                PrintWriter out = response.getWriter();
-                Map<String,Object> map = new HashMap<String,Object>();
-                map.put("resultCode",0);
-                map.put("resultMessage","未登录");
-                out.write(objectMapper.writeValueAsString(map));
-                out.flush();
-                out.close();
-            })
+//            .authenticationEntryPoint((request,response,authException) -> {
+//                response.setContentType("application/json;charset=utf-8");
+//                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+//                PrintWriter out = response.getWriter();
+//                Map<String,Object> map = new HashMap<String,Object>();
+//                map.put("resultCode",0);
+//                map.put("resultMessage","未登录");
+//                out.write(objectMapper.writeValueAsString(map));
+//                out.flush();
+//                out.close();
+//            })
 
             .and()
             .authorizeRequests()//权限
@@ -74,6 +74,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .regexMatchers(securityProperties.getRegexMatchers()).permitAll()
 //            .regexMatchers(HttpMethod.GET, "/article").hasAnyAuthority("normal")
             .antMatchers("/user/**").permitAll()
+            .antMatchers("/menu/**").permitAll()
             .anyRequest()
             .authenticated()
 

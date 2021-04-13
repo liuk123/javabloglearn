@@ -63,7 +63,7 @@ public class UserController {
     public ResultSet addByJson(@RequestBody @Valid NewUserRequest u){
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         System.out.println(encoder.encode(u.getPassword()));
-        return userService.register(u.getUsername(),encoder.encode(u.getPassword()),u.getPhone(),10);
+        return userService.register(u.getUsername(),encoder.encode(u.getPassword()),u.getPhone());
     }
 
     /**

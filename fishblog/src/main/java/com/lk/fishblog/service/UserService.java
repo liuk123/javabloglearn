@@ -24,14 +24,13 @@ public class UserService {
 //    @Autowired
 //    CookieUtil cookieUtil;
 
-    public User save(String username, String password, String phone, Integer role){
+    public User save(String username, String password, String phone){
         return userRepository.save(
             User
                 .builder()
                 .username(username)
                 .password(password)
                 .phone(phone)
-//                .role(role)
                 .build()
         );
     }
@@ -72,7 +71,7 @@ public class UserService {
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "登录成功", user);
     }
 
-    public ResultSet register(String username, String password,String phone, Integer role){
+    public ResultSet register(String username, String password,String phone){
         if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(password) || StringUtils.isEmpty(username)) {
             return new ResultSet(ResultSet.RESULT_CODE_FALSE, "手机号、密码、用户名不可为空");
         }
@@ -81,7 +80,7 @@ public class UserService {
             return new ResultSet(ResultSet.RESULT_CODE_FALSE, "用户名重复");
         }
 
-        User user = save(username,password,phone,role);
+        User user = save(username,password,phone);
 //        String token = UUID.randomUUID().toString().replace("-","");
 //        cookieUtil.addCookie(response,token, user);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "注册成功", user);
