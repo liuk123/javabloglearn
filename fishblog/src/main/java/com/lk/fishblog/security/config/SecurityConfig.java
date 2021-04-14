@@ -1,29 +1,23 @@
 package com.lk.fishblog.security.config;
 
-import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
-
 import com.lk.fishblog.security.MyCustomUserService;
 import com.lk.fishblog.security.MyPasswordEncoder;
+import com.lk.fishblog.security.handler.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import com.lk.fishblog.security.handler.MyLogoutSuccessHandler;
+import com.lk.fishblog.security.handler.MyAuthenticationSuccessHandler;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -34,16 +28,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final MyCustomUserService myCustomUserService;
 
-    private final ObjectMapper objectMapper;
 
     private final SecurityProperties securityProperties;
+    private final MyAuthenticationFailureHandler authenticationFailureHandler;
 
-    public SecurityConfig(MyPasswordEncoder myPasswordEncoder, MyCustomUserService myCustomUserService, ObjectMapper objectMapper, SecurityProperties securityProperties, PersistentTokenRepository persistentTokenRepository) {
+    final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+    private final RestfulAccessDeniedHandler accessDeniedHandler;
+    final MyLogoutSuccessHandler myLogoutSuccessHandler;
+    final MyAuthenticationSuccessHandler authenticationSuccessHandler;
+
+    public SecurityConfig(MyPasswordEncoder myPasswordEncoder, MyCustomUserService myCustomUserService,
+                          SecurityProperties securityProperties, PersistentTokenRepository persistentTokenRepository,
+                          RestAuthenticationEntryPoint restAuthenticationEntryPoint, MyAuthenticationFailureHandler authenticationFailureHandler,
+                          RestfulAccessDeniedHandler accessDeniedHandler,
+                          MyLogoutSuccessHandler myLogoutSuccessHandler, MyAuthenticationSuccessHandler authenticationSuccessHandler) {
         this.myPasswordEncoder = myPasswordEncoder;
         this.myCustomUserService = myCustomUserService;
-        this.objectMapper = objectMapper;
         this.securityProperties = securityProperties;
         this.persistentTokenRepository = persistentTokenRepository;
+        this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
+        this.authenticationFailureHandler = authenticationFailureHandler;
+        this.accessDeniedHandler = accessDeniedHandler;
+        this.myLogoutSuccessHandler = myLogoutSuccessHandler;
+        this.authenticationSuccessHandler = authenticationSuccessHandler;
     }
 
 
@@ -54,18 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authenticationProvider(authenticationProvider())
 
             .httpBasic()
-            //未登录时，进行json格式的提示
-//            .authenticationEntryPoint((request,response,authException) -> {
-//                response.setContentType("application/json;charset=utf-8");
-//                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-//                PrintWriter out = response.getWriter();
-//                Map<String,Object> map = new HashMap<String,Object>();
-//                map.put("resultCode",0);
-//                map.put("resultMessage","未登录");
-//                out.write(objectMapper.writeValueAsString(map));
-//                out.flush();
-//                out.close();
-//            })
+            .authenticationEntryPoint(restAuthenticationEntryPoint)
 
             .and()
             .authorizeRequests()//权限
@@ -83,37 +79,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .passwordParameter("password")
             .loginPage(securityProperties.getLoginPage())
             .loginProcessingUrl(securityProperties.getLoginProcessingUrl())
-            //登录失败，返回json
-            .failureHandler((request,response,ex) -> {
-                response.setContentType("application/json;charset=utf-8");
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                PrintWriter out = response.getWriter();
-                Map<String,Object> map = new HashMap<String,Object>();
-                map.put("resultCode",0);
-                if (ex instanceof UsernameNotFoundException || ex instanceof BadCredentialsException) {
-                    map.put("resultMessage","用户名或密码错误");
-                } else if (ex instanceof DisabledException) {
-                    map.put("resultMessage","账户被禁用");
-                } else {
-                    map.put("resultMessage","登录失败!");
-                }
-                out.write(objectMapper.writeValueAsString(map));
-                out.flush();
-                out.close();
-            })
-            //登录成功，返回json
+            .failureHandler(authenticationFailureHandler)
+            .successHandler(authenticationSuccessHandler)
 //            .successHandler(new MyAuthenticationSuccessHandler("www.baidu.com"))
-            .successHandler((request,response,authentication) -> {
-                Map<String,Object> map = new HashMap<String,Object>();
-                map.put("resultCode",1);
-                map.put("resultMessage","登录成功");
-                map.put("data",authentication.getPrincipal());
-                response.setContentType("application/json;charset=utf-8");
-                PrintWriter out = response.getWriter();
-                out.write(objectMapper.writeValueAsString(map));
-                out.flush();
-                out.close();
-            })
 
             //记住我功能
             .and()
@@ -128,44 +96,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .tokenValiditySeconds(60)
 
             .and()
-            .exceptionHandling()
-            //没有权限，返回json
-            .accessDeniedHandler((request,response,ex) -> {
-                response.setContentType("application/json;charset=utf-8");
-                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                PrintWriter out = response.getWriter();
-                Map<String,Object> map = new HashMap<String,Object>();
-                map.put("resultCode",0);
-                map.put("resultMessage", "权限不足");
-                out.write(objectMapper.writeValueAsString(map));
-                out.flush();
-                out.close();
-            })
-
-            .and()
             .logout()
             .logoutUrl(securityProperties.getLogoutUrl())
             .logoutSuccessUrl(securityProperties.getLoginPage())
             .invalidateHttpSession(true)//是session失效
             .deleteCookies("JSESSIONID")
             //退出成功，返回json
-            .logoutSuccessHandler((request,response,authentication) -> {
-                Map<String,Object> map = new HashMap<String,Object>();
-                map.put("resultCode",1);
-                map.put("resultMessage","退出成功");
-                map.put("data",authentication);
-                response.setContentType("application/json;charset=utf-8");
-                PrintWriter out = response.getWriter();
-                out.write(objectMapper.writeValueAsString(map));
-                out.flush();
-                out.close();
-            });
+            .logoutSuccessHandler(myLogoutSuccessHandler);
 
         //开启跨域访问
         http.cors().disable();
         //开启模拟请求，比如API POST测试工具的测试，不开启时，API POST为报403错误
         http.csrf().disable();
 
+        // 无权访问 JSON 格式的数据
+        http.exceptionHandling().accessDeniedHandler(accessDeniedHandler);
 
     }
 
@@ -183,7 +128,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        //对默认的UserDetailsService进行覆盖
         authenticationProvider.setUserDetailsService(myCustomUserService);
         authenticationProvider.setPasswordEncoder(myPasswordEncoder);
         return authenticationProvider;

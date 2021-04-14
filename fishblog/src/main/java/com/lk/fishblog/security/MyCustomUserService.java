@@ -56,7 +56,6 @@ public class MyCustomUserService implements UserDetailsService {
         myUserDetail.setAuthorities(AuthorityUtils.commaSeparatedStringToAuthorityList(
                 "normal"
         ));
-//        myUserDetail.setPassword(new BCryptPasswordEncoder().encode(u.getPassword()) );
 
         return myUserDetail;
     }
