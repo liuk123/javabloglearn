@@ -1,6 +1,5 @@
 package com.lk.fishblog.controller;
 
-import com.lk.fishblog.security.MyUserDetails;
 import com.lk.fishblog.common.utils.ResultSet;
 import com.lk.fishblog.controller.request.NewUserRequest;
 import com.lk.fishblog.model.User;
@@ -47,8 +46,7 @@ public class UserController {
      */
     @GetMapping(path="/currentUser")
     public ResultSet getCurrentUserBySession(Authentication authentication){
-//        return userService.getCurrentUserBySession(request);
-        MyUserDetails u = (MyUserDetails) authentication.getPrincipal();
+        User u = (User) authentication.getPrincipal();
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "获取用户信息", new User(u.getId(),u.getUsername()));
     }
 

@@ -1,7 +1,6 @@
 package com.lk.fishblog.controller;
 
 import com.lk.fishblog.common.utils.CookieUtil;
-import com.lk.fishblog.security.MyUserDetails;
 import com.lk.fishblog.common.utils.ResultSet;
 import com.lk.fishblog.controller.request.NewReplyRequest;
 import com.lk.fishblog.model.Comment;
@@ -46,7 +45,7 @@ public class ReplyController {
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResultSet addByJson(HttpServletRequest request, @RequestBody @Valid NewReplyRequest r, Authentication authentication){
-        MyUserDetails fu = (MyUserDetails) authentication.getPrincipal();
+        User fu = (User) authentication.getPrincipal();
 //        User fu =cookieUtil.getLoginUser(request);
 //        if(fu == null){
 //            return new ResultSet(ResultSet.RESULT_CODE_FALSE,"请重新登录");

@@ -5,7 +5,6 @@ import com.lk.fishblog.controller.request.NewArticleRequest;
 import com.lk.fishblog.model.Article;
 import com.lk.fishblog.model.Tag;
 import com.lk.fishblog.model.User;
-import com.lk.fishblog.security.MyUserDetails;
 import com.lk.fishblog.service.ArticleService;
 import com.lk.fishblog.service.CommentService;
 import com.lk.fishblog.service.ReplyService;
@@ -59,7 +58,7 @@ public class ArticleController {
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResultSet addByJson(HttpServletRequest request, @RequestBody @Valid  NewArticleRequest a, Authentication authentication){
-        MyUserDetails user = (MyUserDetails) authentication.getPrincipal();
+        User user = (User) authentication.getPrincipal();
 //        User user =cookieUtil.getLoginUser(request);
 //        if(user == null){
 //            return new ResultSet(ResultSet.RESULT_CODE_FALSE,"请重新登录");

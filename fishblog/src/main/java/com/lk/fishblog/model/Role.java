@@ -23,10 +23,8 @@ public class Role extends BaseEntity implements Serializable{
     @ManyToMany(mappedBy = "roleList", cascade = {}, fetch=FetchType.LAZY)
     private List<User> userList;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "roleList", cascade = {}, fetch=FetchType.EAGER)
-    private List<Menu> menuList;
-
+    @ManyToMany(mappedBy = "roleList",fetch = FetchType.EAGER)
+    private List<Authority> Authoritys;
     @Override
     public String toString() {
         return "Role{" +

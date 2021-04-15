@@ -21,7 +21,5 @@ public class SecurityProperties {
     private String[] regexMatchers = new String[]{
 
     };
-    // 默认登录页
-//    private String loginPageHtml = "signin";
 
 }

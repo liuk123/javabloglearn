@@ -1,20 +1,12 @@
 package com.lk.fishblog.security;
 
-import com.lk.fishblog.model.Menu;
 import com.lk.fishblog.repository.MenuRepository;
-import com.lk.fishblog.security.MyUserDetails;
 import com.lk.fishblog.model.User;
 import com.lk.fishblog.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 登录专用类
@@ -44,19 +36,6 @@ public class MyCustomUserService implements UserDetailsService {
         if(null == u){
             throw new UsernameNotFoundException("用户名或密码错误");
         }
-
-        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        System.out.println(u.getRoleList());
-
-
-        MyUserDetails myUserDetail = new MyUserDetails();
-        myUserDetail.setUsername(username);
-        myUserDetail.setId(u.getId());
-        myUserDetail.setPassword(u.getPassword());
-        myUserDetail.setAuthorities(AuthorityUtils.commaSeparatedStringToAuthorityList(
-                "normal"
-        ));
-
-        return myUserDetail;
+        return u;
     }
 }

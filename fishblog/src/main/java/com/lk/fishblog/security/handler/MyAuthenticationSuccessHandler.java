@@ -1,7 +1,6 @@
 package com.lk.fishblog.security.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lk.fishblog.security.MyUserDetails;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;

@@ -21,8 +21,6 @@ import java.util.UUID;
 public class UserService {
     @Autowired
     UserRepository userRepository;
-//    @Autowired
-//    CookieUtil cookieUtil;
 
     public User save(String username, String password, String phone){
         return userRepository.save(
@@ -38,20 +36,10 @@ public class UserService {
         return userRepository.getOne(id);
     }
     public ResultSet deleteById(Long id, HttpServletRequest request){
-//        User user = cookieUtil.getLoginUser(request);
-//        if(null == user){
-//            return new ResultSet(ResultSet.RESULT_CODE_FALSE, "请重新登录");
-//        }
-//        if(user.getRole() < 10000){
-//            return new ResultSet(ResultSet.RESULT_CODE_FALSE, "没有权限删除用户");
-//        }
         userRepository.deleteById(id);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功");
     }
-//    public ResultSet logout(HttpServletRequest request){
-////        cookieUtil.removeCookie(request);
-////        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "退出成功");
-//    }
+
     public ResultSet login(HttpServletResponse response, String phone, String password){
         if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(password)) {
             return new ResultSet(ResultSet.RESULT_CODE_FALSE, "手机号或密码不可为空");
@@ -65,8 +53,6 @@ public class UserService {
         if(!encoder.matches(password, pwd)){
             return new ResultSet(ResultSet.RESULT_CODE_FALSE, "手机号或密码输入有误");
         }
-//        String token = UUID.randomUUID().toString().replace("-","");
-//        cookieUtil.addCookie(response,token, user);
 
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "登录成功", user);
     }
@@ -81,13 +67,6 @@ public class UserService {
         }
 
         User user = save(username,password,phone);
-//        String token = UUID.randomUUID().toString().replace("-","");
-//        cookieUtil.addCookie(response,token, user);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "注册成功", user);
     }
-
-//    public ResultSet getCurrentUserBySession(HttpServletRequest request){
-//        User user = cookieUtil.getLoginUser(request);
-//        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "获取用户信息", user);
-//    }
 }
