@@ -21,7 +21,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User extends BaseEntity implements UserDetails {
+public class User extends BaseEntity implements Serializable, UserDetails {
     private String username;
     private String phone;
     private String password;
@@ -32,7 +32,7 @@ public class User extends BaseEntity implements UserDetails {
     @OrderBy("createTime DESC")
     private List<Article> articleList;
 
-    @ManyToMany(cascade={}, fetch=FetchType.EAGER)
+    @ManyToMany(cascade={CascadeType.REFRESH}, fetch=FetchType.EAGER)
     @JoinTable(
             name = "b_user_role",
             joinColumns = {
@@ -55,13 +55,13 @@ public class User extends BaseEntity implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> auths = new ArrayList<>();
+        List<GrantedAuthority> authorities = new ArrayList<>();
         List<Role> roles = this.getRoleList();
         for (Role role : roles) {
-            for(Authority aurh:role.getAuthoritys())
-                auths.add(new SimpleGrantedAuthority(aurh.getName()));
+            for(Authority authority:role.getAuthoritys())
+                authorities.add(new SimpleGrantedAuthority(authority.getName()));
         }
-        return auths;
+        return authorities;
     }
 
     @Override
