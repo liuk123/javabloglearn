@@ -3,7 +3,6 @@ package com.lk.fishblog.security.config;
 import com.lk.fishblog.security.MyCustomUserService;
 import com.lk.fishblog.security.MyPasswordEncoder;
 import com.lk.fishblog.security.handler.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -56,7 +55,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         http
             .authenticationProvider(authenticationProvider())
 

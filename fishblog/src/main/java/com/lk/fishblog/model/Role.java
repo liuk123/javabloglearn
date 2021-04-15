@@ -25,12 +25,5 @@ public class Role extends BaseEntity implements Serializable{
 
     @ManyToMany(mappedBy = "roleList",fetch = FetchType.EAGER)
     private List<Authority> Authoritys;
-    @Override
-    public String toString() {
-        return "Role{" +
-                "id='" + getId() + '\'' +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                '}';
-    }
+
 }

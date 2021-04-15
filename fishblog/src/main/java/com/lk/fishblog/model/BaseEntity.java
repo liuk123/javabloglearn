@@ -7,11 +7,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.util.Date;
 
+@Setter
 @Getter
 @ToString(callSuper = true)
-@AllArgsConstructor
-@NoArgsConstructor
-@MappedSuperclass
 public class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

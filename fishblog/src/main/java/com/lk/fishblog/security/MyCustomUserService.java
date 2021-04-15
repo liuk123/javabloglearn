@@ -1,6 +1,5 @@
 package com.lk.fishblog.security;
 
-import com.lk.fishblog.repository.MenuRepository;
 import com.lk.fishblog.model.User;
 import com.lk.fishblog.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,12 +16,10 @@ import org.springframework.stereotype.Component;
 public class MyCustomUserService implements UserDetailsService {
 
     final UserRepository userRepository;
-    final MenuRepository menuRepository;
 
 
-    public MyCustomUserService(UserRepository userRepository,MenuRepository menuRepository) {
+    public MyCustomUserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.menuRepository = menuRepository;
     }
 
     /**

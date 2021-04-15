@@ -59,14 +59,4 @@ public class Article implements Serializable{
     public  Article(User author ){
         this.author = author;
     }
-
-    @Override
-    public String toString() {
-        return "Article{" +
-                "id='" + getId() + '\'' +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", author='" + author + '\'' +
-                '}';
-    }
 }

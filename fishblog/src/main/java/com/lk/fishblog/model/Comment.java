@@ -37,13 +37,4 @@ public class Comment extends BaseEntity implements Serializable {
     public Comment(Long id){
         this.id = id;
     }
-
-    @Override
-    public String toString() {
-        return "Comment{" +
-                "id='" + getId() + '\'' +
-                ", content='" + content + '\'' +
-                ", replyList='" + replyList + '\'' +
-                '}';
-    }
 }

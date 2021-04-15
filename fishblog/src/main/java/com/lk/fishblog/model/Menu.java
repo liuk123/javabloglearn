@@ -38,28 +38,12 @@ public class Menu implements Serializable{
     private String link;
     private String permission;
 
-    @ManyToMany(cascade={}, fetch= FetchType.LAZY)
-    @JoinTable(
-            name = "b_menu_role",
-            joinColumns = {
-                    @JoinColumn(name = "menu_id") },
-            inverseJoinColumns = {
-                    @JoinColumn(name = "role_id") })
-    private List<Role> roleList;
-
-    @Override
-    public String toString() {
-        return "Role{" +
-                "id='" + getId() + '\'' +
-                ", title='" + title + '\'' +
-                ", type='" + type + '\'' +
-                ", icon='" + icon + '\'' +
-                ", disabled='" + disabled + '\'' +
-                ", selected='" + selected + '\'' +
-                ", open='" + open + '\'' +
-                ", route='" + route + '\'' +
-                ", link='" + link + '\'' +
-                ", permission='" + permission + '\'' +
-                '}';
-    }
+//    @ManyToMany(cascade={}, fetch= FetchType.LAZY)
+//    @JoinTable(
+//            name = "b_menu_role",
+//            joinColumns = {
+//                    @JoinColumn(name = "menu_id") },
+//            inverseJoinColumns = {
+//                    @JoinColumn(name = "role_id") })
+//    private List<Role> roleList;
 }
