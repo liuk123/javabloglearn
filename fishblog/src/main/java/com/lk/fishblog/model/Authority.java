@@ -1,5 +1,6 @@
 package com.lk.fishblog.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -32,6 +33,7 @@ public class Authority implements Serializable{
     private String url;
     private String description;
 
+    @JsonIgnore
     @ManyToMany(cascade={}, fetch= FetchType.LAZY)
     @JoinTable(
             name = "b_authority_role",
