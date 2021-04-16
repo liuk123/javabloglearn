@@ -60,9 +60,11 @@ public class User extends BaseEntity implements Serializable, UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
         List<Role> roles = this.getRoleList();
-        for (Role role : roles) {
-            for(Authority authority:role.getAuthoritys())
-                authorities.add(new SimpleGrantedAuthority(authority.getName()));
+        if(null != roles){
+            for (Role role : roles) {
+                for(Authority authority:role.getAuthoritys())
+                    authorities.add(new SimpleGrantedAuthority(authority.getName()));
+            }
         }
         return authorities;
     }
