@@ -1,23 +1,14 @@
-package com.lk.fishblog.security;
+package com.lk.fishblog.security.filter;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
-import org.springframework.security.access.SecurityMetadataSource;
-import org.springframework.security.access.intercept.AbstractSecurityInterceptor;
-import org.springframework.security.access.intercept.InterceptorStatusToken;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.web.FilterInvocation;
-import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.*;
-import java.io.IOException;
 import java.util.Collection;
-import java.util.Iterator;
 
 @Service
 public class MyAccessDecisionManager implements AccessDecisionManager {
@@ -40,15 +31,11 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
             return;
             //说明请求的系统中不存在指定的URL，返回执行security配置文件中其他项目。
         }
-        ConfigAttribute c;
         String needRole;
-        for(Iterator<ConfigAttribute> iter = configAttributes.iterator(); iter.hasNext(); ) {
-            c = iter.next();
-            needRole = c.getAttribute();
-            for(GrantedAuthority ga : authentication.getAuthorities()) {
-
-
-                if(needRole.trim().equals(ga.getAuthority())) {
+        for (ConfigAttribute configAttribute : configAttributes) {
+            needRole = configAttribute.getAttribute();
+            for (GrantedAuthority ga : authentication.getAuthorities()) {
+                if (needRole.trim().equals(ga.getAuthority())) {
                     return;
                 }
             }

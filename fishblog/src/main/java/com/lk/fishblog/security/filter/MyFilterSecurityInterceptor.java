@@ -1,12 +1,10 @@
 package com.lk.fishblog.security.filter;
 
-import com.lk.fishblog.security.MyAccessDecisionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.SecurityMetadataSource;
 import org.springframework.security.access.intercept.AbstractSecurityInterceptor;
 import org.springframework.security.access.intercept.InterceptorStatusToken;
 import org.springframework.security.web.FilterInvocation;
-import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.*;
@@ -15,7 +13,7 @@ import java.io.IOException;
 @Service
 public class MyFilterSecurityInterceptor extends AbstractSecurityInterceptor implements Filter {
     @Autowired
-    private FilterInvocationSecurityMetadataSource securityMetadataSource;
+    private MyInvocationSecurityMetadataSourceService securityMetadataSource;
 
     @Autowired
     public void setSecurityMetadataSource(MyAccessDecisionManager myAccessDecisionManager){

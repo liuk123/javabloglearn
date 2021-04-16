@@ -54,12 +54,6 @@ public class CommentController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResultSet addByJson(HttpServletRequest request, @RequestBody @Valid NewCommentRequest c, Authentication authentication){
         User user = (User) authentication.getPrincipal();
-//        User user =cookieUtil.getLoginUser(request);
-//        if(user == null){
-//            return new ResultSet(ResultSet.RESULT_CODE_FALSE,"请重新登录");
-//        }else if(user.getRole()<10){
-//            return new ResultSet(ResultSet.RESULT_CODE_FALSE,"没有权限");
-//        }
         Article a = new Article(c.getArticleId());
         Comment comment = commentService.save(c.getContent(), new User(user.getId(),user.getUsername()), a);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "添加成功", comment);

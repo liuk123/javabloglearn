@@ -1,4 +1,4 @@
-package com.lk.fishblog.security;
+package com.lk.fishblog.security.filter;
 
 import com.lk.fishblog.model.Authority;
 import com.lk.fishblog.repository.AuthorityRepository;
@@ -46,16 +46,14 @@ public class MyInvocationSecurityMetadataSourceService implements FilterInvocati
         if(map ==null) loadResourceDefine();
         HttpServletRequest request = ((FilterInvocation) object).getHttpRequest();
         AntPathRequestMatcher matcher;
-        String resUrl;
-        for(Iterator<String> iter = map.keySet().iterator(); iter.hasNext(); ) {
-            resUrl = iter.next();
+        for (String s : map.keySet()) {
             //当url里有？的时候  进行切割
-            if(resUrl.indexOf("?")>-1){
-                resUrl=resUrl.substring(0,resUrl.indexOf("?"));
+            if (s.contains("?")) {
+                s = s.substring(0, s.indexOf("?"));
             }
-            matcher = new AntPathRequestMatcher(resUrl);
-            if(matcher.matches(request)) {
-                return map.get(resUrl);
+            matcher = new AntPathRequestMatcher(s);
+            if (matcher.matches(request)) {
+                return map.get(s);
             }
         }
         return null;

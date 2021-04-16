@@ -56,12 +56,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            .authenticationProvider(authenticationProvider())
 
-            .httpBasic()
-            .authenticationEntryPoint(restAuthenticationEntryPoint)
+//            .httpBasic()
+//            .authenticationEntryPoint(restAuthenticationEntryPoint)
 
-            .and()
+//            .and()
             .authorizeRequests()//权限
             .antMatchers(securityProperties.getMatchers()).permitAll()//不拦截这些请求
             .regexMatchers(securityProperties.getRegexMatchers()).permitAll()
@@ -79,7 +78,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .loginProcessingUrl(securityProperties.getLoginProcessingUrl())
             .failureHandler(authenticationFailureHandler)
             .successHandler(authenticationSuccessHandler)
-//            .successHandler(new MyAuthenticationSuccessHandler("www.baidu.com"))
 
             //记住我功能
             .and()
@@ -121,14 +119,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(myCustomUserService).passwordEncoder(new BCryptPasswordEncoder());
-    }
-
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(myCustomUserService);
-        authenticationProvider.setPasswordEncoder(myPasswordEncoder);
-        return authenticationProvider;
     }
 
 }

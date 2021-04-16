@@ -2,6 +2,7 @@ package com.lk.fishblog.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -45,8 +46,10 @@ public class User extends BaseEntity implements Serializable, UserDetails {
     public User(Long id){
         this.id = id;
     }
-    public User(String username){
+    public User(String username,String password, String phone){
         this.username=username;
+        this.password=password;
+        this.phone=phone;
     }
     public User(Long id, String username){
         this.id = id;

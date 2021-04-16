@@ -14,6 +14,8 @@ public class MyPasswordEncoder implements PasswordEncoder {
 
     @Override
     public boolean matches(CharSequence charSequence, String s) {
+        System.out.print(charSequence);
+        System.out.print(encode(charSequence));
         return encode(charSequence).equals(s);
     }
 }

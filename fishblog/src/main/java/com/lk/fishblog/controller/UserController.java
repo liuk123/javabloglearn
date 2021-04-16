@@ -3,6 +3,7 @@ package com.lk.fishblog.controller;
 import com.lk.fishblog.common.utils.ResultSet;
 import com.lk.fishblog.controller.request.NewUserRequest;
 import com.lk.fishblog.model.User;
+import com.lk.fishblog.security.MyPasswordEncoder;
 import com.lk.fishblog.service.ArticleService;
 import com.lk.fishblog.service.CommentService;
 import com.lk.fishblog.service.ReplyService;
@@ -12,11 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
@@ -35,7 +34,6 @@ public class UserController {
     @GetMapping(path="/{id}")
     public ResultSet getById(@PathVariable Long id){
         User u = userService.findById(id);
-        log.info("Coffee {}:", u);
         return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", u);
     }
 
@@ -58,31 +56,9 @@ public class UserController {
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResultSet addByJson(@RequestBody @Valid NewUserRequest u){
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        System.out.println(encoder.encode(u.getPassword()));
-        return userService.register(u.getUsername(),encoder.encode(u.getPassword()),u.getPhone());
+        MyPasswordEncoder encoder = new MyPasswordEncoder();
+        return userService.register(u.toUser(encoder));
     }
-
-    /**
-     * 登录
-     * @param response
-     * @param
-     * @return
-     */
-    @GetMapping(path="/login")
-    public ResultSet login(HttpServletResponse response,@RequestParam String password, @RequestParam String phone){
-        return userService.login(response,phone,password);
-    }
-    /**
-     * 退出
-     * @param req
-     * @param
-     * @return
-     */
-//    @GetMapping(path="/logout")
-//    public ResultSet logout(HttpServletRequest req){
-//        return userService.logout(req);
-//    }
 
     /**
      * 删除
@@ -91,7 +67,7 @@ public class UserController {
      */
     @DeleteMapping(path = "/{id}")
     public ResultSet delById(@PathVariable Long id, HttpServletRequest req){
-        userService.deleteById(id, req);
+        userService.deleteById(id);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功");
     }
 }

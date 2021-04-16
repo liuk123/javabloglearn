@@ -40,7 +40,6 @@ public class MenuService {
                 .route(route)
                 .link(link)
                 .permission(permission)
-                .roleList(roleList)
                 .build()
         );
         return save;

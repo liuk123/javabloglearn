@@ -5,14 +5,14 @@ import com.lk.fishblog.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * 登录专用类
  * 自定义类，实现了UserDetailsService接口，用户登录时调用的第一类
  *
  */
-@Component
+@Service
 public class MyCustomUserService implements UserDetailsService {
 
     final UserRepository userRepository;

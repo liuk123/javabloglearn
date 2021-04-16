@@ -19,12 +19,12 @@ import java.util.Map;
 @Component
 public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
-    private String url;
+//    private String url;
 
     // 构造方法
-    public MyAuthenticationSuccessHandler(String url) {
-        this.url = url;
-    }
+//    public MyAuthenticationSuccessHandler(String url) {
+//        this.url = url;
+//    }
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
