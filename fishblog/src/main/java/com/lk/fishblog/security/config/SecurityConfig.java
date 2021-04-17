@@ -3,11 +3,8 @@ package com.lk.fishblog.security.config;
 import com.lk.fishblog.security.MyCustomUserService;
 import com.lk.fishblog.security.MyPasswordEncoder;
 import com.lk.fishblog.security.handler.*;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -78,6 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .loginProcessingUrl(securityProperties.getLoginProcessingUrl())
             .failureHandler(authenticationFailureHandler)
             .successHandler(authenticationSuccessHandler)
+            .permitAll()
 
             //记住我功能
             .and()
@@ -95,7 +93,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .logout()
             .logoutUrl(securityProperties.getLogoutUrl())
             .logoutSuccessUrl(securityProperties.getLoginPage())
-            .invalidateHttpSession(true)//是session失效
             .deleteCookies("JSESSIONID")
             //退出成功，返回json
             .logoutSuccessHandler(myLogoutSuccessHandler);
