@@ -22,11 +22,15 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User extends BaseEntity implements Serializable, UserDetails {
+public class User extends BaseEntity implements UserDetails {
     private String username;
     private String phone;
     private String password;
-    private String enabled;
+
+    private boolean accountNonExpired;
+    private boolean accountNonLocked;
+    private boolean credentialsNonExpired;
+    private boolean enabled;
 
     @JsonIgnore
     @OneToMany(mappedBy = "author", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
@@ -59,9 +63,8 @@ public class User extends BaseEntity implements Serializable, UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        List<Role> roles = this.getRoleList();
-        if(null != roles){
-            for (Role role : roles) {
+        if(null != getRoleList()){
+            for (Role role : getRoleList()) {
                 for(Authority authority:role.getAuthoritys())
                     authorities.add(new SimpleGrantedAuthority(authority.getName()));
             }
@@ -71,21 +74,21 @@ public class User extends BaseEntity implements Serializable, UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return accountNonExpired;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return accountNonLocked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return credentialsNonExpired;
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 }

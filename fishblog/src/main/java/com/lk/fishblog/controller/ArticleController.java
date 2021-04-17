@@ -40,8 +40,6 @@ public class ArticleController {
     @Autowired
     UserService userService;
     @Autowired
-    CookieUtil cookieUtil;
-    @Autowired
     RegUtil regUtil;
     @Autowired
     FileUtil fileUtil;
@@ -59,12 +57,6 @@ public class ArticleController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResultSet addByJson(HttpServletRequest request, @RequestBody @Valid  NewArticleRequest a, Authentication authentication){
         User user = (User) authentication.getPrincipal();
-//        User user =cookieUtil.getLoginUser(request);
-//        if(user == null){
-//            return new ResultSet(ResultSet.RESULT_CODE_FALSE,"请重新登录");
-//        }else if(user.getRole()<100){
-//            return new ResultSet(ResultSet.RESULT_CODE_FALSE,"没有权限");
-//        }
 //图片从缓存文件夹移入正式文件夹
         List<String> urlList = regUtil.extractUrls(a.getContent());
         for(String url: urlList){
@@ -157,15 +149,7 @@ public class ArticleController {
      */
     @DeleteMapping(path = "/{id}")
     public ResultSet delById(HttpServletRequest request, @PathVariable Long id){
-//        User user =cookieUtil.getLoginUser(request);
-//        if(user == null){
-//            return new ResultSet(ResultSet.RESULT_CODE_FALSE,"请重新登录");
-//        }
         Article a = articleService.findById(id);
-//        if(!a.getAuthor().getId().equals(user.getId()) && user.getRole()<1000){
-//            return new ResultSet(ResultSet.RESULT_CODE_FALSE,"没有权限");
-//        }
-
         List<String> urlList = regUtil.extractUrls(a.getContent());
         for(String url: urlList){
             File oldFile = new File(url.substring(url.indexOf(uploadPath),url.lastIndexOf(')')));
