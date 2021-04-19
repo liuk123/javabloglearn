@@ -19,16 +19,17 @@ public class UserGroup extends BaseEntity implements Serializable{
     private String name;
     private String description;
 
-    @ManyToMany(cascade={CascadeType.REFRESH}, fetch=FetchType.LAZY)
+    @JsonIgnore
+    @ManyToMany(cascade={}, fetch=FetchType.LAZY)
     @JoinTable(
             name = "b_userGroup_user",
             joinColumns = {
-                    @JoinColumn(name = "userGroup_id", referencedColumnName = "id") },
+                    @JoinColumn(name = "userGroup_id") },
             inverseJoinColumns = {
-                    @JoinColumn(name = "user_id", referencedColumnName = "id") })
+                    @JoinColumn(name = "user_id") })
     private List<User> userList;
 
-    @ManyToMany(cascade={CascadeType.REFRESH}, fetch=FetchType.EAGER)
+    @ManyToMany(cascade={}, fetch=FetchType.EAGER)
     @JoinTable(
             name = "b_userGroup_role",
             joinColumns = {

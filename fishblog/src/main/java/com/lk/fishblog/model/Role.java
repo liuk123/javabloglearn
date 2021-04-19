@@ -22,13 +22,12 @@ public class Role extends BaseEntity implements Serializable{
     private String description;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "roleList", cascade = {}, fetch=FetchType.LAZY)
+    @ManyToMany(targetEntity = User.class, mappedBy = "roleList", fetch=FetchType.LAZY)
     private List<User> userList;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "roleList", fetch=FetchType.LAZY)
-    private Set<UserGroup> userGroups = new HashSet<>();
-
+    @ManyToMany(targetEntity = UserGroup.class, mappedBy = "roleList", fetch=FetchType.LAZY)
+    private List<UserGroup> userGroupList;
 
     @ManyToMany(cascade={}, fetch= FetchType.EAGER)
     @JoinTable(

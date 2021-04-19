@@ -1,19 +1,15 @@
 package com.lk.fishblog.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "B_USER")
@@ -38,7 +34,7 @@ public class User extends BaseEntity implements UserDetails {
     @OrderBy("createTime DESC")
     private List<Article> articleList;
 
-    @ManyToMany(cascade={CascadeType.REFRESH}, fetch=FetchType.EAGER)
+    @ManyToMany(targetEntity = Role.class, fetch=FetchType.EAGER)
     @JoinTable(
             name = "b_user_role",
             joinColumns = {
@@ -47,8 +43,8 @@ public class User extends BaseEntity implements UserDetails {
                     @JoinColumn(name = "role_id", referencedColumnName = "id") })
     private List<Role> roleList;
 
-    @ManyToMany(mappedBy = "userList", fetch=FetchType.EAGER)
-    private Set<UserGroup> userGroupList;
+    @ManyToMany(targetEntity = UserGroup.class, mappedBy = "userList", fetch=FetchType.LAZY)
+    private List<UserGroup> userGroupList;
 
 
 
@@ -65,6 +61,14 @@ public class User extends BaseEntity implements UserDetails {
         this.username = username;
     }
 
+//    public List<Role> getAllRoles(){
+//        List<Role> roles = new ArrayList<>();
+//        for(UserGroup userGroup: getUserGroupList()){
+//            roles.addAll(userGroup.getRoleList());
+//        }
+//        roles.addAll(getRoleList());
+//        return roles;
+//    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();

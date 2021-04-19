@@ -16,8 +16,7 @@ import java.util.*;
 
 @Service
 public class MyInvocationSecurityMetadataSourceService implements FilterInvocationSecurityMetadataSource {
-    @Autowired
-    private UserRepository userRepository;
+
     @Autowired
     private AuthorityRepository authorityRepository;
 
