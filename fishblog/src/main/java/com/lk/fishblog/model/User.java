@@ -46,6 +46,10 @@ public class User extends BaseEntity implements UserDetails {
                     @JoinColumn(name = "role_id", referencedColumnName = "id") })
     private List<Role> roleList;
 
+    @ManyToMany(targetEntity = UserGroup.class, mappedBy = "userList")
+    private List<UserGroup> userGroupList;
+
+
 
     public User(Long id){
         this.id = id;
@@ -65,7 +69,7 @@ public class User extends BaseEntity implements UserDetails {
         List<GrantedAuthority> authorities = new ArrayList<>();
         if(null != getRoleList()){
             for (Role role : getRoleList()) {
-                for(Authority authority:role.getAuthoritys())
+                for(Authority authority:role.getAuthorityList())
                     authorities.add(new SimpleGrantedAuthority(authority.getName()));
             }
         }

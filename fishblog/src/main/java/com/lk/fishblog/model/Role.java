@@ -5,7 +5,9 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "B_ROLE")
@@ -23,7 +25,17 @@ public class Role extends BaseEntity implements Serializable{
     @ManyToMany(mappedBy = "roleList", cascade = {}, fetch=FetchType.LAZY)
     private List<User> userList;
 
-    @ManyToMany(mappedBy = "roleList",fetch = FetchType.EAGER)
-    private List<Authority> Authoritys;
+    @ManyToMany(targetEntity = UserGroup.class, mappedBy = "roleList")
+    private Set<UserGroup> userGroups = new HashSet<>();
+
+
+    @ManyToMany(cascade={}, fetch= FetchType.EAGER)
+    @JoinTable(
+            name = "b_role_authority",
+            joinColumns = {
+                    @JoinColumn(name = "role_id",referencedColumnName = "id") },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "authority_id",referencedColumnName = "id") })
+    private List<Authority> AuthorityList;
 
 }

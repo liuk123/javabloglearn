@@ -34,12 +34,6 @@ public class Authority implements Serializable{
     private String description;
 
     @JsonIgnore
-    @ManyToMany(cascade={}, fetch= FetchType.LAZY)
-    @JoinTable(
-            name = "b_authority_role",
-            joinColumns = {
-                    @JoinColumn(name = "authority_id",referencedColumnName = "id") },
-            inverseJoinColumns = {
-                    @JoinColumn(name = "role_id",referencedColumnName = "id") })
+    @ManyToMany(targetEntity = Role.class, mappedBy = "AuthorityList")
     private List<Role> roleList;
 }
