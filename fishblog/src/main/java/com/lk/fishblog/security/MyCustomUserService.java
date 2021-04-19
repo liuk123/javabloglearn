@@ -1,11 +1,18 @@
 package com.lk.fishblog.security;
 
+import com.lk.fishblog.model.Authority;
+import com.lk.fishblog.model.Role;
 import com.lk.fishblog.model.User;
+import com.lk.fishblog.model.UserGroup;
 import com.lk.fishblog.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * 登录专用类
@@ -32,6 +39,22 @@ public class MyCustomUserService implements UserDetailsService {
         User u = userRepository.findFirstByUsername(username);
         if(null == u){
             throw new UsernameNotFoundException("用户名或密码错误");
+        }
+
+        Set<Authority> auth = new HashSet<>();
+        Set<UserGroup> userGroupList = u.getUserGroupList();
+
+        u.getAuthorities();
+
+        for(UserGroup group : userGroupList){
+            List<Role> roles = group.getRoleList();
+            for(Role role: roles){
+                List<Authority> authorityList = role.getAuthorityList();
+                for(Authority authority : authorityList){
+//                    u.set
+                }
+            }
+
         }
         return u;
     }

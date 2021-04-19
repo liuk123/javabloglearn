@@ -25,7 +25,8 @@ public class Role extends BaseEntity implements Serializable{
     @ManyToMany(mappedBy = "roleList", cascade = {}, fetch=FetchType.LAZY)
     private List<User> userList;
 
-    @ManyToMany(targetEntity = UserGroup.class, mappedBy = "roleList")
+    @JsonIgnore
+    @ManyToMany(mappedBy = "roleList", fetch=FetchType.LAZY)
     private Set<UserGroup> userGroups = new HashSet<>();
 
 
@@ -36,6 +37,6 @@ public class Role extends BaseEntity implements Serializable{
                     @JoinColumn(name = "role_id",referencedColumnName = "id") },
             inverseJoinColumns = {
                     @JoinColumn(name = "authority_id",referencedColumnName = "id") })
-    private List<Authority> AuthorityList;
+    private List<Authority> authorityList;
 
 }

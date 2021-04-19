@@ -3,7 +3,6 @@ package com.lk.fishblog.security.filter;
 import com.lk.fishblog.model.Authority;
 import com.lk.fishblog.repository.AuthorityRepository;
 import com.lk.fishblog.repository.UserRepository;
-import com.lk.fishblog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;

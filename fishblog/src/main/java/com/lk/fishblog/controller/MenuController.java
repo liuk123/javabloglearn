@@ -44,7 +44,7 @@ public class MenuController {
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResultSet addByJson(@RequestBody @Valid NewMenuRequest m){
-        menuService.saveMenu(m.getId(),m.getParentId(),m.getTitle(),m.getType(),m.getIcon(),m.getDisabled(),m.getSelected(),m.getOpen(),m.getRoute(),m.getLink(),m.getPermission(),m.getRoleList());
+        menuService.saveMenu(m.getId(),m.getParentId(),m.getTitle(),m.getType(),m.getIcon(),m.getDisabled(),m.getSelected(),m.getOpen(),m.getRoute(),m.getLink());
         return new ResultSet(ResultSet.RESULT_CODE_TRUE,"添加成功", null);
     }
 

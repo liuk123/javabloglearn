@@ -34,6 +34,6 @@ public class Authority implements Serializable{
     private String description;
 
     @JsonIgnore
-    @ManyToMany(targetEntity = Role.class, mappedBy = "AuthorityList")
+    @ManyToMany(targetEntity = Role.class, mappedBy = "authorityList")
     private List<Role> roleList;
 }

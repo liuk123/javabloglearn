@@ -25,7 +25,7 @@ public class MenuService {
     public List<Menu> getMenuList(){
         return menuRepository.findAll();
     }
-    public Menu saveMenu(Long id,String parentId, String title, String type, String icon, String disabled, String selected, String open, String route, String link, String permission, List<Role> roleList){
+    public Menu saveMenu(Long id,String parentId, String title, String type, String icon, String disabled, String selected, String open, String route, String link){
         Menu save = menuRepository.save(
             Menu
                 .builder()
@@ -39,7 +39,6 @@ public class MenuService {
                 .open(open)
                 .route(route)
                 .link(link)
-                .permission(permission)
                 .build()
         );
         return save;

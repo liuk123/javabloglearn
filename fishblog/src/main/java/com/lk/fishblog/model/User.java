@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "B_USER")
@@ -46,8 +47,8 @@ public class User extends BaseEntity implements UserDetails {
                     @JoinColumn(name = "role_id", referencedColumnName = "id") })
     private List<Role> roleList;
 
-    @ManyToMany(targetEntity = UserGroup.class, mappedBy = "userList")
-    private List<UserGroup> userGroupList;
+    @ManyToMany(mappedBy = "userList", fetch=FetchType.EAGER)
+    private Set<UserGroup> userGroupList;
 
 
 
