@@ -61,11 +61,21 @@ public class User extends BaseEntity implements UserDetails {
         this.username = username;
     }
 
+    public List<Role> getAllRoles(){
+        List<Role> roles = new ArrayList<>();
+        if(null != getUserGroupList()){
+            for(UserGroup userGroup: getUserGroupList()){
+                roles.addAll(userGroup.getRoleList());
+            }
+        }
+        roles.addAll(getRoleList());
+        return roles;
+    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        if(null != getRoleList()){
-            for (Role role : getRoleList()) {
+        if(null != getAllRoles()){
+            for (Role role : getAllRoles()) {
                 for(Authority authority:role.getAuthorityList())
                     authorities.add(new SimpleGrantedAuthority(authority.getName()));
             }

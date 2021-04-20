@@ -53,22 +53,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-
-//            .httpBasic()
-//            .authenticationEntryPoint(restAuthenticationEntryPoint)
-
-//            .and()
             .authorizeRequests()//权限
+            .antMatchers("/user/**").permitAll()
             .antMatchers(securityProperties.getMatchers()).permitAll()//不拦截这些请求
             .regexMatchers(securityProperties.getRegexMatchers()).permitAll()
 //            .regexMatchers(HttpMethod.GET, "/article").hasAnyAuthority("normal")
-            .antMatchers("/user/**").permitAll()
-            .antMatchers("/menu/**").permitAll()
             .anyRequest()
             .authenticated()
 
             .and()
-            .formLogin() //使用自带的登录
+            .formLogin()
             .usernameParameter("username")
             .passwordParameter("password")
             .loginPage(securityProperties.getLoginPage())
@@ -77,7 +71,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .successHandler(authenticationSuccessHandler)
             .permitAll()
 
-            //记住我功能
             .and()
             .rememberMe()
             //参数名，和表单中的一样
@@ -94,7 +87,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .logoutUrl(securityProperties.getLogoutUrl())
             .logoutSuccessUrl(securityProperties.getLoginPage())
             .deleteCookies("JSESSIONID")
-            //退出成功，返回json
             .logoutSuccessHandler(myLogoutSuccessHandler);
 
         //开启跨域访问

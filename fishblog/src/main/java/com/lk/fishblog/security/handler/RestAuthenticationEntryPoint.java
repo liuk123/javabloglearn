@@ -1,13 +1,8 @@
 package com.lk.fishblog.security.handler;
 
-import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lk.fishblog.security.MyCustomUserService;
-import com.lk.fishblog.security.MyPasswordEncoder;
-import com.lk.fishblog.security.config.SecurityProperties;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;

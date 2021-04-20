@@ -38,7 +38,7 @@ public class MyAuthenticationFailureHandler implements AuthenticationFailureHand
         } else if (ex instanceof DisabledException) {
             map.put("resultMessage","账户被禁用");
         } else {
-            map.put("resultMessage","登录失败!");
+            map.put("resultMessage","登录失败");
         }
         ObjectMapper objectMapper = new ObjectMapper();
         out.write(objectMapper.writeValueAsString(map));

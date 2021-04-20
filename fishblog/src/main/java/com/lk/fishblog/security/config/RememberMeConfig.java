@@ -20,7 +20,6 @@ public class RememberMeConfig {
     @Bean
     public PersistentTokenRepository getPersistentTokenRepository() {
         JdbcTokenRepositoryImpl jdbcTokenRepositoryImpl = new JdbcTokenRepositoryImpl();
-        // 设置数据源
         jdbcTokenRepositoryImpl.setDataSource(dataSource);
         // 自动建表，第一次运行设为true，以后都设为false
         jdbcTokenRepositoryImpl.setCreateTableOnStartup(false);

@@ -1,15 +1,14 @@
 package com.lk.fishblog.security;
 
-import com.lk.fishblog.model.Role;
 import com.lk.fishblog.model.User;
 import com.lk.fishblog.model.UserGroup;
+import com.lk.fishblog.repository.UserGroupRepository;
 import com.lk.fishblog.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,10 +20,12 @@ import java.util.List;
 public class MyCustomUserService implements UserDetailsService {
 
     final UserRepository userRepository;
+    private final UserGroupRepository userGroupRepository;
 
 
-    public MyCustomUserService(UserRepository userRepository) {
+    public MyCustomUserService(UserRepository userRepository, UserGroupRepository userGroupRepository) {
         this.userRepository = userRepository;
+        this.userGroupRepository = userGroupRepository;
     }
 
     /**
@@ -38,15 +39,8 @@ public class MyCustomUserService implements UserDetailsService {
         if(null == u){
             throw new UsernameNotFoundException("用户名或密码错误");
         }
-//        public List<Role> getAllRoles(){
-//            List<Role> roles = new ArrayList<>();
-//            for(UserGroup userGroup: getUserGroupList()){
-//                roles.addAll(userGroup.getRoleList());
-//            }
-//            roles.addAll(getRoleList());
-//            return roles;
-//        }
-//        u.getAuthorities().addAll();
+        List<UserGroup> ug= userGroupRepository.findUserGroupsByUserList(u);
+        u.setUserGroupList(ug);
         return u;
     }
 }
