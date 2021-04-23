@@ -2,7 +2,9 @@ package com.lk.fishblog.security.config;
 
 import com.lk.fishblog.security.MyCustomUserService;
 import com.lk.fishblog.security.MyPasswordEncoder;
+import com.lk.fishblog.security.filter.MyFilterSecurityInterceptor;
 import com.lk.fishblog.security.handler.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -11,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import com.lk.fishblog.security.handler.MyLogoutSuccessHandler;
 import com.lk.fishblog.security.handler.MyAuthenticationSuccessHandler;
@@ -23,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final MyPasswordEncoder myPasswordEncoder;
 
     private final MyCustomUserService myCustomUserService;
-
+    private final MyFilterSecurityInterceptor myFilterSecurityInterceptor;
 
     private final SecurityProperties securityProperties;
     private final MyAuthenticationFailureHandler authenticationFailureHandler;
@@ -37,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                           SecurityProperties securityProperties, PersistentTokenRepository persistentTokenRepository,
                           RestAuthenticationEntryPoint restAuthenticationEntryPoint, MyAuthenticationFailureHandler authenticationFailureHandler,
                           RestfulAccessDeniedHandler accessDeniedHandler,
-                          MyLogoutSuccessHandler myLogoutSuccessHandler, MyAuthenticationSuccessHandler authenticationSuccessHandler) {
+                          MyLogoutSuccessHandler myLogoutSuccessHandler, MyAuthenticationSuccessHandler authenticationSuccessHandler, MyFilterSecurityInterceptor myFilterSecurityInterceptor) {
         this.myPasswordEncoder = myPasswordEncoder;
         this.myCustomUserService = myCustomUserService;
         this.securityProperties = securityProperties;
@@ -47,6 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.accessDeniedHandler = accessDeniedHandler;
         this.myLogoutSuccessHandler = myLogoutSuccessHandler;
         this.authenticationSuccessHandler = authenticationSuccessHandler;
+        this.myFilterSecurityInterceptor = myFilterSecurityInterceptor;
     }
 
 
@@ -87,23 +91,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .logoutUrl(securityProperties.getLogoutUrl())
             .logoutSuccessUrl(securityProperties.getLoginPage())
             .deleteCookies("JSESSIONID")
-            .logoutSuccessHandler(myLogoutSuccessHandler);
+            .logoutSuccessHandler(myLogoutSuccessHandler).permitAll();
 
+
+        http.addFilterBefore(myFilterSecurityInterceptor, FilterSecurityInterceptor.class);
         //开启跨域访问
         http.cors().disable();
         //开启模拟请求，比如API POST测试工具的测试，不开启时，API POST为报403错误
         http.csrf().disable();
-
         // 无权访问 JSON 格式的数据
-        http.exceptionHandling().accessDeniedHandler(accessDeniedHandler);
+//        http.exceptionHandling().accessDeniedHandler(accessDeniedHandler);
 
     }
 
     @Override
     public void configure(WebSecurity web) {
         //对于在header里面增加token等类似情况，放行所有OPTIONS请求。
-        web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**").antMatchers("/css/**", "/js/**", "/plugins/**", "/images/**", "/fonts/**");
-
+        web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**").antMatchers("/css/**", "/js/**", "/images/**", "/fonts/**");
     }
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
