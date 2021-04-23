@@ -9,7 +9,6 @@ import java.util.Date;
 
 @Setter
 @Getter
-@ToString(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @MappedSuperclass

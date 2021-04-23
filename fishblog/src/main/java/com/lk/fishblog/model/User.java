@@ -7,6 +7,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -15,11 +16,12 @@ import java.util.List;
 @Table(name = "B_USER")
 @Builder
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User extends BaseEntity implements UserDetails {
+public class User extends BaseEntity implements UserDetails, Serializable {
     private String username;
     private String phone;
     private String password;
