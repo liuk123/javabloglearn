@@ -90,16 +90,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .logoutUrl(securityProperties.getLogoutUrl())
             .logoutSuccessUrl(securityProperties.getLoginPage())
             .deleteCookies("JSESSIONID")
-            .logoutSuccessHandler(myLogoutSuccessHandler);
+            .logoutSuccessHandler(myLogoutSuccessHandler)
+
+            .and()
+            .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
 
 
-        http.addFilterBefore(myFilterSecurityInterceptor, FilterSecurityInterceptor.class);
+//        http.addFilterBefore(myFilterSecurityInterceptor, FilterSecurityInterceptor.class);
         //开启跨域访问
         http.cors().disable();
         //开启模拟请求，比如API POST测试工具的测试，不开启时，API POST为报403错误
         http.csrf().disable();
-        // 无权访问 JSON 格式的数据
-        http.exceptionHandling().accessDeniedHandler(accessDeniedHandler);
 
     }
 
