@@ -1,10 +1,14 @@
 package com.lk.fishblog;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.jsontype.TypeResolverBuilder;
 import com.lk.fishblog.controller.PerformanceInteceptor;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -13,6 +17,8 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
+
+import java.util.TimeZone;
 
 @SpringBootApplication
 @EnableJpaRepositories
@@ -54,11 +60,11 @@ public class FishblogApplication implements WebMvcConfigurer {
 			registry.addResourceHandler("/"+uploadTemPath+"**").addResourceLocations("file: /home/" + uploadTemPath);
 		}
 	}
-//	@Bean
-//	public Jackson2ObjectMapperBuilderCustomizer jacksonBuilderCustomizer() {
-//		return builder -> {
-//			builder.indentOutput(true);
-//			builder.timeZone(TimeZone.getTimeZone("Asia/Shanghai"));
-//		};
-//	}
+	@Bean
+	public Jackson2ObjectMapperBuilderCustomizer jacksonBuilderCustomizer() {
+		return builder -> {
+			builder.indentOutput(true);
+			builder.timeZone(TimeZone.getTimeZone("Asia/Shanghai"));
+		};
+	}
 }

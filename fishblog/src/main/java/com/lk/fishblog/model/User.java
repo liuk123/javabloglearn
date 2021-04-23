@@ -2,6 +2,8 @@ package com.lk.fishblog.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,18 +12,28 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "B_USER")
 @Builder
-@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User extends BaseEntity implements UserDetails, Serializable {
+public class User implements UserDetails, Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Long id;
+    @Column(updatable = false)
+    @CreationTimestamp
+    public Date createTime;
+    @UpdateTimestamp
+    public Date updateTime;
+
     private String username;
     private String phone;
     private String password;
@@ -62,7 +74,7 @@ public class User extends BaseEntity implements UserDetails, Serializable {
         this.id = id;
         this.username = username;
     }
-
+    @JsonIgnore
     public List<Role> getAllRoles(){
         List<Role> roles = new ArrayList<>();
         List<UserGroup> ugs = getUserGroupList();
@@ -74,6 +86,7 @@ public class User extends BaseEntity implements UserDetails, Serializable {
         roles.addAll(getRoleList());
         return roles;
     }
+    @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();

@@ -47,7 +47,6 @@ public class UserController {
     public ResultSet getCurrentUserBySession(Authentication authentication){
         User u = (User) authentication.getPrincipal();
 //        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.print(u.toString());
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "获取用户信息", new User(u.getId(),u.getUsername()));
     }
 
