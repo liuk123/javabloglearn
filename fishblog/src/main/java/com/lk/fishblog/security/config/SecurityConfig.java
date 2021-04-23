@@ -73,7 +73,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .loginProcessingUrl(securityProperties.getLoginProcessingUrl())
             .failureHandler(authenticationFailureHandler)
             .successHandler(authenticationSuccessHandler)
-            .permitAll()
 
             .and()
             .rememberMe()
@@ -91,7 +90,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .logoutUrl(securityProperties.getLogoutUrl())
             .logoutSuccessUrl(securityProperties.getLoginPage())
             .deleteCookies("JSESSIONID")
-            .logoutSuccessHandler(myLogoutSuccessHandler).permitAll();
+            .logoutSuccessHandler(myLogoutSuccessHandler);
 
 
         http.addFilterBefore(myFilterSecurityInterceptor, FilterSecurityInterceptor.class);
@@ -100,7 +99,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //开启模拟请求，比如API POST测试工具的测试，不开启时，API POST为报403错误
         http.csrf().disable();
         // 无权访问 JSON 格式的数据
-//        http.exceptionHandling().accessDeniedHandler(accessDeniedHandler);
+        http.exceptionHandling().accessDeniedHandler(accessDeniedHandler);
 
     }
 
