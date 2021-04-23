@@ -63,8 +63,9 @@ public class User extends BaseEntity implements UserDetails {
 
     public List<Role> getAllRoles(){
         List<Role> roles = new ArrayList<>();
-        if(null != getUserGroupList()){
-            for(UserGroup userGroup: getUserGroupList()){
+        List<UserGroup> ugs = getUserGroupList();
+        if(null != ugs){
+            for(UserGroup userGroup: ugs){
                 roles.addAll(userGroup.getRoleList());
             }
         }
@@ -74,8 +75,9 @@ public class User extends BaseEntity implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        if(null != getAllRoles()){
-            for (Role role : getAllRoles()) {
+        List<Role> rs = getAllRoles();
+        if(null != rs){
+            for (Role role : rs) {
                 for(Authority authority:role.getAuthorityList())
                     authorities.add(new SimpleGrantedAuthority(authority.getName()));
             }
