@@ -55,7 +55,7 @@ public class ArticleController {
      */
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResultSet addByJson(HttpServletRequest request, @RequestBody @Valid  NewArticleRequest a, Authentication authentication){
+    public ResultSet addByJson(@RequestBody @Valid  NewArticleRequest a, Authentication authentication){
         User user = (User) authentication.getPrincipal();
 //图片从缓存文件夹移入正式文件夹
         List<String> urlList = regUtil.extractUrls(a.getContent());
@@ -148,7 +148,7 @@ public class ArticleController {
      * @param id 文章id
      */
     @DeleteMapping(path = "/{id}")
-    public ResultSet delById(HttpServletRequest request, @PathVariable Long id){
+    public ResultSet delById(@PathVariable Long id){
         Article a = articleService.findById(id);
         List<String> urlList = regUtil.extractUrls(a.getContent());
         for(String url: urlList){

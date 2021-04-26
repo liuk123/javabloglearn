@@ -52,7 +52,7 @@ public class CommentController {
 
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResultSet addByJson(HttpServletRequest request, @RequestBody @Valid NewCommentRequest c, Authentication authentication){
+    public ResultSet addByJson(@RequestBody @Valid NewCommentRequest c, Authentication authentication){
         User user = (User) authentication.getPrincipal();
         Article a = new Article(c.getArticleId());
         Comment comment = commentService.save(c.getContent(), new User(user.getId(),user.getUsername()), a);

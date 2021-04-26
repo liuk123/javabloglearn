@@ -32,12 +32,6 @@ public class UserController {
     @Autowired
     ArticleService articleService;
 
-    @GetMapping(path="/{id}")
-    public ResultSet getById(@PathVariable Long id){
-        User u = userService.findById(id);
-        return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", u);
-    }
-
     /**
      * 获取当前登录人信息
      * @param authentication
@@ -62,14 +56,4 @@ public class UserController {
         return userService.register(u.toUser(encoder));
     }
 
-    /**
-     * 删除
-     * @param id
-     * @return
-     */
-    @DeleteMapping(path = "/{id}")
-    public ResultSet delById(@PathVariable Long id, HttpServletRequest req){
-        userService.deleteById(id);
-        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功");
-    }
 }

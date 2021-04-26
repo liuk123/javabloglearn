@@ -21,7 +21,7 @@ public class UserService {
     public User findById(Long id){
         return userRepository.getOne(id);
     }
-    public ResultSet deleteById(Long id){
+    public ResultSet delById(Long id){
         userRepository.deleteById(id);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功");
     }
