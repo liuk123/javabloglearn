@@ -1,10 +1,13 @@
 package com.lk.fishblog.service;
 
 import com.lk.fishblog.common.utils.ResultSet;
+import com.lk.fishblog.model.Role;
 import com.lk.fishblog.model.User;
 import com.lk.fishblog.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +24,9 @@ public class UserService {
     public ResultSet deleteById(Long id){
         userRepository.deleteById(id);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功");
+    }
+    public Page<User> findAll(int pageNum, int pageSize){
+        return userRepository.findAll(PageRequest.of(pageNum, pageSize));
     }
 
     public ResultSet register(User u){

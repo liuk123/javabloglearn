@@ -1,7 +1,8 @@
 package com.lk.fishblog.repository;
 
 import com.lk.fishblog.model.User;
-import com.lk.fishblog.model.UserGroup;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/role")
-public class RoleController {
+@RequestMapping("/admin")
+public class AdminController {
 
     final UserService userService;
     final MenuService menuService;
 
-    public RoleController(UserService userService, MenuService menuService) {
+    public AdminController(UserService userService, MenuService menuService) {
         this.userService = userService;
         this.menuService = menuService;
     }
