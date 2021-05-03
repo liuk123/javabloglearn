@@ -1,9 +1,13 @@
 package com.lk.fishblog.controller;
 
+import com.lk.fishblog.common.utils.PageInfo;
 import com.lk.fishblog.common.utils.ResultSet;
 import com.lk.fishblog.controller.request.NewMenuRequest;
+import com.lk.fishblog.model.Article;
+import com.lk.fishblog.model.User;
 import com.lk.fishblog.service.UserGroupService;
 import com.lk.fishblog.service.UserService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -54,9 +58,11 @@ public class AdminController {
      * 获取用户
      */
     @GetMapping(path="/user/")
-    public ResultSet getUserAll(@RequestParam Integer pageNum, @RequestParam Integer pageSize){
-        userService.findAll(pageNum,pageSize);
-        return new ResultSet(ResultSet.RESULT_CODE_TRUE,"获取成功");
+    public PageInfo<User> getUserAll(@RequestParam Integer pageNum, @RequestParam Integer pageSize){
+        Page<User> u = userService.findAll(pageNum-1,pageSize);
+        PageInfo<User> page = new PageInfo(u);
+        page.setPageSize(pageSize);
+        return page;
     }
     /**
      * 删除用户
