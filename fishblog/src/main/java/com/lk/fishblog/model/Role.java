@@ -13,6 +13,7 @@ import java.util.Set;
 @Table(name = "B_ROLE")
 @Builder
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @Setter
 @Getter
 @NoArgsConstructor
@@ -38,4 +39,9 @@ public class Role extends BaseEntity implements Serializable{
                     @JoinColumn(name = "authority_id",referencedColumnName = "id") })
     private List<Authority> authorityList;
 
+    public Role(Long id, String name, String description){
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
 }

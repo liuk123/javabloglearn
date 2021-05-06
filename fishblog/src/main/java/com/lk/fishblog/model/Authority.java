@@ -12,6 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "B_AUTHORITY")
+@ToString(callSuper = true)
 @Builder
 @Setter
 @Getter
@@ -28,7 +29,7 @@ public class Authority implements Serializable{
     @UpdateTimestamp
     public Date updateTime;
 
-    private String parentId;
+    private Long parentId;
     private String name;
     private String url;
     private String description;
@@ -36,4 +37,12 @@ public class Authority implements Serializable{
     @JsonIgnore
     @ManyToMany(targetEntity = Role.class, mappedBy = "authorityList")
     private List<Role> roleList;
+
+    public Authority(Long id, Long parentId, String name, String url, String description){
+        this.id = id;
+        this.parentId = parentId;
+        this.name = name;
+        this.url = url;
+        this.description = description;
+    }
 }

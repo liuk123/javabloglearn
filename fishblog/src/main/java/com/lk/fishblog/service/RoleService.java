@@ -25,6 +25,9 @@ public class RoleService {
     public Page<Role> findAll(int pageNum, int pageSize){
         return roleRepository.findAll(PageRequest.of(pageNum, pageSize));
     }
+    public void save(Role r){
+        roleRepository.save(r);
+    }
     public void delById(Long id){
         roleRepository.deleteById(id);
     }

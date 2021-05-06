@@ -1,8 +1,12 @@
 package com.lk.fishblog.controller;
 
+import com.lk.fishblog.common.utils.PageInfo;
 import com.lk.fishblog.common.utils.ResultSet;
+import com.lk.fishblog.controller.request.NewAuthorityRequest;
 import com.lk.fishblog.controller.request.NewMenuRequest;
+import com.lk.fishblog.model.Authority;
 import com.lk.fishblog.service.AuthorityService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -21,11 +25,12 @@ public class AuthorityController {
 
     /**
      * 添加权限
-     * @param m 权限
+     * @param auth 权限
      */
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResultSet addAuthByJson(@RequestBody @Valid NewMenuRequest m){
+    public ResultSet addAuthByJson(@RequestBody @Valid NewAuthorityRequest auth){
+        authorityService.save(auth.toAuthority());
         return new ResultSet(ResultSet.RESULT_CODE_TRUE,"添加成功", null);
     }
 
@@ -33,9 +38,11 @@ public class AuthorityController {
      * 获取权限
      */
     @GetMapping(path="/")
-    public ResultSet getAuthAll(@RequestParam Integer pageNum, @RequestParam Integer pageSize){
-        authorityService.findAll(pageNum,pageSize);
-        return new ResultSet(ResultSet.RESULT_CODE_TRUE,"获取成功");
+    public PageInfo<Authority> getAuthAll(@RequestParam Integer pageNum, @RequestParam Integer pageSize){
+        Page<Authority> u = authorityService.findAll(pageNum-1,pageSize);
+        PageInfo<Authority> page = new PageInfo<Authority>(u);
+        page.setPageSize(pageSize);
+        return page;
     }
     /**
      * 删除分组

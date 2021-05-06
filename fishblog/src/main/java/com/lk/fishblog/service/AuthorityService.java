@@ -23,6 +23,9 @@ public class AuthorityService {
     public Page<Authority> findAll(int pageNum, int pageSize){
         return authorityRepository.findAll(PageRequest.of(pageNum, pageSize));
     }
+    public void save(Authority auth){
+        authorityRepository.save(auth);
+    }
     public void delById(Long id){
         authorityRepository.deleteById(id);
     }

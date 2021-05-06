@@ -1,8 +1,12 @@
 package com.lk.fishblog.controller;
 
+import com.lk.fishblog.common.utils.PageInfo;
 import com.lk.fishblog.common.utils.ResultSet;
 import com.lk.fishblog.controller.request.NewMenuRequest;
+import com.lk.fishblog.controller.request.NewRoleRequest;
+import com.lk.fishblog.model.Role;
 import com.lk.fishblog.service.RoleService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -21,12 +25,12 @@ public class RoleController {
 
     /**
      * 添加角色
-     * @param m 角色
+     * @param r 角色
      */
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResultSet addRoleByJson(@RequestBody @Valid NewMenuRequest m){
-
+    public ResultSet addRoleByJson(@RequestBody @Valid NewRoleRequest r){
+        roleService.save(r.toRole());
         return new ResultSet(ResultSet.RESULT_CODE_TRUE,"添加成功", null);
     }
 
@@ -34,9 +38,11 @@ public class RoleController {
      * 获取角色
      */
     @GetMapping(path="/")
-    public ResultSet getRoleAll(@RequestParam Integer pageNum, @RequestParam Integer pageSize){
-        roleService.findAll(pageNum,pageSize);
-        return new ResultSet(ResultSet.RESULT_CODE_TRUE,"获取成功");
+    public PageInfo<Role> getRoleAll(@RequestParam Integer pageNum, @RequestParam Integer pageSize){
+        Page<Role> u = roleService.findAll(pageNum-1,pageSize);
+        PageInfo<Role> page = new PageInfo<Role>(u);
+        page.setPageSize(pageSize);
+        return page;
     }
 
     /**

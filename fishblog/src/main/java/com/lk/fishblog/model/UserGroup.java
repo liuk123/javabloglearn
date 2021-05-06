@@ -11,6 +11,7 @@ import java.util.List;
 @Table(name = "B_USERGROUP")
 @Builder
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @Setter
 @Getter
 @NoArgsConstructor
@@ -37,4 +38,10 @@ public class UserGroup extends BaseEntity implements Serializable{
             inverseJoinColumns = {
                     @JoinColumn(name = "role_id", referencedColumnName = "id") })
     private List<Role> roleList;
+
+    public UserGroup(Long id, String name, String description){
+        this.id=id;
+        this.name=name;
+        this.description=description;
+    }
 }

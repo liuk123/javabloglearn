@@ -21,7 +21,9 @@ public class UserGroupService {
     public Page<UserGroup> findAll(int pageNum, int pageSize){
         return userGroupRepository.findAll(PageRequest.of(pageNum, pageSize));
     }
-
+    public void save(UserGroup ug){
+        userGroupRepository.save(ug);
+    }
     public void delById(Long id){
         userGroupRepository.deleteById(id);
     }
