@@ -2,7 +2,6 @@ package com.lk.fishblog.controller;
 
 import com.lk.fishblog.common.utils.PageInfo;
 import com.lk.fishblog.common.utils.ResultSet;
-import com.lk.fishblog.controller.request.NewMenuRequest;
 import com.lk.fishblog.controller.request.NewUserGroupRequest;
 import com.lk.fishblog.model.User;
 import com.lk.fishblog.model.UserGroup;
@@ -42,8 +41,8 @@ public class AdminController {
      * 获取分组
      */
     @GetMapping(path="/userGroup/")
-    public PageInfo<UserGroup> getUserGroupAll(@RequestParam Integer pageNum, @RequestParam Integer pageSize){
-        Page<UserGroup> u = userGroupService.findAll(pageNum-1,pageSize);
+    public PageInfo<UserGroup> getUserGroupAll(@RequestParam Integer pageIndex, @RequestParam Integer pageSize){
+        Page<UserGroup> u = userGroupService.findAll(pageIndex-1,pageSize);
         PageInfo<UserGroup> page = new PageInfo<UserGroup>(u);
         page.setPageSize(pageSize);
         return page;
@@ -62,8 +61,8 @@ public class AdminController {
      * 获取用户
      */
     @GetMapping(path="/user/")
-    public PageInfo<User> getUserAll(@RequestParam Integer pageNum, @RequestParam Integer pageSize){
-        Page<User> u = userService.findAll(pageNum-1,pageSize);
+    public PageInfo<User> getUserAll(@RequestParam Integer pageIndex, @RequestParam Integer pageSize){
+        Page<User> u = userService.findAll(pageIndex-1,pageSize);
         PageInfo<User> page = new PageInfo<User>(u);
         page.setPageSize(pageSize);
         return page;

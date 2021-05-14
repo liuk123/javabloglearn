@@ -3,7 +3,6 @@ package com.lk.fishblog.controller;
 import com.lk.fishblog.common.utils.PageInfo;
 import com.lk.fishblog.common.utils.ResultSet;
 import com.lk.fishblog.controller.request.NewAuthorityRequest;
-import com.lk.fishblog.controller.request.NewMenuRequest;
 import com.lk.fishblog.model.Authority;
 import com.lk.fishblog.service.AuthorityService;
 import org.springframework.data.domain.Page;
@@ -38,8 +37,8 @@ public class AuthorityController {
      * 获取权限
      */
     @GetMapping(path="/")
-    public PageInfo<Authority> getAuthAll(@RequestParam Integer pageNum, @RequestParam Integer pageSize){
-        Page<Authority> u = authorityService.findAll(pageNum-1,pageSize);
+    public PageInfo<Authority> getAuthAll(@RequestParam Integer pageIndex, @RequestParam Integer pageSize){
+        Page<Authority> u = authorityService.findAll(pageIndex-1,pageSize);
         PageInfo<Authority> page = new PageInfo<Authority>(u);
         page.setPageSize(pageSize);
         return page;

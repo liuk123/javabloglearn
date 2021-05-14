@@ -107,22 +107,22 @@ public class ArticleController {
 
     /**
      * 列表
-     * @param pageNum 页码
+     * @param pageIndex 页码
      * @param pageSize 页数
      * @param tags 类别
      */
     @GetMapping(path="/")
-    public PageInfo<Article> getAll(@RequestParam Integer pageNum, @RequestParam Integer pageSize, @RequestParam List<Long> tags){
+    public PageInfo<Article> getAll(@RequestParam Integer pageIndex, @RequestParam Integer pageSize, @RequestParam List<Long> tags){
 
         Page<Article> a;
         if(tags.isEmpty()){
-            a = articleService.findAll(pageNum-1, pageSize);
+            a = articleService.findAll(pageIndex-1, pageSize);
         }else{
             List<Tag> tagList = new ArrayList<>();
             for(Long val: tags){
                 tagList.add(new Tag(val));
             }
-            a = articleService.findByTaglist(pageNum-1, pageSize, tagList);
+            a = articleService.findByTaglist(pageIndex-1, pageSize, tagList);
         }
         PageInfo<Article> page = new PageInfo(a);
         page.setPageSize(pageSize);
@@ -132,12 +132,12 @@ public class ArticleController {
     /**
      * 文章列表
      * @param id 用户id
-     * @param pageNum 页码
+     * @param pageIndex 页码
      * @param pageSize 页数
      */
     @GetMapping(path="/getByAuthor/{id}")
-    public PageInfo<Article> getByAuthor(@PathVariable Long id, @RequestParam Integer pageNum, @RequestParam Integer pageSize){
-        Page<Article> a = articleService.findByAuthor(id, pageNum-1, pageSize);
+    public PageInfo<Article> getByAuthor(@PathVariable Long id, @RequestParam Integer pageIndex, @RequestParam Integer pageSize){
+        Page<Article> a = articleService.findByAuthor(id, pageIndex-1, pageSize);
         PageInfo<Article> page = new PageInfo(a);
         return page;
     }

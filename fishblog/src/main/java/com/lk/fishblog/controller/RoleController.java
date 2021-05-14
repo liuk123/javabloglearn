@@ -38,8 +38,8 @@ public class RoleController {
      * 获取角色
      */
     @GetMapping(path="/")
-    public PageInfo<Role> getRoleAll(@RequestParam Integer pageNum, @RequestParam Integer pageSize){
-        Page<Role> u = roleService.findAll(pageNum-1,pageSize);
+    public PageInfo<Role> getRoleAll(@RequestParam Integer pageIndex, @RequestParam Integer pageSize){
+        Page<Role> u = roleService.findAll(pageIndex-1,pageSize);
         PageInfo<Role> page = new PageInfo<Role>(u);
         page.setPageSize(pageSize);
         return page;

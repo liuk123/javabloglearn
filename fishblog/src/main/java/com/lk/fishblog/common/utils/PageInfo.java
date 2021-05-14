@@ -11,7 +11,7 @@ public class PageInfo<T> extends ResultSet{
     /**
      * 当前页
      */
-    private int pageNum;
+    private int pageIndex;
     /**
      * 显示数量
      */
@@ -34,7 +34,7 @@ public class PageInfo<T> extends ResultSet{
         super.resultCode = ResultSet.RESULT_CODE_TRUE;
         super.resultMsg = "查询成功";
         if(!page.isEmpty()){
-            this.pageNum = page.getNumber()+1;
+            this.pageIndex = page.getNumber()+1;
             this.pageSize = page.getSize();
             this.pages = page.getTotalPages();
             this.total = page.getTotalElements();
