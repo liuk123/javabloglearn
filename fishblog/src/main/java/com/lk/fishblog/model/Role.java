@@ -44,4 +44,7 @@ public class Role extends BaseEntity implements Serializable{
         this.name = name;
         this.description = description;
     }
+    public Role(Long id){
+        this.id = id;
+    }
 }

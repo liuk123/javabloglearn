@@ -2,21 +2,32 @@ package com.lk.fishblog.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "B_USERGROUP")
 @Builder
-@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserGroup extends BaseEntity implements Serializable{
+public class UserGroup implements Serializable{
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Long id;
+    @Column(updatable = false)
+    @CreationTimestamp
+    public Date createTime;
+    @UpdateTimestamp
+    public Date updateTime;
+
     private String name;
     private String description;
 

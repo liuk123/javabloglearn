@@ -2,7 +2,6 @@ package com.lk.fishblog.controller;
 
 import com.lk.fishblog.common.utils.PageInfo;
 import com.lk.fishblog.common.utils.ResultSet;
-import com.lk.fishblog.controller.request.NewMenuRequest;
 import com.lk.fishblog.controller.request.NewRoleRequest;
 import com.lk.fishblog.model.Role;
 import com.lk.fishblog.service.RoleService;
@@ -12,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/role")
@@ -38,11 +38,19 @@ public class RoleController {
      * 获取角色
      */
     @GetMapping(path="/")
-    public PageInfo<Role> getRoleAll(@RequestParam Integer pageIndex, @RequestParam Integer pageSize){
-        Page<Role> u = roleService.findAll(pageIndex-1,pageSize);
+    public PageInfo<Role> getRole(@RequestParam Integer pageIndex, @RequestParam Integer pageSize){
+        Page<Role> u = roleService.findRoles(pageIndex-1,pageSize);
         PageInfo<Role> page = new PageInfo<Role>(u);
         page.setPageSize(pageSize);
         return page;
+    }
+    /**
+     * 获取所有角色
+     */
+    @GetMapping(path="/all/")
+    public ResultSet getAllRole(){
+        List<Role> u = roleService.findAllRoles();
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE,"获取角色", u);
     }
 
     /**

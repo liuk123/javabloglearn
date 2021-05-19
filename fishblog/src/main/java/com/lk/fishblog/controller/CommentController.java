@@ -38,14 +38,12 @@ public class CommentController {
     @GetMapping(path="/{id}")
     public ResultSet getById(@PathVariable Long id){
         Comment c = commentService.findById(id);
-        log.info("Comment {}:", c);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", c);
     }
 
     @GetMapping(path="top5/{id}")
     public ResultSet getTop5ByArticleId(@PathVariable Long id){
         List<Comment> c = commentService.findTop5ByArticleId(id);
-        log.info("CommentList {}:", c.get(0).getReplyList());
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", c);
     }
 

@@ -3,6 +3,8 @@ package com.lk.fishblog.controller;
 import com.lk.fishblog.common.utils.PageInfo;
 import com.lk.fishblog.common.utils.ResultSet;
 import com.lk.fishblog.controller.request.NewUserGroupRequest;
+import com.lk.fishblog.model.Role;
+import com.lk.fishblog.model.Tag;
 import com.lk.fishblog.model.User;
 import com.lk.fishblog.model.UserGroup;
 import com.lk.fishblog.service.UserGroupService;
@@ -13,6 +15,8 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
@@ -33,8 +37,12 @@ public class AdminController {
     @PostMapping(path = "/userGroup/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResultSet addUserGroupByJson(@RequestBody @Valid NewUserGroupRequest ug){
-        userGroupService.save(ug.toUserGroup());
-        return new ResultSet(ResultSet.RESULT_CODE_TRUE,"添加成功", null);
+        List<Role> roleList = new ArrayList<>();
+        for(Long val: ug.getRoleIds()){
+            roleList.add(new Role(val));
+        }
+        UserGroup userGroup = userGroupService.save(ug.getId(),ug.getName(),ug.getDescription(), roleList);
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE,"添加成功", userGroup);
     }
 
     /**

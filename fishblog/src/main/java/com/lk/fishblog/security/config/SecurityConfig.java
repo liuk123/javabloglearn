@@ -83,7 +83,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             //登录逻辑设置
             .userDetailsService(myCustomUserService)
             //失效时间，默认为两周，这里设为60秒
-            .tokenValiditySeconds(60)
+            .tokenValiditySeconds(60*60*24*100)
 
             .and()
             .logout()
