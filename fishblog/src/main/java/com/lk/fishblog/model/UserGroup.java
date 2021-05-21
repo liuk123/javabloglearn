@@ -55,4 +55,7 @@ public class UserGroup implements Serializable{
         this.name=name;
         this.description=description;
     }
+    public UserGroup(Long id){
+        this.id=id;
+    }
 }

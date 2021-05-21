@@ -3,6 +3,7 @@ package com.lk.fishblog.controller;
 import com.lk.fishblog.common.utils.PageInfo;
 import com.lk.fishblog.common.utils.ResultSet;
 import com.lk.fishblog.controller.request.NewUserGroupRequest;
+import com.lk.fishblog.controller.request.NewUserRequest;
 import com.lk.fishblog.model.Role;
 import com.lk.fishblog.model.Tag;
 import com.lk.fishblog.model.User;
@@ -74,6 +75,24 @@ public class AdminController {
         PageInfo<User> page = new PageInfo<User>(u);
         page.setPageSize(pageSize);
         return page;
+    }
+    /**
+     * 编辑用户
+     * @param u 分组
+     */
+    @PostMapping(path = "/user/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResultSet addUserByJson(@RequestBody @Valid NewUserRequest u){
+        List<Role> roleList = new ArrayList<>();
+        for(Long val: u.getRoleIds()){
+            roleList.add(new Role(val));
+        }
+        List<UserGroup> userGroupList = new ArrayList<>();
+        for(Long val: u.getUserGroupIds()){
+            userGroupList.add(new UserGroup(val));
+        }
+        User user = userService.save(u.getId(),roleList,userGroupList, u.getAccountNonExpired(),u.getAccountNonLocked(),u.getCredentialsNonExpired(),u.getEnabled());
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE,"添加成功", user);
     }
     /**
      * 删除用户

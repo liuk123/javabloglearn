@@ -1,12 +1,12 @@
 package com.lk.fishblog.controller.request;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.lk.fishblog.model.User;
 import com.lk.fishblog.security.MyPasswordEncoder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.validator.constraints.NotEmpty;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,8 +15,14 @@ public class NewUserRequest {
     private Long id;
     private String username;
     private String password;
-    @NotEmpty
     private String phone;
+    private List<Long> roleIds;
+    private List<Long> userGroupIds;
+
+    private Boolean accountNonExpired;
+    private Boolean accountNonLocked;
+    private Boolean credentialsNonExpired;
+    private Boolean enabled;
 
     public User toUser(MyPasswordEncoder passwordEncoder){
         return new User(username, passwordEncoder.encode(password), phone);

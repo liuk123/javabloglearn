@@ -29,8 +29,8 @@ public class AuthorityController {
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResultSet addAuthByJson(@RequestBody @Valid NewAuthorityRequest auth){
-        authorityService.save(auth.toAuthority());
-        return new ResultSet(ResultSet.RESULT_CODE_TRUE,"添加成功", null);
+        Authority authority = authorityService.save(auth.toAuthority());
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE,"添加成功", authority);
     }
 
     /**
@@ -44,7 +44,7 @@ public class AuthorityController {
         return page;
     }
     /**
-     * 删除分组
+     * 删除权限
      * @param id 角色id
      */
     @DeleteMapping(path = "/{id}")

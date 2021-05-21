@@ -2,9 +2,12 @@ package com.lk.fishblog.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,13 +15,21 @@ import java.util.Set;
 @Entity
 @Table(name = "B_ROLE")
 @Builder
-@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Role extends BaseEntity implements Serializable{
+public class Role implements Serializable{
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Long id;
+    @Column(updatable = false)
+    @CreationTimestamp
+    public Date createTime;
+    @UpdateTimestamp
+    public Date updateTime;
+
     private String name;
     private String description;
 

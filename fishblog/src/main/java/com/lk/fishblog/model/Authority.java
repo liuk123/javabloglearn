@@ -45,4 +45,7 @@ public class Authority implements Serializable{
         this.url = url;
         this.description = description;
     }
+    public Authority(Long id){
+        this.id = id;
+    }
 }
