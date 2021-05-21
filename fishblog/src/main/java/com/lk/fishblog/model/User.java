@@ -57,7 +57,15 @@ public class User implements UserDetails, Serializable {
                     @JoinColumn(name = "role_id", referencedColumnName = "id") })
     private List<Role> roleList;
 
-    @ManyToMany(targetEntity = UserGroup.class, mappedBy = "userList", fetch=FetchType.LAZY)
+//    @ManyToMany(targetEntity = UserGroup.class, mappedBy = "userList", fetch=FetchType.LAZY)
+    @ManyToMany(targetEntity = UserGroup.class, fetch=FetchType.LAZY)
+    @JoinTable(
+            name = "b_user_userGroup",
+            joinColumns = {
+                    @JoinColumn(name = "user_id") },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "userGroup_id") })
+
     private List<UserGroup> userGroupList;
 
 

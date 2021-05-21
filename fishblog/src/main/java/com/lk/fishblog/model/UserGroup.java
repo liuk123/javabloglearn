@@ -31,17 +31,18 @@ public class UserGroup implements Serializable{
     private String name;
     private String description;
 
-    @JsonIgnore
-    @ManyToMany(cascade={}, fetch=FetchType.LAZY)
-    @JoinTable(
-            name = "b_userGroup_user",
-            joinColumns = {
-                    @JoinColumn(name = "userGroup_id") },
-            inverseJoinColumns = {
-                    @JoinColumn(name = "user_id") })
+//    @JsonIgnore
+//    @ManyToMany(cascade={}, fetch=FetchType.LAZY)
+//    @JoinTable(
+//            name = "b_userGroup_user",
+//            joinColumns = {
+//                    @JoinColumn(name = "userGroup_id") },
+//            inverseJoinColumns = {
+//                    @JoinColumn(name = "user_id") })
+    @ManyToMany(targetEntity = User.class, mappedBy = "userGroupList", fetch=FetchType.LAZY)
     private List<User> userList;
 
-    @ManyToMany(cascade={}, fetch=FetchType.EAGER)
+    @ManyToMany(targetEntity = Role.class, fetch=FetchType.EAGER)
     @JoinTable(
             name = "b_userGroup_role",
             joinColumns = {
