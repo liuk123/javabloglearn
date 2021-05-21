@@ -19,8 +19,11 @@ public class UserGroupService {
     @Autowired
     UserGroupRepository userGroupRepository;
 
-    public Page<UserGroup> findAll(int pageNum, int pageSize){
+    public Page<UserGroup> findUserGroups(int pageNum, int pageSize){
         return userGroupRepository.findAll(PageRequest.of(pageNum, pageSize));
+    }
+    public List<UserGroup> findAllUserGroups(){
+        return userGroupRepository.findAll();
     }
     public UserGroup save(Long id, String name, String description, List<Role> roleList){
         return userGroupRepository.save(

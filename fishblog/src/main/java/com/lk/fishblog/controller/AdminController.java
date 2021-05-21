@@ -50,11 +50,19 @@ public class AdminController {
      * 获取分组
      */
     @GetMapping(path="/userGroup/")
-    public PageInfo<UserGroup> getUserGroupAll(@RequestParam Integer pageIndex, @RequestParam Integer pageSize){
-        Page<UserGroup> u = userGroupService.findAll(pageIndex-1,pageSize);
+    public PageInfo<UserGroup> getUserGroups(@RequestParam Integer pageIndex, @RequestParam Integer pageSize){
+        Page<UserGroup> u = userGroupService.findUserGroups(pageIndex-1,pageSize);
         PageInfo<UserGroup> page = new PageInfo<UserGroup>(u);
         page.setPageSize(pageSize);
         return page;
+    }
+    /**
+     * 获取所有分组
+     */
+    @GetMapping(path="/allUserGroup/")
+    public ResultSet getAllUserGroups(){
+        List<UserGroup> userGroups = userGroupService.findAllUserGroups();
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE,"获取所有分组", userGroups);
     }
     /**
      * 删除分组
