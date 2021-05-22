@@ -39,6 +39,7 @@ public class UserGroup implements Serializable{
 //                    @JoinColumn(name = "userGroup_id") },
 //            inverseJoinColumns = {
 //                    @JoinColumn(name = "user_id") })
+    @JsonIgnore
     @ManyToMany(targetEntity = User.class, mappedBy = "userGroupList", fetch=FetchType.LAZY)
     private List<User> userList;
 
@@ -46,9 +47,9 @@ public class UserGroup implements Serializable{
     @JoinTable(
             name = "b_userGroup_role",
             joinColumns = {
-                    @JoinColumn(name = "userGroup_id", referencedColumnName = "id") },
+                    @JoinColumn(name = "userGroup_id") },
             inverseJoinColumns = {
-                    @JoinColumn(name = "role_id", referencedColumnName = "id") })
+                    @JoinColumn(name = "role_id") })
     private List<Role> roleList;
 
     public UserGroup(Long id, String name, String description){

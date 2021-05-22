@@ -1,6 +1,7 @@
 package com.lk.fishblog.service;
 
 import com.lk.fishblog.model.Authority;
+import com.lk.fishblog.model.Role;
 import com.lk.fishblog.model.User;
 import com.lk.fishblog.repository.AuthorityRepository;
 import com.lk.fishblog.repository.RoleRepository;
@@ -11,7 +12,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.awt.*;
 import java.awt.print.Pageable;
+import java.util.List;
 
 @Service
 @Transactional
@@ -20,9 +23,13 @@ public class AuthorityService {
     @Autowired
     AuthorityRepository authorityRepository;
 
-    public Page<Authority> findAll(int pageNum, int pageSize){
+    public Page<Authority> findAuth(int pageNum, int pageSize){
         return authorityRepository.findAll(PageRequest.of(pageNum, pageSize));
     }
+    public List<Authority> findAllAuth(){
+        return authorityRepository.findAll();
+    }
+
     public Authority save(Authority auth){
         return authorityRepository.save(auth);
     }

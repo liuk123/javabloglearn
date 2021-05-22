@@ -3,6 +3,7 @@ package com.lk.fishblog.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,6 +24,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@DynamicUpdate
 public class User implements UserDetails, Serializable {
 
     @Id
@@ -52,9 +54,9 @@ public class User implements UserDetails, Serializable {
     @JoinTable(
             name = "b_user_role",
             joinColumns = {
-                    @JoinColumn(name = "user_id", referencedColumnName = "id") },
+                    @JoinColumn(name = "user_id") },
             inverseJoinColumns = {
-                    @JoinColumn(name = "role_id", referencedColumnName = "id") })
+                    @JoinColumn(name = "role_id") })
     private List<Role> roleList;
 
 //    @ManyToMany(targetEntity = UserGroup.class, mappedBy = "userList", fetch=FetchType.LAZY)
@@ -65,10 +67,7 @@ public class User implements UserDetails, Serializable {
                     @JoinColumn(name = "user_id") },
             inverseJoinColumns = {
                     @JoinColumn(name = "userGroup_id") })
-
     private List<UserGroup> userGroupList;
-
-
 
     public User(Long id){
         this.id = id;

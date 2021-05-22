@@ -43,7 +43,7 @@ public class AdminController {
             roleList.add(new Role(val));
         }
         UserGroup userGroup = userGroupService.save(ug.getId(),ug.getName(),ug.getDescription(), roleList);
-        return new ResultSet(ResultSet.RESULT_CODE_TRUE,"添加成功", userGroup);
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE,"添加分组成功", userGroup);
     }
 
     /**
@@ -62,7 +62,7 @@ public class AdminController {
     @GetMapping(path="/allUserGroup/")
     public ResultSet getAllUserGroups(){
         List<UserGroup> userGroups = userGroupService.findAllUserGroups();
-        return new ResultSet(ResultSet.RESULT_CODE_TRUE,"获取所有分组", userGroups);
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE,"获取所有分组成功", userGroups);
     }
     /**
      * 删除分组
@@ -71,7 +71,7 @@ public class AdminController {
     @DeleteMapping(path = "/userGroup/{id}")
     public ResultSet delUserGroupById(@PathVariable Long id){
         userGroupService.delById(id);
-        return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功");
+        return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除分组成功");
     }
 
     /**
@@ -80,6 +80,9 @@ public class AdminController {
     @GetMapping(path="/user/")
     public PageInfo<User> getUserAll(@RequestParam Integer pageIndex, @RequestParam Integer pageSize){
         Page<User> u = userService.findAll(pageIndex-1,pageSize);
+        for(User val: u.getContent()){
+            val.setUserGroupList(val.getUserGroupList());
+        }
         PageInfo<User> page = new PageInfo<User>(u);
         page.setPageSize(pageSize);
         return page;
@@ -99,8 +102,8 @@ public class AdminController {
         for(Long val: u.getUserGroupIds()){
             userGroupList.add(new UserGroup(val));
         }
-        User user = userService.save(u.getId(),roleList,userGroupList, u.getAccountNonExpired(),u.getAccountNonLocked(),u.getCredentialsNonExpired(),u.getEnabled());
-        return new ResultSet(ResultSet.RESULT_CODE_TRUE,"添加成功", user);
+        User user = userService.save(u.getId(), u.getPassword(), u.getUsername(), u.getPhone(),roleList,userGroupList, u.getAccountNonExpired(),u.getAccountNonLocked(),u.getCredentialsNonExpired(),u.getEnabled());
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE,"添加用户成功", user);
     }
     /**
      * 删除用户
@@ -109,7 +112,7 @@ public class AdminController {
     @DeleteMapping(path = "/user/{id}")
     public ResultSet delUserById(@PathVariable Long id){
         userService.delById(id);
-        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功");
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除用户成功");
     }
 
 }
