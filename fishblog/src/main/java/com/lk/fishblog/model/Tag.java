@@ -21,7 +21,7 @@ public class Tag extends BaseEntity implements Serializable{
     private String name;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "tagList", cascade = {}, fetch=FetchType.LAZY)
+    @ManyToMany(mappedBy = "tagList", fetch=FetchType.LAZY)
     private List<Article> articleList;
 
     public Tag(Long id){

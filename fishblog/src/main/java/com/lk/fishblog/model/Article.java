@@ -40,7 +40,7 @@ public class Article implements Serializable{
     @OrderBy("createTime DESC")
     private List<Comment> commentList;
 
-    @ManyToMany(cascade={}, fetch=FetchType.LAZY)
+    @ManyToMany(fetch=FetchType.LAZY)
     @JoinTable(
             name = "b_article_tag",
             joinColumns = {

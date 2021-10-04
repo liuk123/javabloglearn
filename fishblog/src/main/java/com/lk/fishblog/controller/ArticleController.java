@@ -58,19 +58,17 @@ public class ArticleController {
         User user = (User) authentication.getPrincipal();
 //图片从缓存文件夹移入正式文件夹
         List<String> urlList = regUtil.extractUrls(a.getContent());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
+        String format = sdf.format(new Date());
+        File newFile = new File(uploadPath + format);
         for(String url: urlList){
-            if(url.contains(uploadTemPath)){
-                System.out.println("url:"+url);
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
-                String format = sdf.format(new Date());
-                String realPath = uploadPath;
-                File newFile = new File(realPath + format);
-                File oldFile = new File(url.substring(url.indexOf(uploadTemPath),url.lastIndexOf(')')));
-                fileUtil.moveFile(oldFile.getAbsolutePath(), newFile.getAbsolutePath());
-            }
+            System.out.println("url:"+url);
+            File oldFile = new File(url.substring(url.indexOf(uploadTemPath),url.lastIndexOf(')')));
+            fileUtil.moveFile(oldFile.getAbsolutePath(), newFile.getAbsolutePath());
         }
 //文章中图片地址替换
-        a.setContent(a.getContent().replaceAll(uploadTemPath,uploadPath));
+        String str = "(!\\[.*?]\\(.+?)"+uploadTemPath+"(.+?\\))";
+        a.setContent(a.getContent().replaceAll(str, "$1"+uploadPath+"$2"));
 //修改文章时，删除多余图片
         if(null != a.getId()){
             Article oldA = articleService.findById(a.getId());
@@ -101,8 +99,18 @@ public class ArticleController {
     @GetMapping(path="/{id}")
     public ResultSet getById(@PathVariable Long id){
         Article a = articleService.findById(id);
-        log.info("id {}:",a.getCommentList());
-        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", a);
+        List<Tag> tagList = new ArrayList<>(a.getTagList());
+        Article article = new Article();
+        article.setId(a.getId());
+        article.setTitle(a.getTitle());
+        article.setUpdateTime(a.getUpdateTime());
+        article.setAuthor(a.getAuthor());
+        article.setTagList(tagList);
+        article.setCommentList(a.getCommentList());
+        article.setCreateTime(a.getCreateTime());
+        article.setContent(a.getContent());
+        article.setDescItem(a.getDescItem());
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", article);
     }
 
     /**
