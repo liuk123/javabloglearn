@@ -81,6 +81,7 @@ public class User implements UserDetails, Serializable {
         this.id = id;
         this.username = username;
     }
+
     @JsonIgnore
     public List<Role> getAllRoles(){
         List<Role> roles = new ArrayList<>();

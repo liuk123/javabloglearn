@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @Data
 public class SecurityProperties {
-    private String loginPage = "/user/login.html";
+    private String loginPage = "/user/login";
     private String loginProcessingUrl = "/user/login";
     private String logoutUrl = "/user/logout";
 

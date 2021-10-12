@@ -38,6 +38,10 @@ public class Authority implements Serializable{
     @ManyToMany(targetEntity = Role.class, mappedBy = "authorityList")
     private List<Role> roleList;
 
+    @JsonIgnore
+    @ManyToMany(targetEntity = Menu.class, mappedBy = "authorityList")
+    private List<Menu> menuList;
+
     public Authority(Long id, Long parentId, String name, String url, String description){
         this.id = id;
         this.parentId = parentId;

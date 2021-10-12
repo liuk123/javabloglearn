@@ -27,7 +27,8 @@ public class Menu implements Serializable{
     @UpdateTimestamp
     public Date updateTime;
 
-    private String parentId;
+    private String pid;
+    private String sort;
     private String title;
     private String type;
     private String icon;
@@ -36,4 +37,15 @@ public class Menu implements Serializable{
     private String open;
     private String route;
     private String link;
+    private Boolean isMenuShow;
+    private Boolean isBreadcrumbShow;
+
+    @ManyToMany(fetch=FetchType.LAZY)
+    @JoinTable(
+            name = "b_menu_authority",
+            joinColumns = {
+                    @JoinColumn(name = "menu_id") },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "authority_id") })
+    private  List<Authority> authorityList;
 }

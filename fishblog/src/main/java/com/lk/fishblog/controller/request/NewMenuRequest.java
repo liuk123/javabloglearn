@@ -1,5 +1,6 @@
 package com.lk.fishblog.controller.request;
 
+import com.lk.fishblog.model.Authority;
 import com.lk.fishblog.model.Role;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +14,8 @@ import java.util.List;
 @ToString
 public class NewMenuRequest {
     private Long id;
-    private String parentId;
+    private String pid;
+    private String sort;
     private String title;
     private String type;
     private String icon;
@@ -22,6 +24,7 @@ public class NewMenuRequest {
     private String open;
     private String route;
     private String link;
-    private String permission;
-    private List<Role> roleList;
+    private Boolean isMenuShow;
+    private Boolean isBreadcrumbShow;
+    private  List<Authority> authorityList;
 }

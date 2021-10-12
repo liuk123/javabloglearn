@@ -9,5 +9,10 @@
       "name": "upload.temPath",
       "type": "java.lang.String",
       "description": "Description for upload.temPath."
+    },
+    {
+      "name": "spring.jpa.hibernate.dialect",
+      "type": "java.lang.String",
+      "description": "Description for spring.jpa.hibernate.dialect."
     }
   ] }

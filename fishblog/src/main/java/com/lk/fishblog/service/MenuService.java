@@ -25,12 +25,12 @@ public class MenuService {
     public List<Menu> getMenuList(){
         return menuRepository.findAll();
     }
-    public Menu saveMenu(Long id,String parentId, String title, String type, String icon, String disabled, String selected, String open, String route, String link){
+    public Menu saveMenu(Long id,String pid, String title, String type, String icon, String disabled, String selected, String open, String route, String link){
         Menu save = menuRepository.save(
             Menu
                 .builder()
                 .id(id)
-                .parentId(parentId)
+                .pid(pid)
                 .title(title)
                 .type(type)
                 .icon(icon)
