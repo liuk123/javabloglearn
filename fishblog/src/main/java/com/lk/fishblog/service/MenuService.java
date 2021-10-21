@@ -25,12 +25,13 @@ public class MenuService {
     public List<Menu> getMenuList(){
         return menuRepository.findAll();
     }
-    public Menu saveMenu(Long id,String pid, String title, String type, String icon, String disabled, String selected, String open, String route, String link){
+    public Menu saveMenu(Long id,String pid, String sort, String title, String type, String icon, String disabled, String selected, String open, String route, String link, Boolean isMenuShow, Boolean isBreadcrumbShow, List<Authority> authorityList){
         Menu save = menuRepository.save(
             Menu
                 .builder()
                 .id(id)
                 .pid(pid)
+                .sort(sort)
                 .title(title)
                 .type(type)
                 .icon(icon)
@@ -39,6 +40,9 @@ public class MenuService {
                 .open(open)
                 .route(route)
                 .link(link)
+                .isMenuShow(isMenuShow)
+                .isBreadcrumbShow(isBreadcrumbShow)
+                .authorityList(authorityList)
                 .build()
         );
         return save;

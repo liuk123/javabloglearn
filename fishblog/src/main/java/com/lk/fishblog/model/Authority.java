@@ -29,7 +29,7 @@ public class Authority implements Serializable{
     @UpdateTimestamp
     public Date updateTime;
 
-    private Long parentId;
+    private Long pid;
     private String name;
     private String url;
     private String description;
@@ -42,9 +42,9 @@ public class Authority implements Serializable{
     @ManyToMany(targetEntity = Menu.class, mappedBy = "authorityList")
     private List<Menu> menuList;
 
-    public Authority(Long id, Long parentId, String name, String url, String description){
+    public Authority(Long id, Long pid, String name, String url, String description){
         this.id = id;
-        this.parentId = parentId;
+        this.pid = pid;
         this.name = name;
         this.url = url;
         this.description = description;

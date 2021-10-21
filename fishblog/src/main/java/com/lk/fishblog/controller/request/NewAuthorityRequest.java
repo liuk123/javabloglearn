@@ -10,12 +10,12 @@ import lombok.ToString;
 @ToString
 public class NewAuthorityRequest {
     private Long id;
-    private Long parentId;
+    private Long pid;
     private String name;
     private String url;
     private String description;
 
     public Authority toAuthority(){
-        return new Authority(id,parentId,name,url,description);
+        return new Authority(id,pid,name,url,description);
     }
 }

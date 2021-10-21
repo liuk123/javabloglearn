@@ -29,7 +29,21 @@ public class MenuController {
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResultSet addByJson(@RequestBody @Valid NewMenuRequest m){
-        menuService.saveMenu(m.getId(),m.getPid(),m.getTitle(),m.getType(),m.getIcon(),m.getDisabled(),m.getSelected(),m.getOpen(),m.getRoute(),m.getLink());
+        menuService.saveMenu(
+                m.getId(),
+                m.getPid(),
+                m.getSort(),
+                m.getTitle(),
+                m.getType(),
+                m.getIcon(),
+                m.getDisabled(),
+                m.getSelected(),
+                m.getOpen(),
+                m.getRoute(),
+                m.getLink(),
+                m.getIsMenuShow(),
+                m.getIsBreadcrumbShow(),
+                m.getAuthorityList());
         return new ResultSet(ResultSet.RESULT_CODE_TRUE,"添加成功", null);
     }
 
