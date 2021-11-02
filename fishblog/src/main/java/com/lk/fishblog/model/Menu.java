@@ -11,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "B_MENU")
+@ToString()
 @Builder
 @Setter
 @Getter
@@ -40,7 +41,7 @@ public class Menu implements Serializable{
     private Boolean isMenuShow;
     private Boolean isBreadcrumbShow;
 
-    @ManyToMany(fetch=FetchType.EAGER)
+    @ManyToMany(fetch=FetchType.LAZY)
     @JoinTable(
             name = "b_menu_authority",
             joinColumns = {

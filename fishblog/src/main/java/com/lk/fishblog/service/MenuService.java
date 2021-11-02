@@ -61,7 +61,7 @@ public class MenuService {
     }
 
     public  List<Menu> getMenuByAuth(List<Authority> authorityList){
-        return menuRepository.findMenusByAuthorityListIn(authorityList);
+        return menuRepository.findDistinctByAuthorityListIn(authorityList);
     }
 
 }

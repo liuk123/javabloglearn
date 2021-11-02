@@ -36,5 +36,7 @@ public class AuthorityService {
     public void delById(Long id){
         authorityRepository.deleteById(id);
     }
-
+    public List<Authority> findByNames(List<String> names){
+        return authorityRepository.findByNameIn(names);
+    }
 }

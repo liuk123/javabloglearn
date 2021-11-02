@@ -23,10 +23,12 @@ public class MenuController {
 
     final UserService userService;
     final MenuService menuService;
+    final AuthorityService authorityService;
 
-    public MenuController(UserService userService, MenuService menuService) {
+    public MenuController(UserService userService, MenuService menuService, AuthorityService authorityService) {
         this.userService = userService;
         this.menuService = menuService;
+        this.authorityService = authorityService;
     }
 
     /**
@@ -57,7 +59,7 @@ public class MenuController {
     /**
      * 获取菜单
      */
-    @GetMapping(path="/all")
+    @GetMapping(path="/all/")
     public ResultSet getMenuAll(){
         return new ResultSet(ResultSet.RESULT_CODE_TRUE,"获取成功", menuService.getMenuList());
     }
@@ -71,10 +73,11 @@ public class MenuController {
     public ResultSet getMenuByAuth(Authentication authentication){
 
         Collection<? extends GrantedAuthority> auths = authentication.getAuthorities();
-        List<Authority> authList = new ArrayList<>();
+        List<String> nameList = new ArrayList<>();
         for(GrantedAuthority auth: auths){
-            authList.add(new Authority(auth.getAuthority()));
+            nameList.add(auth.getAuthority());
         }
+        List<Authority> authList = authorityService.findByNames(nameList);
         List<Menu> m = menuService.getMenuByAuth(authList);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE,"获取成功", m);
     }

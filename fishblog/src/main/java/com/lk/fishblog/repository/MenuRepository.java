@@ -11,5 +11,5 @@ import java.util.List;
 
 public interface MenuRepository extends BaseRepository<Menu, Long> {
     Menu findFirstById(Long id);
-    List<Menu> findMenusByAuthorityListIn(List<Authority> authorityList);
+    List<Menu> findDistinctByAuthorityListIn(List<Authority> authorityList);
 }
