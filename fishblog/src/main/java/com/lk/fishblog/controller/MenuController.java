@@ -2,12 +2,19 @@ package com.lk.fishblog.controller;
 
 import com.lk.fishblog.common.utils.*;
 import com.lk.fishblog.controller.request.NewMenuRequest;
+import com.lk.fishblog.model.Authority;
+import com.lk.fishblog.model.Menu;
 import com.lk.fishblog.service.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 
 @RestController
@@ -50,9 +57,26 @@ public class MenuController {
     /**
      * 获取菜单
      */
-    @GetMapping(path="/")
+    @GetMapping(path="/all")
     public ResultSet getMenuAll(){
         return new ResultSet(ResultSet.RESULT_CODE_TRUE,"获取成功", menuService.getMenuList());
+    }
+
+    /**
+     * 获取菜单 根据权限
+     * @param
+     * @return
+     */
+    @GetMapping(path="/")
+    public ResultSet getMenuByAuth(Authentication authentication){
+
+        Collection<? extends GrantedAuthority> auths = authentication.getAuthorities();
+        List<Authority> authList = new ArrayList<>();
+        for(GrantedAuthority auth: auths){
+            authList.add(new Authority(auth.getAuthority()));
+        }
+        List<Menu> m = menuService.getMenuByAuth(authList);
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE,"获取成功", m);
     }
 
 }

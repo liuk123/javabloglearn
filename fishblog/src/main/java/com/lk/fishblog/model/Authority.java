@@ -52,4 +52,7 @@ public class Authority implements Serializable{
     public Authority(Long id){
         this.id = id;
     }
+    public Authority(String name){
+        this.name = name;
+    }
 }

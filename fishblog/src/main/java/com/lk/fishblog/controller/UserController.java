@@ -55,4 +55,16 @@ public class UserController {
         return userService.register(u.toUser(encoder));
     }
 
+    /**
+     * 获取用户信息
+     * @param id 用户id
+     * @return
+     */
+    @GetMapping(path="/{id}")
+    public ResultSet getById(@PathVariable Long id){
+        User u = this.userService.findById(id);
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "获取用户信息", new User(u.getId(),u.getUsername()));
+    }
+
+
 }

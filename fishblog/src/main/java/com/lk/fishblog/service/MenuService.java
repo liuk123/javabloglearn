@@ -59,4 +59,9 @@ public class MenuService {
         }
         return menuList;
     }
+
+    public  List<Menu> getMenuByAuth(List<Authority> authorityList){
+        return menuRepository.findMenusByAuthorityListIn(authorityList);
+    }
+
 }

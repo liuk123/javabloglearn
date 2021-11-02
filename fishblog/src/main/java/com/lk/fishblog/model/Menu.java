@@ -40,7 +40,7 @@ public class Menu implements Serializable{
     private Boolean isMenuShow;
     private Boolean isBreadcrumbShow;
 
-    @ManyToMany(fetch=FetchType.LAZY)
+    @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(
             name = "b_menu_authority",
             joinColumns = {
