@@ -1,11 +1,11 @@
 package com.lk.fishblog.service;
 
-import com.lk.fishblog.common.utils.ResultSet;
 import com.lk.fishblog.model.*;
 import com.lk.fishblog.repository.MenuRepository;
-import com.lk.fishblog.repository.ReplyRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,11 +22,11 @@ public class MenuService {
     public Menu getMenuById(Long id){
         return menuRepository.findFirstById(id);
     }
-    public List<Menu> getMenuList(){
-        return menuRepository.findAll();
+    public Page<Menu> getMenuList(int pageNum, int pageSize){
+        return menuRepository.findAll(PageRequest.of(pageNum, pageSize));
     }
     public Menu saveMenu(Long id,String pid, String sort, String title, String type, String icon, String disabled, String selected, String open, String route, String link, Boolean isMenuShow, Boolean isBreadcrumbShow, List<Authority> authorityList){
-        Menu save = menuRepository.save(
+        return menuRepository.save(
             Menu
                 .builder()
                 .id(id)
@@ -45,7 +45,6 @@ public class MenuService {
                 .authorityList(authorityList)
                 .build()
         );
-        return save;
     }
 
     public static List<Menu> tree(List<Menu> listByRoleId,List<Menu> menuList){

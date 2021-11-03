@@ -35,11 +35,11 @@ public class Authority implements Serializable{
     private String description;
 
     @JsonIgnore
-    @ManyToMany(targetEntity = Role.class, mappedBy = "authorityList")
+    @ManyToMany(targetEntity = Role.class, mappedBy = "authorityList", fetch=FetchType.LAZY)
     private List<Role> roleList;
 
     @JsonIgnore
-    @ManyToMany(targetEntity = Menu.class, mappedBy = "authorityList")
+    @ManyToMany(targetEntity = Menu.class, mappedBy = "authorityList", fetch=FetchType.LAZY)
     private List<Menu> menuList;
 
     public Authority(Long id, Long pid, String name, String url, String description){
