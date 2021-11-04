@@ -39,8 +39,10 @@ public class AdminController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResultSet addUserGroupByJson(@RequestBody @Valid NewUserGroupRequest ug){
         List<Role> roleList = new ArrayList<>();
-        for(Long val: ug.getRoleIds()){
-            roleList.add(new Role(val));
+        if(ug.getRoleIds() != null){
+            for(Long val: ug.getRoleIds()){
+                roleList.add(new Role(val));
+            }
         }
         UserGroup userGroup = userGroupService.save(ug.getId(),ug.getName(),ug.getDescription(), roleList);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE,"添加分组成功", userGroup);

@@ -2,6 +2,7 @@ package com.lk.fishblog.controller;
 
 import com.lk.fishblog.common.utils.ResultSet;
 import com.lk.fishblog.controller.request.NewUserRequest;
+import com.lk.fishblog.controller.request.NewUserResponse;
 import com.lk.fishblog.model.User;
 import com.lk.fishblog.security.MyPasswordEncoder;
 import com.lk.fishblog.service.ArticleService;
@@ -17,7 +18,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
 @RestController
 @RequestMapping("/user")
 @Slf4j
@@ -39,8 +39,12 @@ public class UserController {
     @GetMapping(path="/currentUser")
     public ResultSet getCurrentUserBySession(Authentication authentication){
         User u = (User) authentication.getPrincipal();
+        if(u != null){
+            return new ResultSet(ResultSet.RESULT_CODE_TRUE, "获取用户信息", new NewUserResponse(u.getId(),u.getUsername()));
+        }else{
+            return new ResultSet(ResultSet.RESULT_CODE_FALSE, "获取用户信息", null);
+        }
 //        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "获取用户信息", new User(u.getId(),u.getUsername()));
     }
 
     /**

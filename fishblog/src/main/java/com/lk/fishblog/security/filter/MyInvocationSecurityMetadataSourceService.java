@@ -25,9 +25,11 @@ public class MyInvocationSecurityMetadataSourceService implements FilterInvocati
         Collection<ConfigAttribute> array;
         List<Authority> permissions=authorityRepository.findAll();
         for(Authority permission:permissions){
-            array = new ArrayList<>();
-            array.add(new SecurityConfig(permission.getName()));
-            map.put(permission.getUrl(),array);
+            if(permission.getUrl() != null){
+                array = new ArrayList<>();
+                array.add(new SecurityConfig(permission.getName()));
+                map.put(permission.getUrl(),array);
+            }
         }
     }
 /*

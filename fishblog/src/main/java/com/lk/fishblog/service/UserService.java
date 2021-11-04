@@ -37,6 +37,10 @@ public class UserService {
         if(oUser != null){
             return new ResultSet(ResultSet.RESULT_CODE_FALSE, "用户名重复");
         }
+        u.setAccountNonExpired(true);
+        u.setAccountNonLocked(true);
+        u.setCredentialsNonExpired(true);
+        u.setEnabled(true);
         User user = userRepository.save(u);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "注册成功", user);
     }
