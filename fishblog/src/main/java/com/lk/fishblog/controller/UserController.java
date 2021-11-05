@@ -38,9 +38,9 @@ public class UserController {
      */
     @GetMapping(path="/currentUser")
     public ResultSet getCurrentUserBySession(Authentication authentication){
-        User u = (User) authentication.getPrincipal();
-        if(u != null){
-            return new ResultSet(ResultSet.RESULT_CODE_TRUE, "获取用户信息", new NewUserResponse(u.getId(),u.getUsername()));
+        if(authentication != null){
+            User u = (User) authentication.getPrincipal();
+            return new ResultSet(ResultSet.RESULT_CODE_TRUE, "获取用户信息", new NewUserResponse(u.getId(),u.getUsername(),u.getCreateTime()));
         }else{
             return new ResultSet(ResultSet.RESULT_CODE_FALSE, "获取用户信息", null);
         }

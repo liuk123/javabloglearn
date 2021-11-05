@@ -25,7 +25,6 @@ public class TagController {
     @GetMapping(path="/")
     public ResultSet getAllById(){
         List<Tag> t = tagService.findAll();
-        log.info("Coffee {}:", t);
         return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", t);
     }
 

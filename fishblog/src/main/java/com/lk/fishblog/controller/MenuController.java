@@ -2,10 +2,8 @@ package com.lk.fishblog.controller;
 
 import com.lk.fishblog.common.utils.*;
 import com.lk.fishblog.controller.request.NewMenuRequest;
-import com.lk.fishblog.model.Article;
 import com.lk.fishblog.model.Authority;
 import com.lk.fishblog.model.Menu;
-import com.lk.fishblog.model.Tag;
 import com.lk.fishblog.service.*;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -69,6 +67,9 @@ public class MenuController {
     @GetMapping(path="/all/")
     public PageInfo<Menu> getMenuAll(@RequestParam Integer pageIndex, @RequestParam Integer pageSize){
         Page<Menu> a = menuService.getMenuList(pageIndex-1, pageSize);
+        for(Menu menu: a.getContent()){
+            menu.setAuthorityList(menu.getAuthorityList());
+        }
         return new PageInfo<>(a);
     }
 

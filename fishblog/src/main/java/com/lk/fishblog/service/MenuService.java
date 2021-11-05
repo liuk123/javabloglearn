@@ -60,7 +60,7 @@ public class MenuService {
     }
 
     public  List<Menu> getMenuByAuth(List<Authority> authorityList){
-        return menuRepository.findDistinctByAuthorityListIn(authorityList);
+        return menuRepository.findByAuthorityListIn(authorityList);
     }
 
 }
