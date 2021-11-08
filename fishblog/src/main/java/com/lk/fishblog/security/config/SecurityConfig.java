@@ -58,10 +58,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()//权限
-            .antMatchers("/user/**").permitAll()
             .antMatchers(securityProperties.getMatchers()).permitAll()//不拦截这些请求
             .regexMatchers(securityProperties.getRegexMatchers()).permitAll()
-//            .regexMatchers(HttpMethod.GET, "/article").hasAnyAuthority("normal")
+            .regexMatchers(HttpMethod.GET, "/article").permitAll()
+            .regexMatchers(HttpMethod.GET, "/comment").permitAll()
+            .regexMatchers(HttpMethod.GET, "/reply").permitAll()
+            .regexMatchers(HttpMethod.GET, "/tag").permitAll()
             .anyRequest()
             .authenticated()
 

@@ -14,6 +14,8 @@ public class SecurityProperties {
 
     private String[] matchers = new String[]{
             "/js/**",
+            "/user/**",
+            "/menu/**",
     };
     private String[] regexMatchers = new String[]{
 

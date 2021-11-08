@@ -67,9 +67,9 @@ public class MenuController {
     @GetMapping(path="/all/")
     public PageInfo<Menu> getMenuAll(@RequestParam Integer pageIndex, @RequestParam Integer pageSize){
         Page<Menu> a = menuService.getMenuList(pageIndex-1, pageSize);
-        for(Menu menu: a.getContent()){
-            menu.setAuthorityList(menu.getAuthorityList());
-        }
+//        for(Menu menu: a.getContent()){
+//            menu.setAuthorityList(menu.getAuthorityList());
+//        }
         return new PageInfo<>(a);
     }
 
@@ -81,13 +81,19 @@ public class MenuController {
     @GetMapping(path="/")
     public ResultSet getMenuByAuth(Authentication authentication){
 
-        Collection<? extends GrantedAuthority> auths = authentication.getAuthorities();
-        List<String> nameList = new ArrayList<>();
-        for(GrantedAuthority auth: auths){
-            nameList.add(auth.getAuthority());
+        List<Menu> m;
+        if(authentication != null){
+            Collection<? extends GrantedAuthority> auths = authentication.getAuthorities();
+            List<String> nameList = new ArrayList<>();
+            for(GrantedAuthority auth: auths){
+                nameList.add(auth.getAuthority());
+            }
+            List<Authority> authList = authorityService.findByNames(nameList);
+            m = menuService.getMenuByAuth(authList);
+        }else{
+            List<Authority> authList = authorityService.findAllAuth();
+            m = menuService.getMenuByAuthNot(authList);
         }
-        List<Authority> authList = authorityService.findByNames(nameList);
-        List<Menu> m = menuService.getMenuByAuth(authList);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE,"获取成功", m);
     }
 

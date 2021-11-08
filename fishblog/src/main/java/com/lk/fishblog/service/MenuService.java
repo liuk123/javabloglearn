@@ -62,5 +62,8 @@ public class MenuService {
     public  List<Menu> getMenuByAuth(List<Authority> authorityList){
         return menuRepository.findByAuthorityListIn(authorityList);
     }
+    public  List<Menu> getMenuByAuthNot(List<Authority> authorityList){
+        return menuRepository.findByAuthorityListNotIn(authorityList);
+    }
 
 }
