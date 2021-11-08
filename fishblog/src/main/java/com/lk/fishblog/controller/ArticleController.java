@@ -132,6 +132,10 @@ public class ArticleController {
             }
             a = articleService.findByTaglist(pageIndex-1, pageSize, tagList);
         }
+        for(Article article: a.getContent()){
+            List<Tag> taglist = new ArrayList<>(article.getTagList());
+            article.setTagList(taglist);
+        }
         PageInfo<Article> page = new PageInfo(a);
         page.setPageSize(pageSize);
         return page;
@@ -146,6 +150,10 @@ public class ArticleController {
     @GetMapping(path="/getByAuthor/{id}")
     public PageInfo<Article> getByAuthor(@PathVariable Long id, @RequestParam Integer pageIndex, @RequestParam Integer pageSize){
         Page<Article> a = articleService.findByAuthor(id, pageIndex-1, pageSize);
+        for(Article article: a.getContent()){
+            List<Tag> tags = new ArrayList<>(article.getTagList());
+            article.setTagList(tags);
+        }
         PageInfo<Article> page = new PageInfo(a);
         return page;
     }

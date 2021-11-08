@@ -67,9 +67,10 @@ public class MenuController {
     @GetMapping(path="/all/")
     public PageInfo<Menu> getMenuAll(@RequestParam Integer pageIndex, @RequestParam Integer pageSize){
         Page<Menu> a = menuService.getMenuList(pageIndex-1, pageSize);
-//        for(Menu menu: a.getContent()){
-//            menu.setAuthorityList(menu.getAuthorityList());
-//        }
+        for(Menu menu: a.getContent()){
+            List<Authority> auths = new ArrayList<>(menu.getAuthorityList());
+            menu.setAuthorityList(auths);
+        }
         return new PageInfo<>(a);
     }
 
