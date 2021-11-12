@@ -31,6 +31,7 @@ public class Article implements Serializable{
     @Basic(fetch = FetchType.LAZY)
     private String content;
     private String descItem;
+    private String postImage;
 
     @ManyToOne(cascade = {}, optional=false)
     @JoinColumn(name="user_id")

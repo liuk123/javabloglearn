@@ -23,4 +23,5 @@ public class NewArticleRequest {
     private List<Long> tagList;
 
     private Long id;
+    private String postImage;
 }
