@@ -1,10 +1,6 @@
 package com.lk.fishblog;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.jsontype.TypeResolverBuilder;
-import com.lk.fishblog.controller.PerformanceInteceptor;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,12 +8,13 @@ import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilde
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 
+import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
 @SpringBootApplication
@@ -68,4 +65,13 @@ public class FishblogApplication implements WebMvcConfigurer {
 			builder.timeZone(TimeZone.getTimeZone("Asia/Shanghai"));
 		};
 	}
+//	@Bean
+//	public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
+//		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+//		ObjectMapper mapper = converter.getObjectMapper();
+//		Hibernate5Module hibernate5Module = new Hibernate5Module();
+//		mapper.registerModule(hibernate5Module);
+//		mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+//		return converter;
+//	}
 }

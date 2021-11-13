@@ -11,7 +11,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "B_MENU")
-@ToString()
 @Builder
 @Setter
 @Getter
