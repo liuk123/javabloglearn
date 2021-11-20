@@ -2,7 +2,9 @@ package com.lk.fishblog.controller;
 
 import com.lk.fishblog.common.utils.*;
 import com.lk.fishblog.controller.request.NewArticleRequest;
+import com.lk.fishblog.controller.request.NewTagRequest;
 import com.lk.fishblog.model.Article;
+import com.lk.fishblog.model.Collect;
 import com.lk.fishblog.model.Tag;
 import com.lk.fishblog.model.User;
 import com.lk.fishblog.service.ArticleService;
@@ -123,7 +125,7 @@ public class ArticleController {
     }
 
     /**
-     * 列表
+     * 首页获取文章列表
      * @param pageIndex 页码
      * @param pageSize 页数
      * @param tags 类别
@@ -151,17 +153,18 @@ public class ArticleController {
     }
 
     /**
-     * 文章列表
+     * 根据用户获取文章列表
      * @param id 用户id
      * @param pageIndex 页码
      * @param pageSize 页数
      */
-    @GetMapping(path="/getByAuthor/{id}")
-    public PageInfo<Article> getByAuthor(@PathVariable Long id, @RequestParam Integer pageIndex, @RequestParam Integer pageSize){
-        Page<Article> a = articleService.findByAuthor(id, pageIndex-1, pageSize);
-        for(Article article: a.getContent()){
-            List<Tag> tags = new ArrayList<>(article.getTagList());
-            article.setTagList(tags);
+    @GetMapping(path="/getByAuthor/")
+    public PageInfo<Article> getByAuthor(@RequestParam Long id, @RequestParam(required = false) Long categoryId, @RequestParam Integer pageIndex, @RequestParam Integer pageSize){
+        Page<Article> a;
+        if(categoryId==null){
+            a = articleService.findByAuthor(id, pageIndex-1, pageSize);
+        }else{
+            a = articleService.findByAuthorAndCategory(id, categoryId, pageIndex-1, pageSize);
         }
         PageInfo<Article> page = new PageInfo(a);
         return page;
@@ -184,6 +187,44 @@ public class ArticleController {
         }
 
         articleService.deleteById(id);
+        return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功");
+    }
+
+    /**
+     * 获取收藏
+     * @param authentication
+     * @return
+     */
+    @GetMapping(path="/collect/")
+    public ResultSet collect(Authentication authentication){
+        User u = (User) authentication.getPrincipal();
+        List<Collect> collect = articleService.findCollectList(u.getId());
+        return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "获取收藏", collect);
+    }
+    /**
+     * 保存收藏
+     * @param articleId
+     * @return
+     */
+    @PostMapping(path = "/collect/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResultSet addCollect(@RequestBody @Valid Long articleId, Authentication authentication){
+        User u = (User) authentication.getPrincipal();
+        Article a = new Article(articleId);
+        articleService.saveCollect(u, a);
+        return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "收藏成功");
+    }
+
+    /**
+     * 删除收藏
+     * @param id 文章id
+     */
+    @DeleteMapping(path = "/collect/{id}")
+    public ResultSet delCollect(@PathVariable Long id, Authentication authentication){
+        User u = (User) authentication.getPrincipal();
+        Article a = new Article(id);
+        Collect c = new Collect(u, a);
+        articleService.deleteCollect(c);
         return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功");
     }
 }

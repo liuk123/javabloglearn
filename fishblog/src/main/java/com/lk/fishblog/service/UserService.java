@@ -1,6 +1,7 @@
 package com.lk.fishblog.service;
 
 import com.lk.fishblog.common.utils.ResultSet;
+import com.lk.fishblog.model.Article;
 import com.lk.fishblog.model.Role;
 import com.lk.fishblog.model.User;
 import com.lk.fishblog.model.UserGroup;
@@ -65,5 +66,21 @@ public class UserService {
         );
     }
 
+    /**
+     * 关注某人
+     * @param userList
+     * @param id
+     * @return
+     */
+    public User saveFocus(Long id, List<User> userList){
+        return userRepository.save(
+                User.builder().id(id).focusList(userList).build()
+        );
+    }
 
+//    public User saveCollect(Long id, List<Article> collectList){
+//        return userRepository.save(
+//            User.builder().id(id).collectList(collectList).build()
+//        );
+//    }
 }

@@ -1,9 +1,11 @@
 package com.lk.fishblog.service;
 
 import com.lk.fishblog.model.Article;
+import com.lk.fishblog.model.Collect;
 import com.lk.fishblog.model.Tag;
 import com.lk.fishblog.model.User;
 import com.lk.fishblog.repository.ArticleRepository;
+import com.lk.fishblog.repository.CollectRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -12,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,13 +24,18 @@ import java.util.List;
 public class ArticleService {
     @Autowired
     ArticleRepository articleRepository;
+    @Autowired
+    CollectRepository collectRepository;
 
     public Article findById(Long id){
         return articleRepository.getOne(id);
     }
 //    @Cacheable
-    public Page<Article> findByAuthor(Long id, int pageNum, int pageSize){
-        return this.articleRepository.findAllByAuthor_Id(id, PageRequest.of(pageNum, pageSize));
+    public Page<Article> findByAuthor(Long uerId, int pageNum, int pageSize){
+        return this.articleRepository.findByAuthor_Id(uerId, PageRequest.of(pageNum, pageSize));
+    }
+    public Page<Article> findByAuthorAndCategory(Long uerId, Long categoryId, int pageNum, int pageSize){
+        return this.articleRepository.findByAuthor_IdAndCategory_Id(uerId, categoryId, PageRequest.of(pageNum, pageSize));
     }
 //    @Cacheable
     public Page<Article> findByTaglist(int pageNum, int pageSize, List<Tag> tagList){
@@ -53,10 +61,33 @@ public class ArticleService {
     public void deleteById(Long id){
         articleRepository.deleteById(id);
     }
-//    public Article findContentById(Long id){
-//        return articleRepository.findContentById(id);
-//    }
-//    public Article findAuthorById(Long id){
-//        return articleRepository.findAuthorById(id);
-//    }
+
+    /**
+     * 保存收藏
+     * @param user
+     * @param article
+     * @return
+     */
+    public Collect saveCollect(User user, Article article){
+        return collectRepository.save(
+                Collect.builder().user(user).article(article).build()
+        );
+    }
+
+    /**
+     * 获取收藏
+     * @param id
+     * @return
+     */
+    public List<Collect> findCollectList(Long id){
+        return collectRepository.findByUser_Id(id);
+    }
+
+    /**
+     * 删除收藏
+     * @param collect
+     */
+    public void deleteCollect(Collect collect){
+        collectRepository.delete(collect);
+    }
 }

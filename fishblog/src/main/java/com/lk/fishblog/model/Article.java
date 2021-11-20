@@ -50,14 +50,15 @@ public class Article implements Serializable{
                     @JoinColumn(name = "tag_id") })
     private  List<Tag> tagList;
 
+    @ManyToOne(cascade = {}, optional=false)
+    @JoinColumn(name="category_id")
+    private Category category;
+
+    @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "article")
+    private  List<Collect> collectList;
+
 
     public  Article(Long id){
         this.id = id;
-    }
-    public  Article(String content){
-        this.content = content;
-    }
-    public  Article(User author ){
-        this.author = author;
     }
 }

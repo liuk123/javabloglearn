@@ -50,6 +50,24 @@ public class User implements UserDetails, Serializable {
     @OrderBy("createTime DESC")
     private List<Article> articleList;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "author", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    @OrderBy("createTime DESC")
+    private List<Category> categoryList;
+
+    @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "user")
+    private  List<Collect> collectList;
+
+    @JsonIgnore
+    @ManyToMany(targetEntity = User.class, fetch=FetchType.LAZY)
+    @JoinTable(
+            name = "b_user_focus",
+            joinColumns = {
+                    @JoinColumn(name = "user_id") },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "focus_id") })
+    private List<User> focusList;
+
     @ManyToMany(targetEntity = Role.class, fetch=FetchType.EAGER)
     @JoinTable(
             name = "b_user_role",
