@@ -196,10 +196,10 @@ public class ArticleController {
      * @return
      */
     @GetMapping(path="/collect/")
-    public ResultSet collect(Authentication authentication){
+    public Page<Collect> collect(Authentication authentication, @RequestParam Integer pageIndex, @RequestParam Integer pageSize){
         User u = (User) authentication.getPrincipal();
-        List<Collect> collect = articleService.findCollectList(u.getId());
-        return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "获取收藏", collect);
+        Page<Collect> collect = articleService.findCollectList(u.getId(), pageIndex-1, pageSize);
+        return  collect;
     }
     /**
      * 保存收藏
@@ -217,12 +217,12 @@ public class ArticleController {
 
     /**
      * 删除收藏
-     * @param id 文章id
+     * @param articleId 文章id
      */
     @DeleteMapping(path = "/collect/{id}")
-    public ResultSet delCollect(@PathVariable Long id, Authentication authentication){
+    public ResultSet delCollect(@PathVariable Long articleId, Authentication authentication){
         User u = (User) authentication.getPrincipal();
-        Article a = new Article(id);
+        Article a = new Article(articleId);
         Collect c = new Collect(u, a);
         articleService.deleteCollect(c);
         return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功");

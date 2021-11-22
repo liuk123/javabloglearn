@@ -79,8 +79,8 @@ public class ArticleService {
      * @param id
      * @return
      */
-    public List<Collect> findCollectList(Long id){
-        return collectRepository.findByUser_Id(id);
+    public Page<Collect> findCollectList(Long id, int pageNum, int pageSize){
+        return collectRepository.findByUser_Id(id, PageRequest.of(pageNum, pageSize));
     }
 
     /**

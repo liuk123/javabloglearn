@@ -80,7 +80,7 @@ public class UserController {
      * @param authentication
      * @return
      */
-    @PostMapping(path = "/focus", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/focus/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResultSet saveFocus(@RequestBody @Valid long userId, Authentication authentication){
         if(authentication == null){
@@ -93,4 +93,5 @@ public class UserController {
         userService.saveFocus(u.getId(), us);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "关注成功",null);
     }
+    
 }
