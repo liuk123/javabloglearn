@@ -83,4 +83,7 @@ public class UserService {
 //            User.builder().id(id).collectList(collectList).build()
 //        );
 //    }
+    public void delFocus(Long userId){
+        userRepository.deleteFocusListByFocusList_Focus_Id(userId);
+    }
 }

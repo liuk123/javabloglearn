@@ -3,6 +3,8 @@ package com.lk.fishblog.controller;
 import com.lk.fishblog.common.utils.ResultSet;
 import com.lk.fishblog.controller.request.NewUserRequest;
 import com.lk.fishblog.controller.request.NewUserResponse;
+import com.lk.fishblog.model.Article;
+import com.lk.fishblog.model.Collect;
 import com.lk.fishblog.model.User;
 import com.lk.fishblog.security.MyPasswordEncoder;
 import com.lk.fishblog.service.ArticleService;
@@ -92,6 +94,15 @@ public class UserController {
         us.add(u1);
         userService.saveFocus(u.getId(), us);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "关注成功",null);
+    }
+    /**
+     * 取消关注
+     * @param userId 用户id
+     */
+    @DeleteMapping(path = "/focus/{id}")
+    public ResultSet delCollect(@PathVariable Long userId){
+        userService.delFocus(userId);
+        return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功");
     }
     
 }
