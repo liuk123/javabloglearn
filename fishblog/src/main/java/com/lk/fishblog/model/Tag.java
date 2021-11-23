@@ -28,4 +28,12 @@ public class Tag extends BaseEntity implements Serializable{
         this.id = id;
     }
 
+    @Override
+    public String toString() {
+        return "Tag{" +
+                "id='" + getId() + '\'' +
+                ", name='" + getName() + '\'' +
+                '}';
+    }
+
 }

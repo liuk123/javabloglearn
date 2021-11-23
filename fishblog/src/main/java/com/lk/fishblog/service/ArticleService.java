@@ -82,6 +82,14 @@ public class ArticleService {
     public Page<Collect> findCollectList(Long id, int pageNum, int pageSize){
         return collectRepository.findByUser_Id(id, PageRequest.of(pageNum, pageSize));
     }
+    /**
+     * 根据id查询收藏
+     * @param
+     * @return
+     */
+    public Collect findCollectById(Long userId, Long articleId){
+        return collectRepository.findByUser_IdAndArticle_Id(userId, articleId);
+    }
 
     /**
      * 删除收藏

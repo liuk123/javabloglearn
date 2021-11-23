@@ -15,7 +15,6 @@ import java.util.Set;
 @Entity
 @Table(name = "B_ROLE")
 @Builder
-@ToString(callSuper = true)
 @Setter
 @Getter
 @NoArgsConstructor

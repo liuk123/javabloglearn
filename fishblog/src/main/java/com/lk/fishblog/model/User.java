@@ -19,7 +19,6 @@ import java.util.List;
 @Entity
 @Table(name = "B_USER")
 @Builder
-@ToString(callSuper = true)
 @Setter
 @Getter
 @NoArgsConstructor
@@ -47,26 +46,19 @@ public class User implements UserDetails, Serializable {
 
     @JsonIgnore
     @OneToMany(mappedBy = "author", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-    @OrderBy("createTime DESC")
     private List<Article> articleList;
 
     @JsonIgnore
     @OneToMany(mappedBy = "author", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-    @OrderBy("createTime DESC")
     private List<Category> categoryList;
 
-    @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "user")
+    @JsonIgnore
+    @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "user", fetch=FetchType.LAZY)
     private  List<Collect> collectList;
 
     @JsonIgnore
-    @ManyToMany(targetEntity = User.class, fetch=FetchType.LAZY)
-    @JoinTable(
-            name = "b_user_focus",
-            joinColumns = {
-                    @JoinColumn(name = "user_id") },
-            inverseJoinColumns = {
-                    @JoinColumn(name = "focus_id") })
-    private List<User> focusList;
+    @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "user", fetch=FetchType.LAZY)
+    private  List<Focus> focusList;
 
     @ManyToMany(targetEntity = Role.class, fetch=FetchType.EAGER)
     @JoinTable(
@@ -77,7 +69,6 @@ public class User implements UserDetails, Serializable {
                     @JoinColumn(name = "role_id") })
     private List<Role> roleList;
 
-//    @ManyToMany(targetEntity = UserGroup.class, mappedBy = "userList", fetch=FetchType.LAZY)
     @ManyToMany(targetEntity = UserGroup.class, fetch=FetchType.LAZY)
     @JoinTable(
             name = "b_user_userGroup",

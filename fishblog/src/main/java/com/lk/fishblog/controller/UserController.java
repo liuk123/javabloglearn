@@ -75,34 +75,5 @@ public class UserController {
         // 添加获取文章分类
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "获取用户信息", new User(u.getId(),u.getUsername()));
     }
-
-    /**
-     * 关注某人
-     * @param userId
-     * @param authentication
-     * @return
-     */
-    @PostMapping(path = "/focus/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResultSet saveFocus(@RequestBody @Valid long userId, Authentication authentication){
-        if(authentication == null){
-            return new ResultSet(ResultSet.RESULT_CODE_TRUE, "登录",null);
-        }
-        User u = (User) authentication.getPrincipal();
-        User u1 = new User(userId);
-        List<User> us = new ArrayList<>();
-        us.add(u1);
-        userService.saveFocus(u.getId(), us);
-        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "关注成功",null);
-    }
-    /**
-     * 取消关注
-     * @param userId 用户id
-     */
-    @DeleteMapping(path = "/focus/{id}")
-    public ResultSet delCollect(@PathVariable Long userId){
-        userService.delFocus(userId);
-        return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功");
-    }
     
 }

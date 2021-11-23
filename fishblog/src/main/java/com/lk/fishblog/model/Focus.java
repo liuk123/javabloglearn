@@ -6,14 +6,14 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "B_COLLECT")
+@Table(name = "B_FOCUS")
 @Builder
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@IdClass(Collect.CollectEmbeddable.class)
-public class Collect implements Serializable{
+@IdClass(Focus.FocusEmbeddable.class)
+public class Focus implements Serializable{
     @Id
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name="user_id")
@@ -21,16 +21,16 @@ public class Collect implements Serializable{
 
     @Id
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
-    @JoinColumn(name="article_id")
-    private  Article article;
+    @JoinColumn(name="focus_id")
+    private  User focus;
 
     @Setter
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
     @EqualsAndHashCode()
-    public static class CollectEmbeddable implements  Serializable {
+    public static class FocusEmbeddable implements  Serializable {
         private User user;
-        private Article article;
+        private User focus;
     }
 }

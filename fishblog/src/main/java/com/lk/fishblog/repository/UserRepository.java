@@ -5,6 +5,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     User findFirstByUsername(String username);
-    User findFirstByFocusList(Long userId);
-    void deleteFocusListByFocusList_Focus_Id(Long userId);
 }

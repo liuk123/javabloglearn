@@ -1,5 +1,6 @@
 package com.lk.fishblog.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -50,11 +51,12 @@ public class Article implements Serializable{
                     @JoinColumn(name = "tag_id") })
     private  List<Tag> tagList;
 
-    @ManyToOne(cascade = {}, optional=false)
+    @ManyToOne(cascade = {}, optional=false, fetch=FetchType.EAGER)
     @JoinColumn(name="category_id")
     private Category category;
 
-    @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "article")
+    @JsonIgnore
+    @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "article", fetch=FetchType.LAZY)
     private  List<Collect> collectList;
 
 

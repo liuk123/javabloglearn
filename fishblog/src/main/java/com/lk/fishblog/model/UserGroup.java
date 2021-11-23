@@ -13,7 +13,6 @@ import java.util.List;
 @Entity
 @Table(name = "B_USERGROUP")
 @Builder
-@ToString(callSuper = true)
 @Setter
 @Getter
 @NoArgsConstructor
@@ -31,14 +30,6 @@ public class UserGroup implements Serializable{
     private String name;
     private String description;
 
-//    @JsonIgnore
-//    @ManyToMany(cascade={}, fetch=FetchType.LAZY)
-//    @JoinTable(
-//            name = "b_userGroup_user",
-//            joinColumns = {
-//                    @JoinColumn(name = "userGroup_id") },
-//            inverseJoinColumns = {
-//                    @JoinColumn(name = "user_id") })
     @JsonIgnore
     @ManyToMany(targetEntity = User.class, mappedBy = "userGroupList", fetch=FetchType.LAZY)
     private List<User> userList;

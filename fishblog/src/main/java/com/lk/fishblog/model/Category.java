@@ -29,11 +29,20 @@ public class Category implements Serializable{
 
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "category",cascade={}, fetch=FetchType.LAZY)
-    @OrderBy("createTime DESC")
     private List<Article> articleList;
 
+    @JsonIgnore
     @ManyToOne(cascade = {}, optional=false, fetch=FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User author;
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id='" + getId() + '\'' +
+                ", name='" + getName() + '\'' +
+                '}';
+    }
 }

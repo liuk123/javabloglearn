@@ -12,7 +12,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "B_AUTHORITY")
-@ToString(callSuper = true)
 @Builder
 @Setter
 @Getter

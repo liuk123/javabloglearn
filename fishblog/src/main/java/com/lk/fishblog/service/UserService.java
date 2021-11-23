@@ -66,24 +66,4 @@ public class UserService {
         );
     }
 
-    /**
-     * 关注某人
-     * @param userList
-     * @param id
-     * @return
-     */
-    public User saveFocus(Long id, List<User> userList){
-        return userRepository.save(
-                User.builder().id(id).focusList(userList).build()
-        );
-    }
-
-//    public User saveCollect(Long id, List<Article> collectList){
-//        return userRepository.save(
-//            User.builder().id(id).collectList(collectList).build()
-//        );
-//    }
-    public void delFocus(Long userId){
-        userRepository.deleteFocusListByFocusList_Focus_Id(userId);
-    }
 }

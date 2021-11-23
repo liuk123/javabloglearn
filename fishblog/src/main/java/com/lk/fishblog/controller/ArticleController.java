@@ -2,6 +2,7 @@ package com.lk.fishblog.controller;
 
 import com.lk.fishblog.common.utils.*;
 import com.lk.fishblog.controller.request.NewArticleRequest;
+import com.lk.fishblog.controller.request.NewCollectRequest;
 import com.lk.fishblog.controller.request.NewTagRequest;
 import com.lk.fishblog.model.Article;
 import com.lk.fishblog.model.Collect;
@@ -196,21 +197,33 @@ public class ArticleController {
      * @return
      */
     @GetMapping(path="/collect/")
-    public Page<Collect> collect(Authentication authentication, @RequestParam Integer pageIndex, @RequestParam Integer pageSize){
+    public PageInfo<Collect> collect(Authentication authentication, @RequestParam Integer pageIndex, @RequestParam Integer pageSize){
         User u = (User) authentication.getPrincipal();
         Page<Collect> collect = articleService.findCollectList(u.getId(), pageIndex-1, pageSize);
-        return  collect;
+        PageInfo<Collect> page = new PageInfo(collect);
+        return  page;
+    }
+    /**
+     * 判断是否收藏
+     * @param authentication
+     * @return
+     */
+    @GetMapping(path="/collect/is")
+    public ResultSet collectById(Authentication authentication, @RequestParam Long articleId){
+        User u = (User) authentication.getPrincipal();
+        Collect collectId = articleService.findCollectById(u.getId(), articleId);
+        return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "收藏", collectId == null);
     }
     /**
      * 保存收藏
-     * @param articleId
+     * @param collectRequest
      * @return
      */
     @PostMapping(path = "/collect/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResultSet addCollect(@RequestBody @Valid Long articleId, Authentication authentication){
+    public ResultSet addCollect(@RequestBody @Valid NewCollectRequest collectRequest, Authentication authentication){
         User u = (User) authentication.getPrincipal();
-        Article a = new Article(articleId);
+        Article a = new Article(collectRequest.getArticleId());
         articleService.saveCollect(u, a);
         return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "收藏成功");
     }

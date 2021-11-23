@@ -27,17 +27,6 @@ public class FishblogApplication implements WebMvcConfigurer {
 		SpringApplication.run(FishblogApplication.class, args);
 	}
 
-//	@Override
-//	public void addInterceptors(InterceptorRegistry registry) {
-//		registry.addInterceptor(new PerformanceInteceptor())
-//				.addPathPatterns("/article/**")
-//				.addPathPatterns("/comment/**")
-//				.addPathPatterns("/user/**")
-//				.addPathPatterns("/reply/**")
-//				.addPathPatterns("/file/**")
-//				.addPathPatterns("/admin/**");
-//	}
-
 	@Bean
 	public Hibernate5Module hibernate5Module() {
 		return new Hibernate5Module();
