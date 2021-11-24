@@ -64,7 +64,7 @@ public class FocusController {
      * 取消关注
      * @param userId 用户id
      */
-    @DeleteMapping(path = "/{id}")
+    @DeleteMapping(path = "/{userId}")
     public ResultSet delCollect(@PathVariable Long userId, Authentication authentication){
         if(authentication == null){
             return new ResultSet(ResultSet.RESULT_CODE_TRUE, "登录",null);
@@ -85,7 +85,7 @@ public class FocusController {
     @GetMapping(path="/is")
     public ResultSet getFocusIs(Authentication authentication, @RequestParam Long userId){
         User u = (User) authentication.getPrincipal();
-        Focus f = focusService.findFocusById(u.getId(), userId);
-        return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "关注", f == null);
+        Boolean f = focusService.existsFocusById(u.getId(), userId);
+        return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "关注", f);
     }
 }

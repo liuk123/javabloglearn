@@ -26,7 +26,7 @@ public class FocusService {
      */
     public Focus saveFocus(User user, User focusUser){
         return focusRepository.save(
-                Focus.builder().user(user).focus(focusUser).build()
+                Focus.builder().user(user).focusUser(focusUser).build()
         );
     }
 
@@ -53,7 +53,7 @@ public class FocusService {
      * @param FocusUserId
      * @return
      */
-    public Focus findFocusById(Long userId, Long FocusUserId){
-        return focusRepository.findByUser_IdAndFocus_Id(userId, FocusUserId);
+    public Boolean existsFocusById(Long userId, Long FocusUserId){
+        return focusRepository.existsByUser_IdAndFocusUser_Id(userId, FocusUserId);
     }
 }

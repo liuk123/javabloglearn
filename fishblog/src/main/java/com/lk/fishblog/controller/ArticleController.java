@@ -211,8 +211,8 @@ public class ArticleController {
     @GetMapping(path="/collect/is")
     public ResultSet collectById(Authentication authentication, @RequestParam Long articleId){
         User u = (User) authentication.getPrincipal();
-        Collect collectId = articleService.findCollectById(u.getId(), articleId);
-        return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "收藏", collectId == null);
+        Boolean c = articleService.existsCollectById(u.getId(), articleId);
+        return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "收藏", c);
     }
     /**
      * 保存收藏
@@ -232,7 +232,7 @@ public class ArticleController {
      * 删除收藏
      * @param articleId 文章id
      */
-    @DeleteMapping(path = "/collect/{id}")
+    @DeleteMapping(path = "/collect/{articleId}")
     public ResultSet delCollect(@PathVariable Long articleId, Authentication authentication){
         User u = (User) authentication.getPrincipal();
         Article a = new Article(articleId);

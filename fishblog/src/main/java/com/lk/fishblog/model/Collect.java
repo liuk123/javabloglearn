@@ -15,12 +15,12 @@ import java.io.Serializable;
 @IdClass(Collect.CollectEmbeddable.class)
 public class Collect implements Serializable{
     @Id
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToOne(cascade = {})
     @JoinColumn(name="user_id")
     private  User user;
 
     @Id
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToOne(cascade = {})
     @JoinColumn(name="article_id")
     private  Article article;
 
@@ -32,5 +32,22 @@ public class Collect implements Serializable{
     public static class CollectEmbeddable implements  Serializable {
         private User user;
         private Article article;
+
+        public CollectEmbeddable(Long userId, Long articleId){
+            this.user = new User(userId);
+            this.article = new Article(articleId);
+        }
+        public User getUser(){
+            return this.user;
+        }
+        public void setUser(Long userId){
+            this.user = new User(userId);
+        }
+        public Article getArticle(){
+            return this.article;
+        }
+        public void setArticle(Long articleId){
+            this.article = new Article(articleId);
+        }
     }
 }

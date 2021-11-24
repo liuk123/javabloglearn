@@ -87,8 +87,8 @@ public class ArticleService {
      * @param
      * @return
      */
-    public Collect findCollectById(Long userId, Long articleId){
-        return collectRepository.findByUser_IdAndArticle_Id(userId, articleId);
+    public Boolean existsCollectById(Long userId, Long articleId){
+        return collectRepository.existsByUser_IdAndArticle_Id(userId, articleId);
     }
 
     /**

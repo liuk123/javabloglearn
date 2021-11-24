@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FocusRepository extends JpaRepository<Focus, Focus.FocusEmbeddable> {
     Page<Focus> findByUser_Id(Long userId, Pageable pageable);
-    Focus findByUser_IdAndFocus_Id(Long userId, Long focusUserId);
+    Boolean existsByUser_IdAndFocusUser_Id(Long userId, Long focusUserId);
 }

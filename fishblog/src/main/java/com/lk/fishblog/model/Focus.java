@@ -15,14 +15,14 @@ import java.io.Serializable;
 @IdClass(Focus.FocusEmbeddable.class)
 public class Focus implements Serializable{
     @Id
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToOne(cascade = {})
     @JoinColumn(name="user_id")
     private  User user;
 
     @Id
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToOne(cascade = {})
     @JoinColumn(name="focus_id")
-    private  User focus;
+    private  User focusUser;
 
     @Setter
     @Getter
@@ -31,6 +31,22 @@ public class Focus implements Serializable{
     @EqualsAndHashCode()
     public static class FocusEmbeddable implements  Serializable {
         private User user;
-        private User focus;
+        private User focusUser;
+        public FocusEmbeddable(Long userId, Long focusUserId){
+            this.user = new User(userId);
+            this.focusUser = new User(focusUserId);
+        }
+        public void setUser(Long userId){
+            this.user = new User(userId);
+        }
+        public void setFocusUser(Long focusUserId){
+            this.focusUser = new User(focusUserId);
+        }
+        public User getUser(){
+            return this.user;
+        }
+        public User getFocusUser(){
+            return this.focusUser;
+        }
     }
 }
