@@ -113,10 +113,12 @@ public class ArticleController {
         Article a = articleService.findById(id);
         List<Tag> tagList = new ArrayList<>(a.getTagList());
         Article article = new Article();
+        User au = a.getAuthor();
+        User u = new User(au.getId(),au.getUsername());
         article.setId(a.getId());
         article.setTitle(a.getTitle());
         article.setUpdateTime(a.getUpdateTime());
-        article.setAuthor(a.getAuthor());
+        article.setAuthor(u);
         article.setTagList(tagList);
         article.setCommentList(a.getCommentList());
         article.setCreateTime(a.getCreateTime());

@@ -15,7 +15,7 @@ import java.io.Serializable;
 @IdClass(Collect.CollectEmbeddable.class)
 public class Collect implements Serializable{
     @Id
-    @ManyToOne(cascade = {})
+    @ManyToOne(cascade = {}, fetch=FetchType.LAZY)
     @JoinColumn(name="user_id")
     private  User user;
 

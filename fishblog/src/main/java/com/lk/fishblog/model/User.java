@@ -60,7 +60,7 @@ public class User implements UserDetails, Serializable {
     @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "user", fetch=FetchType.LAZY)
     private  List<Focus> focusList;
 
-    @ManyToMany(targetEntity = Role.class, fetch=FetchType.EAGER)
+    @ManyToMany(targetEntity = Role.class, fetch=FetchType.LAZY)
     @JoinTable(
             name = "b_user_role",
             joinColumns = {
