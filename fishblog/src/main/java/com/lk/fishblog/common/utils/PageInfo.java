@@ -34,8 +34,12 @@ public class PageInfo<T> extends ResultSet{
         super.resultCode = ResultSet.RESULT_CODE_TRUE;
         super.resultMsg = "查询成功";
         if(!page.isEmpty()){
+            if(page.getSize() == 0){
+                this.pageSize = 10;
+            }else{
+                this.pageSize = page.getSize();
+            }
             this.pageIndex = page.getNumber()+1;
-            this.pageSize = page.getSize();
             this.pages = page.getTotalPages();
             this.total = page.getTotalElements();
             this.list = page.getContent();

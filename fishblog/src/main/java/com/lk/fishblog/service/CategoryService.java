@@ -20,9 +20,9 @@ public class CategoryService {
     @Autowired
     CategoryRepository categoryRepository;
 
-    public Category save(String name, User user, List<Article> articleList){
+    public Category save(Long id, String name, User user, List<Article> articleList){
         return categoryRepository.save(
-            Category.builder().name(name).author(user).articleList(articleList).build()
+            Category.builder().id(id).name(name).author(user).articleList(articleList).build()
         );
     }
     public void deleteById(Long id){

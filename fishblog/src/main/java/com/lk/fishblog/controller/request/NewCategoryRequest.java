@@ -9,7 +9,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Setter
 @ToString
 public class NewCategoryRequest {
+    private  Long id;
     @NotEmpty
     private String name;
     private Long articleId;
+
 }

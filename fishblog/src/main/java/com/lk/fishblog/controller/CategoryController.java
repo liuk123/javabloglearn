@@ -47,7 +47,7 @@ public class CategoryController {
         Article a = new Article(categoryRequest.getArticleId());
         List<Article> aList = new ArrayList<>();
         aList.add(a);
-        Category category = categoryService.save(categoryRequest.getName(), u, aList);
+        Category category = categoryService.save(categoryRequest.getId(), categoryRequest.getName(), u, aList);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "添加成功", category);
     }
 
