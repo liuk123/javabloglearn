@@ -44,7 +44,7 @@ public class ArticleService {
     public Page<Article> findAll(int pageNum, int pageSize){
         return this.articleRepository.findAll(PageRequest.of(pageNum, pageSize));
     }
-    public Article save(Long id, String title, String content, String descItem, List<Tag> tagList, User auther, String postImage){
+    public Article save(Long id, String title, String content, String descItem, List<Tag> tagList, User author, String postImage){
         return articleRepository.save(
             Article
                 .builder()
@@ -53,7 +53,7 @@ public class ArticleService {
                 .content(content)
                 .descItem(descItem)
                 .tagList(tagList)
-                .author(auther)
+                .author(author)
                 .postImage(postImage)
                 .build()
         );

@@ -110,8 +110,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) {
         //对于在header里面增加token等类似情况，放行所有OPTIONS请求。
         web.ignoring()
-            .antMatchers(HttpMethod.OPTIONS, "/**")
-            .antMatchers("/css/**", "/js/**", "/images/**", "/fonts/**");
+            .antMatchers(HttpMethod.OPTIONS, "/**");
+//            .antMatchers("/css/**", "/js/**", "/images/**", "/fonts/**");
     }
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

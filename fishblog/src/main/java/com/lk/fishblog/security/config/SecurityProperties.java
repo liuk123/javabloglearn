@@ -13,7 +13,6 @@ public class SecurityProperties {
     private String logoutUrl = "/user/logout";
 
     private String[] matchers = new String[]{
-            "/js/**",
             "/user/**",
             "/menu/**",
     };

@@ -51,7 +51,7 @@ public class Article implements Serializable{
                     @JoinColumn(name = "tag_id") })
     private  List<Tag> tagList;
 
-    @ManyToOne(cascade = {}, optional=false, fetch=FetchType.EAGER)
+    @ManyToOne(cascade = {}, fetch=FetchType.EAGER)
     @JoinColumn(name="category_id")
     private Category category;
 

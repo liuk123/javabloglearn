@@ -14,5 +14,15 @@
       "name": "spring.jpa.hibernate.dialect",
       "type": "java.lang.String",
       "description": "Description for spring.jpa.hibernate.dialect."
+    },
+    {
+      "name": "upload.assets",
+      "type": "java.lang.String",
+      "description": "Description for upload.assets."
+    },
+    {
+      "name": "upload.icons",
+      "type": "java.lang.String",
+      "description": "Description for upload.icons."
     }
   ] }
