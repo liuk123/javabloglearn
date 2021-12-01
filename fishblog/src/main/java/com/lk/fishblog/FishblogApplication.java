@@ -32,15 +32,19 @@ public class FishblogApplication implements WebMvcConfigurer {
 	private String uploadPath;
 	@Value("${upload.temPath}")
 	private String uploadTemPath;
+	@Value("${upload.resource}")
+	private String resource;
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		String os = System.getProperty("os.name");
 		if (os.toLowerCase().startsWith("win")){
-			registry.addResourceHandler("/"+uploadPath+"**").addResourceLocations("file:D:/code/java/javabloglearn/fishblog/" + uploadPath);
-			registry.addResourceHandler("/"+uploadTemPath+"**").addResourceLocations("file:D:/code/java/javabloglearn/fishblog/" + uploadTemPath);
+			registry.addResourceHandler("/"+uploadPath+"**").addResourceLocations("file:D:/code/java/javabloglearn/fishblog/assets/" + uploadPath);
+			registry.addResourceHandler("/"+uploadTemPath+"**").addResourceLocations("file:D:/code/java/javabloglearn/fishblog/assets/" + uploadTemPath);
+			registry.addResourceHandler("/"+resource+"**").addResourceLocations("file:D:/code/java/javabloglearn/fishblog/assets/" + resource);
 		}else{
-			registry.addResourceHandler("/"+uploadPath+"**").addResourceLocations("file: /home/" + uploadPath);
-			registry.addResourceHandler("/"+uploadTemPath+"**").addResourceLocations("file: /home/" + uploadTemPath);
+			registry.addResourceHandler("/"+uploadPath+"**").addResourceLocations("file: /home/assets/" + uploadPath);
+			registry.addResourceHandler("/"+uploadTemPath+"**").addResourceLocations("file: /home/assets/" + uploadTemPath);
+			registry.addResourceHandler("/"+resource+"**").addResourceLocations("file: /home/assets/" + resource);
 		}
 	}
 	@Bean
