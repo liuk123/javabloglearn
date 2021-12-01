@@ -104,7 +104,7 @@ public class AdminController {
         for(Long val: u.getUserGroupIds()){
             userGroupList.add(new UserGroup(val));
         }
-        User user = userService.save(u.getId(), u.getPassword(), u.getUsername(), u.getPhone(),roleList,userGroupList, u.getAccountNonExpired(),u.getAccountNonLocked(),u.getCredentialsNonExpired(),u.getEnabled());
+        User user = userService.save(u.getId(), u.getPassword(), u.getUsername(), u.getPhone(), u.getEmail(), u.getAvatar(), roleList,userGroupList, u.getAccountNonExpired(),u.getAccountNonLocked(),u.getCredentialsNonExpired(),u.getEnabled());
         return new ResultSet(ResultSet.RESULT_CODE_TRUE,"添加用户成功", user);
     }
     /**

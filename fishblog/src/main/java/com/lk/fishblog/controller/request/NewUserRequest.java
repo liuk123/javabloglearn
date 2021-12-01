@@ -16,6 +16,8 @@ public class NewUserRequest {
     private String username;
     private String password;
     private String phone;
+    private String email;
+    private String avatar;
     private List<Long> roleIds;
     private List<Long> userGroupIds;
 

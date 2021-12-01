@@ -46,7 +46,7 @@ public class UserService {
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "注册成功", user);
     }
 
-    public User save(Long id, String pwd, String username, String phone, List<Role> roleList,List<UserGroup> userGroups, Boolean accountNonExpired,Boolean accountNonLocked,Boolean credentialsNonExpired,Boolean enabled){
+    public User save(Long id, String pwd, String username, String phone, String email, String avatar, List<Role> roleList,List<UserGroup> userGroups, Boolean accountNonExpired,Boolean accountNonLocked,Boolean credentialsNonExpired,Boolean enabled){
         return userRepository.save(
             User
                 .builder()
@@ -57,6 +57,8 @@ public class UserService {
                 .password(pwd)
                 .username(username)
                 .phone(phone)
+                .email(email)
+                .avatar(avatar)
 
                 .accountNonExpired(accountNonExpired)
                 .accountNonLocked(accountNonLocked)

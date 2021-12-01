@@ -13,12 +13,15 @@ import java.util.List;
 public class NewUserResponse {
     private Long id;
     private String username;
+    private String avatar;
     private String phone;
     private Date createTime;
 
-    public NewUserResponse(Long id, String username, Date createTime){
+    public NewUserResponse(Long id, String username, String avatar, Date createTime){
         this.id = id;
         this.username = username;
+        this.avatar = avatar;
         this.createTime = createTime;
+
     }
 }

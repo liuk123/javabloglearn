@@ -3,7 +3,6 @@ package com.lk.fishblog.controller;
 import com.lk.fishblog.common.utils.*;
 import com.lk.fishblog.controller.request.NewArticleRequest;
 import com.lk.fishblog.controller.request.NewCollectRequest;
-import com.lk.fishblog.controller.request.NewTagRequest;
 import com.lk.fishblog.model.Article;
 import com.lk.fishblog.model.Collect;
 import com.lk.fishblog.model.Tag;

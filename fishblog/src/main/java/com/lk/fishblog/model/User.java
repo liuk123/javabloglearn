@@ -38,6 +38,8 @@ public class User implements UserDetails, Serializable {
     private String username;
     private String phone;
     private String password;
+    private String email;
+    private String avatar;
 
     private boolean accountNonExpired;
     private boolean accountNonLocked;

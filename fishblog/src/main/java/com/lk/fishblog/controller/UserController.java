@@ -45,7 +45,12 @@ public class UserController {
     public ResultSet getCurrentUserBySession(Authentication authentication){
         if(authentication != null){
             User u = (User) authentication.getPrincipal();
-            return new ResultSet(ResultSet.RESULT_CODE_TRUE, "获取用户信息", new NewUserResponse(u.getId(),u.getUsername(),u.getCreateTime()));
+            return new ResultSet(ResultSet.RESULT_CODE_TRUE, "获取用户信息",
+                    new NewUserResponse(
+                            u.getId(),
+                            u.getUsername(),
+                            u.getAvatar(),
+                            u.getCreateTime()));
         }else{
             return new ResultSet(ResultSet.RESULT_CODE_FALSE, "获取用户信息", null);
         }
