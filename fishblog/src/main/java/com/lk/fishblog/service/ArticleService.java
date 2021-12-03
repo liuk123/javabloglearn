@@ -1,9 +1,6 @@
 package com.lk.fishblog.service;
 
-import com.lk.fishblog.model.Article;
-import com.lk.fishblog.model.Collect;
-import com.lk.fishblog.model.Tag;
-import com.lk.fishblog.model.User;
+import com.lk.fishblog.model.*;
 import com.lk.fishblog.repository.ArticleRepository;
 import com.lk.fishblog.repository.CollectRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -32,19 +29,20 @@ public class ArticleService {
     }
 //    @Cacheable
     public Page<Article> findByAuthor(Long uerId, int pageNum, int pageSize){
-        return this.articleRepository.findByAuthor_Id(uerId, PageRequest.of(pageNum, pageSize));
+        return this.articleRepository.findByAuthor_IdOrderByCreateTimeDesc(uerId, PageRequest.of(pageNum, pageSize));
     }
     public Page<Article> findByAuthorAndCategory(Long uerId, Long categoryId, int pageNum, int pageSize){
-        return this.articleRepository.findByAuthor_IdAndCategory_Id(uerId, categoryId, PageRequest.of(pageNum, pageSize));
+        return this.articleRepository.findByAuthor_IdAndCategory_IdOrderByCreateTimeDesc(uerId, categoryId, PageRequest.of(pageNum, pageSize));
     }
 //    @Cacheable
     public Page<Article> findByTaglist(int pageNum, int pageSize, List<Tag> tagList){
-        return this.articleRepository.findDistinctByTagListIn(tagList, PageRequest.of(pageNum, pageSize));
+        return this.articleRepository.findDistinctByTagListInOrderByCreateTimeDesc(tagList, PageRequest.of(pageNum, pageSize));
     }
     public Page<Article> findAll(int pageNum, int pageSize){
-        return this.articleRepository.findAll(PageRequest.of(pageNum, pageSize));
+        return this.articleRepository.findByOrderByCreateTimeDesc(PageRequest.of(pageNum, pageSize));
     }
-    public Article save(Long id, String title, String content, String descItem, List<Tag> tagList, User author, String postImage){
+    public Article save(Long id, String title, String content, String descItem, List<Tag> tagList, Category category, User author, String postImage){
+
         return articleRepository.save(
             Article
                 .builder()
@@ -53,6 +51,7 @@ public class ArticleService {
                 .content(content)
                 .descItem(descItem)
                 .tagList(tagList)
+                .category(category)
                 .author(author)
                 .postImage(postImage)
                 .build()

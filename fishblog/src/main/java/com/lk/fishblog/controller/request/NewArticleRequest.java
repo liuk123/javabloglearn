@@ -21,6 +21,7 @@ public class NewArticleRequest {
     private String descItem;
     @NotEmpty
     private List<Long> tagList;
+    private Long category;
 
     private Long id;
     private String postImage;

@@ -3,10 +3,7 @@ package com.lk.fishblog.controller;
 import com.lk.fishblog.common.utils.*;
 import com.lk.fishblog.controller.request.NewArticleRequest;
 import com.lk.fishblog.controller.request.NewCollectRequest;
-import com.lk.fishblog.model.Article;
-import com.lk.fishblog.model.Collect;
-import com.lk.fishblog.model.Tag;
-import com.lk.fishblog.model.User;
+import com.lk.fishblog.model.*;
 import com.lk.fishblog.service.ArticleService;
 import com.lk.fishblog.service.CommentService;
 import com.lk.fishblog.service.ReplyService;
@@ -68,8 +65,11 @@ public class ArticleController {
         File newFile = new File(uploadPath + format);
         for(String url: urlList){
             System.out.println("url:"+url);
-            File oldFile = new File(url.substring(url.indexOf(uploadTemPath),url.lastIndexOf(')')));
-            fileUtil.moveFile(oldFile.getAbsolutePath(), newFile.getAbsolutePath());
+            int index = url.indexOf(uploadTemPath);
+            if(index != -1){
+                File oldFile = new File(url.substring(index,url.lastIndexOf(')')));
+                fileUtil.moveFile(oldFile.getAbsolutePath(), newFile.getAbsolutePath());
+            }
         }
 //文章中图片地址替换
         String str = "(!\\[.*?]\\(.+?)"+uploadTemPath+"(.+?\\))";
@@ -87,8 +87,11 @@ public class ArticleController {
                 }
                 for(String oldUrl: urlOldList){
                     if(!urlList.contains(oldUrl)){
-                        File oldFile = new File(oldUrl.substring(oldUrl.indexOf(uploadPath),oldUrl.lastIndexOf(')')));
-                        fileUtil.delFile(oldFile.getAbsolutePath());
+                        int index = oldUrl.indexOf(uploadPath);
+                        if(index != -1){
+                            File oldFile = new File(oldUrl.substring(index,oldUrl.lastIndexOf(')')));
+                            fileUtil.delFile(oldFile.getAbsolutePath());
+                        }
                     }
                 }
             }
@@ -98,8 +101,21 @@ public class ArticleController {
         for(Long val: a.getTagList()){
             tagList.add(new Tag(val));
         }
-
-        Article article = articleService.save(a.getId(),a.getTitle(),a.getContent(), a.getDescItem(), tagList, new User(user.getId(),user.getUsername()), a.getPostImage());
+        Category c = null;
+        if(a.getCategory() != null){
+            c = new Category(a.getCategory());
+        }else{
+            c = new Category();
+        };
+        Article article = articleService.save(
+                a.getId(),
+                a.getTitle(),
+                a.getContent(),
+                a.getDescItem(),
+                tagList,
+                c,
+                new User(user.getId(),user.getUsername()),
+                a.getPostImage());
         return new ResultSet(ResultSet.RESULT_CODE_TRUE,"添加成功", article.getId());
     }
 
@@ -112,6 +128,7 @@ public class ArticleController {
         Article a = articleService.findById(id);
         List<Tag> tagList = new ArrayList<>(a.getTagList());
         Article article = new Article();
+        List<Comment> commentList = new ArrayList<>(a.getCommentList());
         User au = a.getAuthor();
         User u = new User(au.getId(),au.getUsername());
         article.setId(a.getId());
@@ -119,10 +136,11 @@ public class ArticleController {
         article.setUpdateTime(a.getUpdateTime());
         article.setAuthor(u);
         article.setTagList(tagList);
-        article.setCommentList(a.getCommentList());
+        article.setCommentList(commentList);
         article.setCreateTime(a.getCreateTime());
         article.setContent(a.getContent());
         article.setDescItem(a.getDescItem());
+        article.setCategory(a.getCategory());
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", article);
     }
 

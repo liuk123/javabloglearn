@@ -60,10 +60,10 @@ public class MenuService {
     }
 
     public  List<Menu> getMenuByAuth(List<Authority> authorityList){
-        return menuRepository.findByAuthorityListIn(authorityList);
+        return menuRepository.findByAuthorityListInOrderBySortAsc(authorityList);
     }
     public  List<Menu> getMenuByAuthNot(List<Authority> authorityList){
-        return menuRepository.findByAuthorityListNotIn(authorityList);
+        return menuRepository.findByAuthorityListNotInOrderBySortAsc(authorityList);
     }
 
 }

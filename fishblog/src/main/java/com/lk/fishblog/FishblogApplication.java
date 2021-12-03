@@ -64,7 +64,7 @@ public class FishblogApplication implements WebMvcConfigurer {
 		ObjectMapper mapper = converter.getObjectMapper();
 		Hibernate5Module hibernate5Module = new Hibernate5Module();
 		mapper.registerModule(hibernate5Module);
-		mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+//		mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
 		return converter;
 	}
 }

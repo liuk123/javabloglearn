@@ -38,6 +38,9 @@ public class Category implements Serializable{
     @JoinColumn(name="user_id")
     private User author;
 
+    public Category(Long id){
+        this.id = id;
+    }
     @Override
     public String toString() {
         return "Category{" +

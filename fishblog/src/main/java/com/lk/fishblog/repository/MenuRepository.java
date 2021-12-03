@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface MenuRepository extends BaseRepository<Menu, Long> {
     Menu findFirstById(Long id);
-    List<Menu> findByAuthorityListIn(List<Authority> authorityList);
-    List<Menu> findByAuthorityListNotIn(List<Authority> authorityList);
+    List<Menu> findByAuthorityListInOrderBySortAsc(List<Authority> authorityList);
+    List<Menu> findByAuthorityListNotInOrderBySortAsc(List<Authority> authorityList);
 }
