@@ -8,9 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "B_ROLE")
@@ -32,8 +30,13 @@ public class Role implements Serializable{
     private String name;
     private String description;
 
-    @JsonIgnore
-    @ManyToMany(targetEntity = User.class, mappedBy = "roleList", fetch=FetchType.LAZY)
+    @ManyToMany(targetEntity = User.class, fetch=FetchType.LAZY)
+    @JoinTable(
+            name = "b_role_user",
+            joinColumns = {
+                    @JoinColumn(name = "role_id") },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "user_id") })
     private List<User> userList;
 
     @JsonIgnore

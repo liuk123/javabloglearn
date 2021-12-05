@@ -16,6 +16,12 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@NamedEntityGraph(
+        name = "MenuEntity",
+        attributeNodes = {
+                @NamedAttributeNode("authorityList")
+        }
+)
 public class Menu implements Serializable{
 
     @Id
