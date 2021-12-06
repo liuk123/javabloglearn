@@ -62,8 +62,13 @@ public class User implements UserDetails, Serializable {
     @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "user", fetch=FetchType.LAZY)
     private  List<Focus> focusList;
 
-    @JsonIgnore
-    @ManyToMany(targetEntity = Role.class, mappedBy = "userList", fetch=FetchType.LAZY)
+    @ManyToMany(targetEntity = Role.class, fetch=FetchType.LAZY)
+    @JoinTable(
+            name = "b_user_role",
+            joinColumns = {
+                    @JoinColumn(name = "user_id") },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "role_id") })
     private List<Role> roleList;
 
     @JsonIgnore

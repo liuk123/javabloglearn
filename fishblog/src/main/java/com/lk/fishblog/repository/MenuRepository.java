@@ -8,7 +8,8 @@ import java.util.List;
 
 public interface MenuRepository extends BaseRepository<Menu, Long> {
     Menu findFirstById(Long id);
-    @EntityGraph("MenuEntity")
+    @EntityGraph(value = "MenuEntity", type = EntityGraph.EntityGraphType.FETCH)
     List<Menu> findByAuthorityListInOrderBySortAsc(List<Authority> authorityList);
+    @EntityGraph(value = "MenuEntity", type = EntityGraph.EntityGraphType.FETCH)
     List<Menu> findByAuthorityListNotInOrderBySortAsc(List<Authority> authorityList);
 }

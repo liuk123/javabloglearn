@@ -17,6 +17,12 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@NamedEntityGraph(
+        name = "RoleEntity",
+        attributeNodes = {
+                @NamedAttributeNode("authorityList")
+        }
+)
 public class Role implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,13 +36,8 @@ public class Role implements Serializable{
     private String name;
     private String description;
 
-    @ManyToMany(targetEntity = User.class, fetch=FetchType.LAZY)
-    @JoinTable(
-            name = "b_role_user",
-            joinColumns = {
-                    @JoinColumn(name = "role_id") },
-            inverseJoinColumns = {
-                    @JoinColumn(name = "user_id") })
+    @JsonIgnore
+    @ManyToMany(targetEntity = User.class, mappedBy = "roleList", fetch=FetchType.LAZY)
     private List<User> userList;
 
     @JsonIgnore
