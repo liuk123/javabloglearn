@@ -2,6 +2,7 @@ package com.lk.fishblog.controller;
 
 import com.lk.fishblog.common.utils.FileUtil;
 import com.lk.fishblog.common.utils.ResultSet;
+import com.lk.fishblog.controller.request.NewFileResponse;
 import com.lk.fishblog.service.ArticleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +62,10 @@ public class FileController {
         try{
             file.transferTo(newFile);
             String filePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/"+ uploadTemPath + format + fileName;
-            return new ResultSet(ResultSet.RESULT_CODE_TRUE, "上传成功", filePath);
+            NewFileResponse f = new NewFileResponse();
+            f.setName(file.getOriginalFilename());
+            f.setUrl(filePath);
+            return new ResultSet(ResultSet.RESULT_CODE_TRUE, "上传成功", f);
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -80,7 +84,7 @@ public class FileController {
         String realPath = uploadTemPath;
         String format = sdf.format(new Date());
         File realFile = new File(realPath + format);
-
+        List<NewFileResponse> fileList = new ArrayList<>();
         for(MultipartFile file:files){
             if(file.isEmpty()){
                 return new ResultSet(ResultSet.RESULT_CODE_FALSE, "文件不可为空");
@@ -95,14 +99,17 @@ public class FileController {
                 try{
                     file.transferTo(newFile);
                     String filePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/"+uploadTemPath + format + fileName;
-
+                    NewFileResponse f = new NewFileResponse();
+                    f.setName(file.getOriginalFilename());
+                    f.setUrl(filePath);
+                    fileList.add(f);
                 }catch (IOException e){
                     e.printStackTrace();
                     return new ResultSet(ResultSet.RESULT_CODE_FALSE, "上传失败");
                 }
             }
         }
-        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "上传成功");
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "上传成功", fileList);
     }
 
     @GetMapping(path = "/download")

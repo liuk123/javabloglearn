@@ -17,6 +17,12 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@NamedEntityGraph(
+        name = "UserGroupEntity",
+        attributeNodes = {
+                @NamedAttributeNode("roleList")
+        }
+)
 public class UserGroup implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

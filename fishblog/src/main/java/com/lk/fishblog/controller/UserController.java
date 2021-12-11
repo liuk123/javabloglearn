@@ -54,7 +54,6 @@ public class UserController {
         }else{
             return new ResultSet(ResultSet.RESULT_CODE_FALSE, "获取用户信息", null);
         }
-//        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
     /**
