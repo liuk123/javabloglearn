@@ -60,6 +60,10 @@ public class User implements UserDetails, Serializable {
 
     @JsonIgnore
     @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "user", fetch=FetchType.LAZY)
+    private  List<NavCategory> NavCategoryList;
+
+    @JsonIgnore
+    @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "user", fetch=FetchType.LAZY)
     private  List<Focus> focusList;
 
     @ManyToMany(targetEntity = Role.class, fetch=FetchType.LAZY)
