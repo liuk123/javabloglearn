@@ -1,7 +1,6 @@
 package com.lk.fishblog.service;
 
 import com.lk.fishblog.model.Nav;
-import com.lk.fishblog.model.NavCategory;
 
 import com.lk.fishblog.repository.NavRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +22,7 @@ public class NavService {
 //            Nav.builder().id(id).sort(sort).title(title).link(link).navCategory(navCategory).build()
 //        );
 //    }
-    public List<Nav> saveAll(List<Nav> nav){
-        return navRepository.saveAll(nav);
+    public void saveAll(List<Nav> nav){
+        navRepository.saveAll(nav);
     }
 }

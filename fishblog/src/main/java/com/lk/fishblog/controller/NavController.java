@@ -61,7 +61,7 @@ public class NavController {
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "添加成功",null);
     }
 
-    @PostMapping(path = "/nav/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResultSet saveNav(@RequestBody @Valid NewNavRequest[] navRequestList){
         List<Nav> navs = new ArrayList<>();

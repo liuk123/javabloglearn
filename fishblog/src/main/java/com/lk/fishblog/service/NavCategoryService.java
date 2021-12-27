@@ -21,8 +21,8 @@ public class NavCategoryService {
 //            NavCategory.builder().id(id).pid(pid).sort(sort).title(title).user(user).build()
 //        );
 //    }
-    public List<NavCategory> saveAll(List<NavCategory> navCategoryList){
-        return navCategoryRepository.saveAll(navCategoryList);
+    public void saveAll(List<NavCategory> navCategoryList){
+        navCategoryRepository.saveAll(navCategoryList);
     }
     public List<NavCategory> findNavCategory(Long userId){
         return navCategoryRepository.findByUser_Id(userId);

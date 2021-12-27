@@ -20,30 +20,30 @@ public class MenuService {
     MenuRepository menuRepository;
 
     public Menu getMenuById(Long id){
-        return menuRepository.findFirstById(id);
+        return menuRepository.getOne(id);
     }
     public Page<Menu> getMenuList(int pageNum, int pageSize){
         return menuRepository.findAll(PageRequest.of(pageNum, pageSize));
     }
-    public Menu saveMenu(Long id,String pid, String sort, String title, String type, String icon, String disabled, String selected, String open, String route, String link, Boolean isMenuShow, Boolean isBreadcrumbShow, List<Authority> authorityList){
-        return menuRepository.save(
-            Menu
-                .builder()
-                .id(id)
-                .pid(pid)
-                .sort(sort)
-                .title(title)
-                .type(type)
-                .icon(icon)
-                .disabled(disabled)
-                .selected(selected)
-                .open(open)
-                .route(route)
-                .link(link)
-                .isMenuShow(isMenuShow)
-                .isBreadcrumbShow(isBreadcrumbShow)
-                .authorityList(authorityList)
-                .build()
+    public void saveMenu(Long id, String pid, String sort, String title, String type, String icon, String disabled, String selected, String open, String route, String link, Boolean isMenuShow, Boolean isBreadcrumbShow, List<Authority> authorityList){
+        menuRepository.save(
+                Menu
+                        .builder()
+                        .id(id)
+                        .pid(pid)
+                        .sort(sort)
+                        .title(title)
+                        .type(type)
+                        .icon(icon)
+                        .disabled(disabled)
+                        .selected(selected)
+                        .open(open)
+                        .route(route)
+                        .link(link)
+                        .isMenuShow(isMenuShow)
+                        .isBreadcrumbShow(isBreadcrumbShow)
+                        .authorityList(authorityList)
+                        .build()
         );
     }
 
