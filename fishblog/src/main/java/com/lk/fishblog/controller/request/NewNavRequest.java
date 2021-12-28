@@ -13,7 +13,7 @@ import javax.persistence.*;
 @ToString
 public class NewNavRequest {
     public Long id;
-    private String sort;
+    private Long sort;
     private String title;
     private String link;
     private Long navCategoryId;

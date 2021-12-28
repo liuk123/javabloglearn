@@ -6,6 +6,7 @@ import java.util.List;
 public interface NavCategoryRepository extends BaseRepository<NavCategory, Long> {
     List<NavCategory> findByUser_Id(Long userId);
     List<NavCategory> findByUser_IdAndPid(Long userId, Long pid);
-
     List<NavCategory> findNavListTop5ByUser_IdAndPid(Long userId, Long pid);
+
+    NavCategory findFirstById(Long id);
 }

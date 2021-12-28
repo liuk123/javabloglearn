@@ -16,11 +16,6 @@ public class NavCategoryService {
     @Autowired
     NavCategoryRepository navCategoryRepository;
 
-//    public NavCategory save(Long id, String pid, String sort, String title, User user){
-//        return navCategoryRepository.save(
-//            NavCategory.builder().id(id).pid(pid).sort(sort).title(title).user(user).build()
-//        );
-//    }
     public void saveAll(List<NavCategory> navCategoryList){
         navCategoryRepository.saveAll(navCategoryList);
     }
@@ -30,5 +25,8 @@ public class NavCategoryService {
 
     public List<NavCategory> findByPid(Long userId, long pid){
         return navCategoryRepository.findByUser_IdAndPid(userId, pid);
+    }
+    public NavCategory findOne(Long id){
+        return navCategoryRepository.findFirstById(id);
     }
 }

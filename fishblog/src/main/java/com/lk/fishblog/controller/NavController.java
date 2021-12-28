@@ -1,6 +1,7 @@
 package com.lk.fishblog.controller;
 
 import com.lk.fishblog.common.utils.ResultSet;
+import com.lk.fishblog.controller.request.NewArticleRequest;
 import com.lk.fishblog.controller.request.NewNavCategoryRequest;
 import com.lk.fishblog.controller.request.NewNavRequest;
 import com.lk.fishblog.model.Nav;
@@ -33,17 +34,17 @@ public class NavController {
      * @param authentication
      * @return
      */
-    @GetMapping(path="/")
+    @GetMapping(path="/navCategory/")
     public ResultSet getNavCategory(Authentication authentication){
         User u = (User) authentication.getPrincipal();
         List<NavCategory> n = navCategoryService.findNavCategory(u.getId());
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", n);
     }
-    @GetMapping(path="/all/")
-    public ResultSet getAll(Authentication authentication, @RequestParam Long pid){
+    @GetMapping(path="/pid/")
+    public ResultSet getNav(Authentication authentication, @RequestParam Long pid){
         User u = (User) authentication.getPrincipal();
-        List<NavCategory> n = navCategoryService.findByPid(u.getId(), pid);
-        return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", n);
+        NavCategory n = navCategoryService.findOne(pid);
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", n);
     }
 
     @PostMapping(path = "/navCategory/", consumes = MediaType.APPLICATION_JSON_VALUE)

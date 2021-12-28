@@ -36,7 +36,7 @@ public class ArticleService {
     }
 //    @Cacheable
     public Page<Article> findByTaglist(int pageNum, int pageSize, List<Tag> tagList){
-        return this.articleRepository.findDistinctByTagListInOrderByCreateTimeDesc(tagList, PageRequest.of(pageNum, pageSize));
+        return this.articleRepository.findByTagListInOrderByCreateTimeDesc(tagList, PageRequest.of(pageNum, pageSize));
     }
     public Page<Article> findAll(int pageNum, int pageSize){
         return this.articleRepository.findByOrderByCreateTimeDesc(PageRequest.of(pageNum, pageSize));

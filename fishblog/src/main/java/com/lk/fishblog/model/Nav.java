@@ -18,7 +18,7 @@ public class Nav implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long id;
-    private String sort;
+    private Long sort;
     private String title;
     private String link;
 
