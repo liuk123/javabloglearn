@@ -187,6 +187,7 @@ public class ArticleController {
             a = articleService.findByAuthorAndCategory(id, categoryId, pageIndex-1, pageSize);
         }
         PageInfo<Article> page = new PageInfo(a);
+        page.setPageSize(pageSize);
         return page;
     }
 

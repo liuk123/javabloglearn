@@ -22,7 +22,7 @@ public class NavService {
         navRepository.saveAll(nav);
     }
 
-//    public List<Nav> findNav(Long id){
-//        return navRepository.findByNavCategory_IdIn(id);
-//    }
+    public List<Nav> findNav(Long id){
+        return navRepository.findByNavCategory_Id(id);
+    }
 }

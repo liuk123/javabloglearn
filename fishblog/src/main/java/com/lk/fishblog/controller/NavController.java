@@ -40,10 +40,10 @@ public class NavController {
         List<NavCategory> n = navCategoryService.findNavCategory(u.getId());
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", n);
     }
-    @GetMapping(path="/pid/")
+    @GetMapping(path="/navItem/")
     public ResultSet getNav(Authentication authentication, @RequestParam Long pid){
         User u = (User) authentication.getPrincipal();
-        NavCategory n = navCategoryService.findOne(pid);
+        List<Nav> n = navService.findNav(pid);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", n);
     }
 

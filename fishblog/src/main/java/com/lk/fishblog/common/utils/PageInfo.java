@@ -43,6 +43,8 @@ public class PageInfo<T> extends ResultSet{
             this.pages = page.getTotalPages();
             this.total = page.getTotalElements();
             this.list = page.getContent();
+        }else{
+            this.pageSize = 10;
         }
     }
 }
