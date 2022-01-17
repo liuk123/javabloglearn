@@ -10,5 +10,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @ToString
 public class NewTagRequest {
     @NotEmpty
-    private String name;
+    private String title;
+    private Long pid;
+    private Long sort;
 }

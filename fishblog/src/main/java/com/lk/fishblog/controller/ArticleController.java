@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -129,6 +130,9 @@ public class ArticleController {
         List<Tag> tagList = new ArrayList<>(a.getTagList());
         Article article = new Article();
         List<Comment> commentList = new ArrayList<>(a.getCommentList());
+        for(Comment comment: commentList){
+            comment.setReplyList(comment.getReplyList().stream().limit(5).collect(Collectors.toList()));
+        }
         User au = a.getAuthor();
         User u = new User(au.getId(),au.getUsername());
         article.setId(a.getId());

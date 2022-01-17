@@ -31,7 +31,7 @@ public class TagController {
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResultSet addByJson(@RequestBody @Valid NewTagRequest t){
-        Tag tag = tagService.save(t.getName());
+        Tag tag = tagService.save(t.getTitle(),t.getPid(),t.getSort());
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "添加成功", tag);
     }
 

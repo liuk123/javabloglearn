@@ -14,8 +14,8 @@ import java.util.List;
 @ToString
 public class NewMenuRequest {
     private Long id;
-    private String pid;
-    private String sort;
+    private Long pid;
+    private Long sort;
     private String title;
     private String type;
     private String icon;

@@ -16,9 +16,9 @@ public class TagService {
     @Autowired
     TagRepository tagRepository;
 
-    public Tag save(String name){
+    public Tag save(String title, Long pid, Long sort){
         return tagRepository.save(
-            Tag.builder().name(name).build()
+            Tag.builder().title(title).pid(pid).sort(sort).build()
         );
     }
     public void deleteById(Long id){

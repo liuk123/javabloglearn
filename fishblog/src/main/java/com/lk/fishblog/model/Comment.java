@@ -30,7 +30,7 @@ public class Comment extends BaseEntity implements Serializable {
 
     private String content;
 
-    @OneToMany(mappedBy = "comment",cascade={CascadeType.REMOVE, CascadeType.REFRESH}, fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "comment",cascade={CascadeType.REMOVE, CascadeType.REFRESH}, fetch=FetchType.LAZY)
     @OrderBy("createTime ASC")
     private List<Reply> replyList;
 

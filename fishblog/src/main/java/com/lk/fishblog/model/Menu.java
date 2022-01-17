@@ -33,8 +33,8 @@ public class Menu implements Serializable{
     @UpdateTimestamp
     public Date updateTime;
 
-    private String pid;
-    private String sort;
+    private Long pid;
+    private Long sort;
     private String title;
     private String type;
     private String icon;

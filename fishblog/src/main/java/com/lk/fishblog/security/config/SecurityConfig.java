@@ -60,10 +60,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()//权限
             .antMatchers(securityProperties.getMatchers()).permitAll()//不拦截这些请求
             .regexMatchers(securityProperties.getRegexMatchers()).permitAll()
-            .regexMatchers(HttpMethod.GET, "/article").permitAll()
-            .regexMatchers(HttpMethod.GET, "/comment").permitAll()
-            .regexMatchers(HttpMethod.GET, "/reply").permitAll()
-            .regexMatchers(HttpMethod.GET, "/tag").permitAll()
+            .antMatchers(HttpMethod.GET, "/article/**").permitAll()
+            .antMatchers(HttpMethod.GET, "/comment/**").permitAll()
+            .antMatchers(HttpMethod.GET, "/reply/**").permitAll()
+            .antMatchers(HttpMethod.GET, "/tag/**").permitAll()
             .anyRequest()
             .authenticated()
 

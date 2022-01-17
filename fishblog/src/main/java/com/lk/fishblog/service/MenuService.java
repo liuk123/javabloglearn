@@ -25,7 +25,7 @@ public class MenuService {
     public Page<Menu> getMenuList(int pageNum, int pageSize){
         return menuRepository.findAll(PageRequest.of(pageNum, pageSize));
     }
-    public void saveMenu(Long id, String pid, String sort, String title, String type, String icon, String disabled, String selected, String open, String route, String link, Boolean isMenuShow, Boolean isBreadcrumbShow, List<Authority> authorityList){
+    public void saveMenu(Long id, Long pid, Long sort, String title, String type, String icon, String disabled, String selected, String open, String route, String link, Boolean isMenuShow, Boolean isBreadcrumbShow, List<Authority> authorityList){
         menuRepository.save(
                 Menu
                         .builder()
