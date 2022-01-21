@@ -50,44 +50,65 @@ public class NavController {
     public ResultSet getNavByUser(Authentication authentication, @RequestBody List<NewNavRequest> data){
         User u = (User) authentication.getPrincipal();
         List<NavCategory> nc = navCategoryService.findNavCategory(u.getId());
-        List<Long> categoryIds = new ArrayList<>();
-        List<String> categoryNames = new ArrayList<>();
+        List<Nav> nList = new ArrayList<>();
         for(NavCategory item: nc){
-            categoryIds.add(item.getId());
-            categoryNames.add(item.getTitle());
-        }
-        List<Nav> n = navService.findNavByCIds(categoryIds);
-        List<String> navNames = new ArrayList<>();
-        for(Nav item: n){
-            navNames.add(item.getTitle());
+            for(Nav subItem : item.getNavList()){
+                subItem.setNavCategory(item);
+                nList.add(subItem);
+            }
+
         }
         for(NewNavRequest item: data){
-            getChild(item, navNames, categoryNames, u, null);
+            getChild(item, nList, nc, u, null);
         }
-        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", n);
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功");
     }
 
-    private void getChild(NewNavRequest data, List<String> navNames, List<String> categoryNames, User u, Long pId){
+    private void getChild(NewNavRequest data, List<Nav> navList, List<NavCategory> categoryList, User u, Long pId){
         if(data != null){
             Long p = null;
-            if(data.getType().equals("link") && !navNames.contains(data.getTitle())){
-                if(pId!=null){
+            if(data.getType().equals("link")){
+                boolean isGo = true;
+                for(Nav item : navList){
+                    if(item.getTitle().equals(data.getTitle())){
+                        if(item.getLink().equals(data.getLink()) && item.getNavCategory().getId().equals(pId)){
+                            isGo = false;
+                            p = item.getId();
+                            break;
+                        }
+                        data.setId(item.getId());
+                        break;
+                    }
+                }
+                if(pId!=null && isGo){
                     NavCategory nc = new NavCategory(pId);
                     Nav n = navService.save(data.getId(),data.getSort(),data.getTitle(),data.getLink(),nc);
                     p = n.getId();
-                }else{
+                }else if(isGo){
                     Nav n = navService.save(data.getId(),data.getSort(),data.getTitle(),data.getLink(), null);
                     p = n.getId();
                 }
-            }else if(data.getType().equals("sub") && !categoryNames.contains(data.getTitle())){
-
-                NavCategory nc = navCategoryService.save(data.getId(),pId,data.getSort(),data.getTitle(), u);
-                p=nc.getId();
-
+            }else if(data.getType().equals("sub")){
+                boolean isGo = true;
+                for(NavCategory item : categoryList){
+                    if(item.getTitle().equals(data.getTitle())){
+                        if((item.getPid() == null && pId == null)||(item.getPid() != null && item.getPid().equals(pId))){
+                            isGo = false;
+                            p = item.getId();
+                            break;
+                        }
+                        data.setId(item.getId());
+                        break;
+                    }
+                }
+                if(isGo){
+                    NavCategory nc = navCategoryService.save(data.getId(),pId,data.getSort(),data.getTitle(), u);
+                    p=nc.getId();
+                }
             }
             if(data.getChildren() != null){
                 for(NewNavRequest item:data.getChildren()){
-                    getChild(item, navNames, categoryNames, u, p);
+                    getChild(item, navList, categoryList, u, p);
                 }
             }
         }

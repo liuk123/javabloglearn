@@ -24,5 +24,10 @@
       "name": "upload.icons",
       "type": "java.lang.String",
       "description": "Description for upload.icons."
+    },
+    {
+      "name": "spring.data.redis.repositories.type",
+      "type": "java.lang.String",
+      "description": "Description for spring.data.redis.repositories.type."
     }
   ] }
