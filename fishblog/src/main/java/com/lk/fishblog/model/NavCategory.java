@@ -31,9 +31,8 @@ public class NavCategory implements Serializable{
     @JoinColumn(name="user_id")
     private User user;
 
-    @JsonIgnore
-    @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "navCategory", fetch=FetchType.LAZY)
-    private  List<Nav> NavList;
+    @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "navCategory", fetch=FetchType.EAGER)
+    private  List<Nav> navList;
 
     public NavCategory(Long id){
         this.id = id;

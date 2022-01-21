@@ -17,6 +17,14 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@NamedEntityGraphs({
+        @NamedEntityGraph(
+                name = "CommentEntity",
+                attributeNodes = {
+                        @NamedAttributeNode(value="replyList")
+                }
+        )
+})
 public class Comment extends BaseEntity implements Serializable {
 
     @ManyToOne(cascade = {}, optional=false)

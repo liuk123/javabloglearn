@@ -25,7 +25,7 @@ public class ArticleService {
     CollectRepository collectRepository;
 
     public Article findById(Long id){
-        return articleRepository.getOne(id);
+        return articleRepository.findFirstById(id);
     }
 //    @Cacheable
     public Page<Article> findByAuthor(Long uerId, int pageNum, int pageSize){

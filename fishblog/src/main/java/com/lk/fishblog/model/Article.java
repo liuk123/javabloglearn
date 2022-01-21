@@ -17,6 +17,14 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@NamedEntityGraphs({
+        @NamedEntityGraph(
+                name = "ArticleEntity",
+                attributeNodes = {
+                        @NamedAttributeNode(value="commentList")
+                }
+        )
+})
 public class Article implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
