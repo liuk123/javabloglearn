@@ -23,7 +23,7 @@ public class Nav implements Serializable{
     private String link;
 
     @JsonIgnore
-    @ManyToOne(cascade = {}, optional=false)
+    @ManyToOne(cascade = {},fetch = FetchType.LAZY)
     @JoinColumn(name="navcategory_id")
     private NavCategory navCategory;
 

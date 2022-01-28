@@ -10,8 +10,8 @@ import java.util.List;
 
 public interface RoleRepository extends BaseRepository<Role, Long> {
 
-    @EntityGraph(value = "RoleEntity")
+    @EntityGraph(value = "RoleEntity", type = EntityGraph.EntityGraphType.FETCH)
     Page<Role> findAll(Pageable pageable);
-    @EntityGraph(value = "RoleEntity")
+    @EntityGraph(value = "RoleEntity", type = EntityGraph.EntityGraphType.FETCH)
     List<Role> findAll();
 }

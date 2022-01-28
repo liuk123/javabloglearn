@@ -17,14 +17,6 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@NamedEntityGraphs({
-        @NamedEntityGraph(
-                name = "NavCategoryEntity",
-                attributeNodes = {
-                        @NamedAttributeNode(value="navList")
-                }
-        )
-})
 public class NavCategory implements Serializable{
 
     @Id

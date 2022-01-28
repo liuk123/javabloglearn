@@ -47,7 +47,7 @@ public class NavController {
 
     @PostMapping(path = "/importNav/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResultSet getNavByUser(Authentication authentication, @RequestBody List<NewNavRequest> data){
+    public ResultSet importNav(Authentication authentication, @RequestBody List<NewNavRequest> data){
         User u = (User) authentication.getPrincipal();
         List<NavCategory> nc = navCategoryService.findNavCategory(u.getId());
         List<Nav> nList = new ArrayList<>();
@@ -61,7 +61,7 @@ public class NavController {
         for(NewNavRequest item: data){
             getChild(item, nList, nc, u, null);
         }
-        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功");
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "导入成功");
     }
 
     private void getChild(NewNavRequest data, List<Nav> navList, List<NavCategory> categoryList, User u, Long pId){
@@ -121,15 +121,31 @@ public class NavController {
             return new ResultSet(ResultSet.RESULT_CODE_TRUE, "登录",null);
         }
         User u = (User) authentication.getPrincipal();
-        navCategoryService.save(navCategory.getId(),navCategory.getPid(),navCategory.getSort(),navCategory.getTitle(), u);
-        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "添加成功",null);
+        NavCategory nc = navCategoryService.save(navCategory.getId(),navCategory.getPid(),navCategory.getSort(),navCategory.getTitle(), u);
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "添加成功",nc);
     }
 
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResultSet saveNav(@RequestBody @Valid NewNavRequest navRequest){
         NavCategory nc = new NavCategory(navRequest.getNavCategoryId());
-        navService.save(navRequest.getId(),navRequest.getSort(),navRequest.getTitle(),navRequest.getLink(),nc);
-        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "添加成功",null);
+        Nav n = navService.save(navRequest.getId(),navRequest.getSort(),navRequest.getTitle(),navRequest.getLink(),nc);
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "添加成功",n);
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public ResultSet delById(@PathVariable Long id){
+        navService.delOne(id);
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功");
+    }
+    @DeleteMapping(path = "/navCategory/{id}")
+    public ResultSet delNavCategoryById(@PathVariable Long id){
+        navCategoryService.delOne(id);
+        List<NavCategory> ncList = navCategoryService.findByPid(id);
+        for(NavCategory item: ncList){
+            item.setPid(null);
+        }
+        navCategoryService.saveAll(ncList);
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功");
     }
 }

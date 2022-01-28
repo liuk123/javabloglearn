@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.SelectBeforeUpdate;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -82,10 +83,11 @@ public class User implements UserDetails, Serializable {
     public User(Long id){
         this.id = id;
     }
-    public User(String username,String password, String phone){
+    public User(String username,String password, String avatar, String email){
         this.username=username;
         this.password=password;
-        this.phone=phone;
+        this.phone=email;
+        this.avatar=avatar;
     }
     public User(Long id, String username){
         this.id = id;

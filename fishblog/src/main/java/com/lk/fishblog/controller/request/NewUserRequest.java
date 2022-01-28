@@ -27,6 +27,6 @@ public class NewUserRequest {
     private Boolean enabled;
 
     public User toUser(MyPasswordEncoder passwordEncoder){
-        return new User(username, passwordEncoder.encode(password), phone);
+        return new User(username, passwordEncoder.encode(password), avatar, email);
     }
 }

@@ -25,10 +25,13 @@ public class NavCategoryService {
         return navCategoryRepository.findByUser_Id(userId);
     }
 
-    public List<NavCategory> findByPid(Long userId, long pid){
-        return navCategoryRepository.findByUser_IdAndPid(userId, pid);
+    public List<NavCategory> findByPid(long pid){
+        return navCategoryRepository.findByPid(pid);
     }
-    public NavCategory findOne(Long id){
-        return navCategoryRepository.findFirstById(id);
+    public void delOne(Long id){
+        navCategoryRepository.deleteFirstById(id);
+    }
+    public void saveAll(List<NavCategory> ncList){
+        navCategoryRepository.saveAll(ncList);
     }
 }

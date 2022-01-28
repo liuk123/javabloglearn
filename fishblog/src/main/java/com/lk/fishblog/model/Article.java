@@ -21,7 +21,9 @@ import java.util.List;
         @NamedEntityGraph(
                 name = "ArticleEntity",
                 attributeNodes = {
-                        @NamedAttributeNode(value="commentList")
+                        @NamedAttributeNode(value="commentList"),
+                        @NamedAttributeNode(value="category"),
+                        @NamedAttributeNode(value="author"),
                 }
         )
 })

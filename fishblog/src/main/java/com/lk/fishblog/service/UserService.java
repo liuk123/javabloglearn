@@ -67,5 +67,21 @@ public class UserService {
                 .build()
         );
     }
+    public User saveUserInfo(Long id, String avatar,String userName, String email, String phone){
+        User u = userRepository.findFirstById(id);
+        if(avatar!=null){
+            u.setAvatar(avatar);
+        }
+        if(userName!=null){
+            u.setUsername(userName);
+        }
+        if(email!=null){
+            u.setEmail(email);
+        }
+        if(phone!=null){
+            u.setPhone(phone);
+        }
+        return userRepository.save(u);
+    }
 
 }

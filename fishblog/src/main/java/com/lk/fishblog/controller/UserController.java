@@ -3,8 +3,6 @@ package com.lk.fishblog.controller;
 import com.lk.fishblog.common.utils.ResultSet;
 import com.lk.fishblog.controller.request.NewUserRequest;
 import com.lk.fishblog.controller.request.NewUserResponse;
-import com.lk.fishblog.model.Article;
-import com.lk.fishblog.model.Collect;
 import com.lk.fishblog.model.User;
 import com.lk.fishblog.security.MyPasswordEncoder;
 import com.lk.fishblog.service.ArticleService;
@@ -16,12 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -50,6 +44,7 @@ public class UserController {
                             u.getId(),
                             u.getUsername(),
                             u.getAvatar(),
+                            u.getEmail(),
                             u.getCreateTime()));
         }else{
             return new ResultSet(ResultSet.RESULT_CODE_FALSE, "获取用户信息", null);
@@ -79,5 +74,11 @@ public class UserController {
         // 添加获取文章分类
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "获取用户信息", new User(u.getId(),u.getUsername()));
     }
-    
+
+    @PostMapping(path = "/userInfo/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResultSet saveUserInfo(@RequestBody @Valid NewUserRequest u){
+        User user = userService.saveUserInfo(u.getId(),u.getAvatar(),u.getUsername(),u.getEmail(),u.getPhone());
+        return new ResultSet(ResultSet.RESULT_CODE_FALSE, "保存用户信息成功", user);
+    }
 }

@@ -129,7 +129,7 @@ public class ArticleController {
         Article a = articleService.findById(id);
         List<Tag> tagList = new ArrayList<>(a.getTagList());
         Article article = new Article();
-        List<Comment> commentList = new ArrayList<>(a.getCommentList());
+        List<Comment> commentList = new ArrayList<>(a.getCommentList().stream().limit(5).collect(Collectors.toList()));
         for(Comment comment: commentList){
             comment.setReplyList(comment.getReplyList().stream().limit(5).collect(Collectors.toList()));
         }
