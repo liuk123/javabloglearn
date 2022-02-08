@@ -22,7 +22,7 @@ public class NavCategoryService {
         );
     }
     public List<NavCategory> findNavCategory(Long userId){
-        return navCategoryRepository.findByUser_Id(userId);
+        return navCategoryRepository.findByUser_IdOrderBySort(userId);
     }
 
     public List<NavCategory> findByPid(long pid){
