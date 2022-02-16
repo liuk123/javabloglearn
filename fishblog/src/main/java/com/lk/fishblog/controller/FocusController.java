@@ -84,6 +84,9 @@ public class FocusController {
      */
     @GetMapping(path="/is")
     public ResultSet getFocusIs(Authentication authentication, @RequestParam Long userId){
+        if(authentication==null){
+            return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "请登录");
+        }
         User u = (User) authentication.getPrincipal();
         Boolean f = focusService.existsFocusById(u.getId(), userId);
         return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "关注", f);

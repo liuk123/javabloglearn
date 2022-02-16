@@ -29,7 +29,10 @@ public class PageInfo<T> extends ResultSet{
      * 列表数据
      */
     private List<T> list;
-
+    public PageInfo(int code, String msg){
+        super.resultCode = code;
+        super.resultMsg = msg;
+    }
     public PageInfo(Page<T> page){
         super.resultCode = ResultSet.RESULT_CODE_TRUE;
         super.resultMsg = "查询成功";

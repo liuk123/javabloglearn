@@ -55,6 +55,9 @@ public class ArticleController {
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResultSet addByJson(@RequestBody @Valid  NewArticleRequest a, Authentication authentication){
+        if(authentication==null){
+            return new ResultSet(ResultSet.RESULT_CODE_TRUE,"请登录");
+        }
         User user = (User) authentication.getPrincipal();
 //图片从缓存文件夹移入正式文件夹
         List<String> urlList = regUtil.extractUrls(a.getContent());
@@ -84,14 +87,21 @@ public class ArticleController {
             if(null != oldA){
                 List<String> urlOldList = regUtil.extractUrls(oldA.getContent());
                 if(oldA.getPostImage()!=null){
-                    urlOldList.add(a.getPostImage());
+                    urlOldList.add(oldA.getPostImage());
                 }
                 for(String oldUrl: urlOldList){
                     if(!urlList.contains(oldUrl)){
                         int index = oldUrl.indexOf(uploadPath);
+                        int lastIndex = oldUrl.lastIndexOf(')');
                         if(index != -1){
-                            File oldFile = new File(oldUrl.substring(index,oldUrl.lastIndexOf(')')));
-                            fileUtil.delFile(oldFile.getAbsolutePath());
+                            if(lastIndex>0){
+                                File oldFile = new File(oldUrl.substring(index,lastIndex));
+                                fileUtil.delFile(oldFile.getAbsolutePath());
+                            }else{
+                                File oldFile = new File(oldUrl);
+                                fileUtil.delFile(oldFile.getAbsolutePath());
+                            }
+                            
                         }
                     }
                 }
@@ -222,6 +232,9 @@ public class ArticleController {
      */
     @GetMapping(path="/collect/")
     public PageInfo<Collect> collect(Authentication authentication, @RequestParam Integer pageIndex, @RequestParam Integer pageSize){
+        if(authentication==null){
+            return new PageInfo<Collect>(ResultSet.RESULT_CODE_TRUE, "请登录");
+        }
         User u = (User) authentication.getPrincipal();
         Page<Collect> collect = articleService.findCollectList(u.getId(), pageIndex-1, pageSize);
         PageInfo<Collect> page = new PageInfo(collect);
@@ -234,6 +247,9 @@ public class ArticleController {
      */
     @GetMapping(path="/collect/is")
     public ResultSet collectById(Authentication authentication, @RequestParam Long articleId){
+        if(authentication==null){
+            return new ResultSet(ResultSet.RESULT_CODE_TRUE,"请登录");
+        }
         User u = (User) authentication.getPrincipal();
         Boolean c = articleService.existsCollectById(u.getId(), articleId);
         return  new ResultSet(ResultSet.RESULT_CODE_TRUE, "收藏", c);
@@ -246,6 +262,9 @@ public class ArticleController {
     @PostMapping(path = "/collect/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResultSet addCollect(@RequestBody @Valid NewCollectRequest collectRequest, Authentication authentication){
+        if(authentication==null){
+            return new ResultSet(ResultSet.RESULT_CODE_TRUE,"请登录");
+        }
         User u = (User) authentication.getPrincipal();
         Article a = new Article(collectRequest.getArticleId());
         articleService.saveCollect(u, a);
@@ -258,6 +277,9 @@ public class ArticleController {
      */
     @DeleteMapping(path = "/collect/{articleId}")
     public ResultSet delCollect(@PathVariable Long articleId, Authentication authentication){
+        if(authentication==null){
+            return new ResultSet(ResultSet.RESULT_CODE_TRUE,"请登录");
+        }
         User u = (User) authentication.getPrincipal();
         Article a = new Article(articleId);
         Collect c = new Collect(u, a);

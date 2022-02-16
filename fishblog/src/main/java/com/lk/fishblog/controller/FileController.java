@@ -61,7 +61,13 @@ public class FileController {
         }
         try{
             file.transferTo(newFile);
-            String filePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/"+ uploadTemPath + format + fileName;
+            String os = System.getProperty("os.name");
+            String filePath;
+            if (os.toLowerCase().startsWith("win")){
+                filePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/"+ uploadTemPath + format + fileName;
+            }else{
+                filePath = request.getScheme() + "://www.cicode.cn/api/"+ uploadTemPath + format + fileName;
+            }
             NewFileResponse f = new NewFileResponse();
             f.setName(file.getOriginalFilename());
             f.setUrl(filePath);
@@ -98,7 +104,14 @@ public class FileController {
                 }
                 try{
                     file.transferTo(newFile);
-                    String filePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/"+uploadTemPath + format + fileName;
+                    String os = System.getProperty("os.name");
+                    String filePath;
+                    if (os.toLowerCase().startsWith("win")){
+                        filePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/"+ uploadTemPath + format + fileName;
+                    }else{
+                        filePath = request.getScheme() + "://www.cicode.cn/api/"+ uploadTemPath + format + fileName;
+                    }
+//                    String filePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/"+uploadTemPath + format + fileName;
                     NewFileResponse f = new NewFileResponse();
                     f.setName(file.getOriginalFilename());
                     f.setUrl(filePath);

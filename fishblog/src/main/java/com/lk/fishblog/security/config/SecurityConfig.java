@@ -35,12 +35,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final RestfulAccessDeniedHandler accessDeniedHandler;
     final MyLogoutSuccessHandler myLogoutSuccessHandler;
     final MyAuthenticationSuccessHandler authenticationSuccessHandler;
+    final CustomExpiredSessionHandler customExpiredSessionHandler;
 
     public SecurityConfig(MyPasswordEncoder myPasswordEncoder, MyCustomUserService myCustomUserService,
                           SecurityProperties securityProperties, PersistentTokenRepository persistentTokenRepository,
                           RestAuthenticationEntryPoint restAuthenticationEntryPoint, MyAuthenticationFailureHandler authenticationFailureHandler,
                           RestfulAccessDeniedHandler accessDeniedHandler,
-                          MyLogoutSuccessHandler myLogoutSuccessHandler, MyAuthenticationSuccessHandler authenticationSuccessHandler, MyFilterSecurityInterceptor myFilterSecurityInterceptor) {
+                          MyLogoutSuccessHandler myLogoutSuccessHandler, MyAuthenticationSuccessHandler authenticationSuccessHandler,
+                          MyFilterSecurityInterceptor myFilterSecurityInterceptor,
+                          CustomExpiredSessionHandler customExpiredSessionHandler) {
         this.myPasswordEncoder = myPasswordEncoder;
         this.myCustomUserService = myCustomUserService;
         this.securityProperties = securityProperties;
@@ -51,6 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.myLogoutSuccessHandler = myLogoutSuccessHandler;
         this.authenticationSuccessHandler = authenticationSuccessHandler;
         this.myFilterSecurityInterceptor = myFilterSecurityInterceptor;
+        this.customExpiredSessionHandler = customExpiredSessionHandler;
     }
 
 
@@ -95,10 +99,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .logoutSuccessHandler(myLogoutSuccessHandler)
 
             .and()
-            .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
+            .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
 
+            .and()
+            .sessionManagement()
+            .invalidSessionUrl("/user/invalid")
+            .maximumSessions(1)
+            // 当达到最大值时，是否保留已经登录的用户
+            .maxSessionsPreventsLogin(false)
+            // 当达到最大值时，旧用户被踢出后的操作
+            .expiredSessionStrategy(customExpiredSessionHandler);
 
-//        http.addFilterBefore(myFilterSecurityInterceptor, FilterSecurityInterceptor.class);
         //开启跨域访问
         http.cors().disable();
         //开启模拟请求，比如API POST测试工具的测试，不开启时，API POST为报403错误
@@ -108,10 +119,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
-        //对于在header里面增加token等类似情况，放行所有OPTIONS请求。
         web.ignoring()
-            .antMatchers(HttpMethod.OPTIONS, "/**");
-//            .antMatchers("/css/**", "/js/**", "/images/**", "/fonts/**");
+            .antMatchers(HttpMethod.OPTIONS, "/**")
+            .antMatchers("/assets/**");
     }
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

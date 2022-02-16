@@ -48,7 +48,7 @@ public class FishblogApplication implements WebMvcConfigurer {
 		}else{
 //			registry.addResourceHandler("/"+uploadPath+"**").addResourceLocations("file: /home/assets/" + uploadPath);
 //			registry.addResourceHandler("/"+uploadTemPath+"**").addResourceLocations("file: /home/assets/" + uploadTemPath);
-			registry.addResourceHandler("/"+assets+"**").addResourceLocations("file: /home/" + assets);
+			registry.addResourceHandler("/"+assets+"**").addResourceLocations("file:/home/" + assets);
 		}
 	}
 	@Bean
