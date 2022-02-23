@@ -89,9 +89,10 @@ public class User implements UserDetails, Serializable {
         this.phone=email;
         this.avatar=avatar;
     }
-    public User(Long id, String username){
+    public User(Long id, String username, String avatar){
         this.id = id;
         this.username = username;
+        this.avatar = avatar;
     }
 
     @JsonIgnore

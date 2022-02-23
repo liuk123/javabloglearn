@@ -52,7 +52,7 @@ public class CommentController {
     public ResultSet addByJson(@RequestBody @Valid NewCommentRequest c, Authentication authentication){
         User user = (User) authentication.getPrincipal();
         Article a = new Article(c.getArticleId());
-        Comment comment = commentService.save(c.getContent(), new User(user.getId(),user.getUsername()), a);
+        Comment comment = commentService.save(c.getContent(), new User(user.getId()), a);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "添加成功", comment);
     }
 

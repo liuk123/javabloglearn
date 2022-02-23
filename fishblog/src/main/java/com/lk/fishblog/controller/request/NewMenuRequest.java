@@ -26,5 +26,6 @@ public class NewMenuRequest {
     private String link;
     private Boolean isMenuShow;
     private Boolean isBreadcrumbShow;
+    private String meta;
     private  List<Long> authorityIds;
 }

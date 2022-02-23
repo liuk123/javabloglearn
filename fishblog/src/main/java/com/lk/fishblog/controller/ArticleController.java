@@ -125,7 +125,7 @@ public class ArticleController {
                 a.getDescItem(),
                 tagList,
                 c,
-                new User(user.getId(),user.getUsername()),
+                new User(user.getId()),
                 a.getPostImage());
         return new ResultSet(ResultSet.RESULT_CODE_TRUE,"添加成功", article.getId());
     }
@@ -139,12 +139,12 @@ public class ArticleController {
         Article a = articleService.findById(id);
         List<Tag> tagList = new ArrayList<>(a.getTagList());
         Article article = new Article();
-        List<Comment> commentList = new ArrayList<>(a.getCommentList().stream().limit(5).collect(Collectors.toList()));
+        List<Comment> commentList = a.getCommentList().stream().limit(5).collect(Collectors.toList());
         for(Comment comment: commentList){
             comment.setReplyList(comment.getReplyList().stream().limit(5).collect(Collectors.toList()));
         }
         User au = a.getAuthor();
-        User u = new User(au.getId(),au.getUsername());
+        User u = new User(au.getId(),au.getUsername(), au.getAvatar());
         article.setId(a.getId());
         article.setTitle(a.getTitle());
         article.setUpdateTime(a.getUpdateTime());
@@ -180,8 +180,11 @@ public class ArticleController {
         for(Article article: a.getContent()){
             List<Tag> taglist = new ArrayList<>(article.getTagList());
             article.setTagList(taglist);
+            User au = article.getAuthor();
+            User u = new User(au.getId(),au.getUsername(),au.getAvatar());
+            article.setAuthor(u);
         }
-        PageInfo<Article> page = new PageInfo(a);
+        PageInfo<Article> page = new PageInfo<>(a);
         page.setPageSize(pageSize);
         return page;
     }
@@ -200,7 +203,7 @@ public class ArticleController {
         }else{
             a = articleService.findByAuthorAndCategory(id, categoryId, pageIndex-1, pageSize);
         }
-        PageInfo<Article> page = new PageInfo(a);
+        PageInfo<Article> page = new PageInfo<>(a);
         page.setPageSize(pageSize);
         return page;
     }

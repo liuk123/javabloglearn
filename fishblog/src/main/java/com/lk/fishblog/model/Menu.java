@@ -45,6 +45,7 @@ public class Menu implements Serializable{
     private String link;
     private Boolean isMenuShow;
     private Boolean isBreadcrumbShow;
+    private String meta;
 
     @ManyToMany(fetch=FetchType.LAZY)
     @JoinTable(

@@ -72,7 +72,7 @@ public class UserController {
     public ResultSet getById(@PathVariable Long id){
         User u = this.userService.findById(id);
         // 添加获取文章分类
-        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "获取用户信息", new User(u.getId(),u.getUsername()));
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "获取用户信息", new User(u.getId(),u.getUsername(), u.getAvatar()));
     }
 
     @PostMapping(path = "/userInfo/", consumes = MediaType.APPLICATION_JSON_VALUE)

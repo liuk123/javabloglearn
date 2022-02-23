@@ -52,9 +52,9 @@ public class ReplyController {
 //        }else if(fu.getRole()<10){
 //            return new ResultSet(ResultSet.RESULT_CODE_FALSE,"没有权限");
 //        }
-        User tu = new User(r.getToUserId(), r.getToUsername());
+        User tu = new User(r.getToUserId());
         Comment c = new Comment(r.getCommentId());
-        Reply reply = replyService.save(r.getContent(), c, new User(fu.getId(),fu.getUsername()), tu);
+        Reply reply = replyService.save(r.getContent(), c, new User(fu.getId()), tu);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "添加成功", reply);
     }
 

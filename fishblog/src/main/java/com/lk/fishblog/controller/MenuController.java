@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-
 @RestController
 @RequestMapping("/menu")
 public class MenuController {
@@ -57,6 +56,7 @@ public class MenuController {
                 m.getLink(),
                 m.getIsMenuShow(),
                 m.getIsBreadcrumbShow(),
+                m.getMeta(),
                 authList);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE,"添加成功", null);
     }
