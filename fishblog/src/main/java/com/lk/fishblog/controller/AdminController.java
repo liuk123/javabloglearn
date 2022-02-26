@@ -83,7 +83,11 @@ public class AdminController {
     public PageInfo<User> getUserAll(@RequestParam Integer pageIndex, @RequestParam Integer pageSize){
         Page<User> u = userService.findAll(pageIndex-1,pageSize);
         for(User val: u.getContent()){
-            val.setUserGroupList(val.getUserGroupList());
+            if(val.getUserGroupList().isEmpty()){
+                val.setUserGroupList(new ArrayList<>());
+            }else{
+                val.setUserGroupList(val.getUserGroupList());
+            }
         }
         PageInfo<User> page = new PageInfo<User>(u);
         page.setPageSize(pageSize);
@@ -97,8 +101,10 @@ public class AdminController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResultSet addUserByJson(@RequestBody @Valid NewUserRequest u){
         List<Role> roleList = new ArrayList<>();
-        for(Long val: u.getRoleIds()){
-            roleList.add(new Role(val));
+        if(u.getRoleIds()!=null){
+            for(Long val: u.getRoleIds()){
+                roleList.add(new Role(val));
+            }
         }
         List<UserGroup> userGroupList = new ArrayList<>();
         for(Long val: u.getUserGroupIds()){
