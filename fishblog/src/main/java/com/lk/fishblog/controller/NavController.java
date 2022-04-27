@@ -70,8 +70,8 @@ public class NavController {
             if(data.getType().equals("link")){
                 boolean isGo = true;
                 for(Nav item : navList){
-                    if(item.getTitle().equals(data.getTitle())){
-                        if(item.getLink().equals(data.getLink()) && item.getNavCategory().getId().equals(pId)){
+                    if(item.getLink().equals(data.getLink())){
+                        if(item.getNavCategory().getId().equals(pId)){
                             isGo = false;
                             p = item.getId();
                             break;
