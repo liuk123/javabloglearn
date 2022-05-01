@@ -20,6 +20,7 @@ public class Bookmark implements Serializable{
     private String title;
     private String link;
     private String icon;
+    private String type;
 
     @JsonIgnore
     @ManyToOne(cascade = {},fetch = FetchType.LAZY)

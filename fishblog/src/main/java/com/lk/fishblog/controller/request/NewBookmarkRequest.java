@@ -12,5 +12,6 @@ public class NewBookmarkRequest {
     private String title;
     private String link;
     private String icon;
+    private String type;
     private Long categoryId;
 }
