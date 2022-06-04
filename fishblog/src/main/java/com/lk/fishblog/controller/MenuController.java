@@ -65,8 +65,13 @@ public class MenuController {
      * 获取菜单
      */
     @GetMapping(path="/all/")
-    public PageInfo<Menu> getMenuAll(@RequestParam Integer pageIndex, @RequestParam Integer pageSize){
-        Page<Menu> a = menuService.getMenuList(pageIndex-1, pageSize);
+    public PageInfo<Menu> getMenuAll(@RequestParam Integer pageIndex, @RequestParam Integer pageSize, @RequestParam(required = false) Long pid){
+        Page<Menu> a;
+        if(pid==null){
+            a = menuService.getMenuListByPidIsNull(pageIndex-1, pageSize);
+        }else{
+            a = menuService.getMenuListByPid(pid,pageIndex-1, pageSize);
+        }
         for(Menu menu: a.getContent()){
             List<Authority> auths = new ArrayList<>(menu.getAuthorityList());
             menu.setAuthorityList(auths);

@@ -19,11 +19,10 @@ public class MenuService {
     @Autowired
     MenuRepository menuRepository;
 
-    public Menu getMenuById(Long id){
-        return menuRepository.getOne(id);
-    }
-    public Page<Menu> getMenuList(int pageNum, int pageSize){
-        return menuRepository.findAll(PageRequest.of(pageNum, pageSize));
+    public Page<Menu> getMenuListByPid(Long pid, int pageNum, int pageSize){
+        return menuRepository.findAllByPid(pid, PageRequest.of(pageNum, pageSize));
+    }public Page<Menu> getMenuListByPidIsNull(int pageNum, int pageSize){
+        return menuRepository.findAllByPidIsNull(PageRequest.of(pageNum, pageSize));
     }
     public void saveMenu(Long id, Long pid, Long sort, String title, String type, String icon, String disabled, String selected, String open, String route, String link, Boolean isMenuShow, Boolean isBreadcrumbShow, String meta, List<Authority> authorityList){
         menuRepository.save(
