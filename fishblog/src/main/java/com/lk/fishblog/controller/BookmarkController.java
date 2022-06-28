@@ -10,12 +10,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/bookmark")
@@ -28,19 +26,17 @@ public class BookmarkController {
 
     /**
      * 获取书签分类
-     * @param authentication
+     * @param
      * @return
      */
     @GetMapping(path="/bookmarkCategory/")
-    public ResultSet getBookmarkCategory(Authentication authentication){
-        User u = (User) authentication.getPrincipal();
+    public ResultSet getBookmarkCategory(){
         List<BookmarkCategory> n = bookmarkCategoryService.findBookmarkCategory();
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", n);
     }
 
     @GetMapping(path="/")
-    public ResultSet getBookmarks(Authentication authentication, @RequestParam Long id){
-        User u = (User) authentication.getPrincipal();
+    public ResultSet getBookmarks(@RequestParam Long id){
         List<BookmarkCategory> n = bookmarkCategoryService.findByPid(id);
         for(BookmarkCategory b: n){
             b.setBookmarkList(new ArrayList<>(b.getBookmarkList()));
@@ -49,7 +45,7 @@ public class BookmarkController {
     }
 
     @GetMapping(path="/bookmarkItem/")
-    public ResultSet getBookmark(Authentication authentication, @RequestParam List<Long> ids){
+    public ResultSet getBookmark(@RequestParam List<Long> ids){
         List<Bookmark> n = bookmarkService.findBookmarkByCIds(ids);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", n);
     }
@@ -57,11 +53,7 @@ public class BookmarkController {
 
     @PostMapping(path = "/bookmarkCategory/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResultSet saveNavCategory(@RequestBody @Valid NewBookmarkCategoryRequest bookmarkCategory, Authentication authentication){
-        if(authentication == null){
-            return new ResultSet(ResultSet.RESULT_CODE_TRUE, "登录",null);
-        }
-        User u = (User) authentication.getPrincipal();
+    public ResultSet saveNavCategory(@RequestBody @Valid NewBookmarkCategoryRequest bookmarkCategory){
         BookmarkCategory c = bookmarkCategoryService.save(bookmarkCategory.getId(),bookmarkCategory.getPid(),bookmarkCategory.getSort(),bookmarkCategory.getTitle(), bookmarkCategory.getIcon());
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "添加成功",c);
     }

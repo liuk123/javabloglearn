@@ -61,17 +61,16 @@ public class ArticleController {
         User user = (User) authentication.getPrincipal();
 //图片从缓存文件夹移入正式文件夹
         List<String> urlList = regUtil.extractUrls(a.getContent());
-        if(a.getPostImage()!= null){
+        if(!urlList.contains(a.getPostImage())){
             urlList.add(a.getPostImage());
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
         String format = sdf.format(new Date());
         File newFile = new File(uploadPath + format);
         for(String url: urlList){
-            System.out.println("url:"+url);
             int index = url.indexOf(uploadTemPath);
             if(index != -1){
-                File oldFile = new File(url.substring(index,url.lastIndexOf(')')));
+                File oldFile = new File(url.substring(index));
                 fileUtil.moveFile(oldFile.getAbsolutePath(), newFile.getAbsolutePath());
             }
         }
@@ -86,22 +85,15 @@ public class ArticleController {
             Article oldA = articleService.findById(a.getId());
             if(null != oldA){
                 List<String> urlOldList = regUtil.extractUrls(oldA.getContent());
-                if(oldA.getPostImage()!=null){
+                if(!urlOldList.contains(oldA.getPostImage())){
                     urlOldList.add(oldA.getPostImage());
                 }
                 for(String oldUrl: urlOldList){
                     if(!urlList.contains(oldUrl)){
                         int index = oldUrl.indexOf(uploadPath);
-                        int lastIndex = oldUrl.lastIndexOf(')');
                         if(index != -1){
-                            if(lastIndex>0){
-                                File oldFile = new File(oldUrl.substring(index,lastIndex));
-                                fileUtil.delFile(oldFile.getAbsolutePath());
-                            }else{
-                                File oldFile = new File(oldUrl);
-                                fileUtil.delFile(oldFile.getAbsolutePath());
-                            }
-                            
+                            File oldFile = new File(oldUrl.substring(index));
+                            fileUtil.delFile(oldFile.getAbsolutePath());
                         }
                     }
                 }
@@ -216,11 +208,11 @@ public class ArticleController {
     public ResultSet delById(@PathVariable Long id){
         Article a = articleService.findById(id);
         List<String> urlList = regUtil.extractUrls(a.getContent());
-        if(a.getPostImage()!=null){
+        if(!urlList.contains(a.getPostImage())){
             urlList.add(a.getPostImage());
         }
         for(String url: urlList){
-            File oldFile = new File(url.substring(url.indexOf(uploadPath),url.lastIndexOf(')')));
+            File oldFile = new File(url.substring(url.indexOf(uploadPath)));
             fileUtil.delFile(oldFile.getAbsolutePath());
         }
 

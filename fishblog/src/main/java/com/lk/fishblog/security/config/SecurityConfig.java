@@ -62,13 +62,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()//权限
-            .antMatchers(securityProperties.getMatchers()).permitAll()//不拦截这些请求
-            .regexMatchers(securityProperties.getRegexMatchers()).permitAll()
+            .antMatchers("/user/**","/assets/**").permitAll()//不拦截这些请求
+//            .regexMatchers(securityProperties.getRegexMatchers()).permitAll()
             .antMatchers(HttpMethod.GET, "/article/**").permitAll()
             .antMatchers(HttpMethod.GET, "/comment/**").permitAll()
             .antMatchers(HttpMethod.GET, "/reply/**").permitAll()
             .antMatchers(HttpMethod.GET, "/tag/**").permitAll()
             .antMatchers(HttpMethod.GET, "/category/**").permitAll()
+            .antMatchers(HttpMethod.GET, "/bookmark/**").permitAll()
+            .antMatchers(HttpMethod.GET, "/menu/**").permitAll()
+            .antMatchers(HttpMethod.GET, "/focus/**").permitAll()
             .anyRequest()
             .authenticated()
 
@@ -100,16 +103,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .logoutSuccessHandler(myLogoutSuccessHandler)
 
             .and()
-            .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
+            .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
 
-            .and()
-            .sessionManagement()
-            .invalidSessionUrl("/user/invalid")
-            .maximumSessions(1)
-            // 当达到最大值时，是否保留已经登录的用户
-            .maxSessionsPreventsLogin(false)
-            // 当达到最大值时，旧用户被踢出后的操作
-            .expiredSessionStrategy(customExpiredSessionHandler);
+//            .and()
+//            .sessionManagement()
+//            .invalidSessionUrl("/user/invalid")
+//            .maximumSessions(1)
+//            // 当达到最大值时，是否保留已经登录的用户
+//            .maxSessionsPreventsLogin(false)
+//            // 当达到最大值时，旧用户被踢出后的操作
+//            .expiredSessionStrategy(customExpiredSessionHandler);
 
         //开启跨域访问
         http.cors().disable();
