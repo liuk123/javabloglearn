@@ -61,7 +61,7 @@ public class ArticleController {
         User user = (User) authentication.getPrincipal();
 //图片从缓存文件夹移入正式文件夹
         List<String> urlList = regUtil.extractUrls(a.getContent());
-        if(!urlList.contains(a.getPostImage())){
+        if(a.getPostImage() != null && !urlList.contains(a.getPostImage())){
             urlList.add(a.getPostImage());
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
@@ -85,11 +85,11 @@ public class ArticleController {
             Article oldA = articleService.findById(a.getId());
             if(null != oldA){
                 List<String> urlOldList = regUtil.extractUrls(oldA.getContent());
-                if(!urlOldList.contains(oldA.getPostImage())){
+                if(oldA.getPostImage()!= null && !urlOldList.contains(oldA.getPostImage())){
                     urlOldList.add(oldA.getPostImage());
                 }
                 for(String oldUrl: urlOldList){
-                    if(!urlList.contains(oldUrl)){
+                    if(oldUrl!=null && !urlList.contains(oldUrl)){
                         int index = oldUrl.indexOf(uploadPath);
                         if(index != -1){
                             File oldFile = new File(oldUrl.substring(index));
@@ -208,7 +208,7 @@ public class ArticleController {
     public ResultSet delById(@PathVariable Long id){
         Article a = articleService.findById(id);
         List<String> urlList = regUtil.extractUrls(a.getContent());
-        if(!urlList.contains(a.getPostImage())){
+        if(a.getPostImage() != null && !urlList.contains(a.getPostImage())){
             urlList.add(a.getPostImage());
         }
         for(String url: urlList){
