@@ -38,7 +38,7 @@ public class ArticleService {
     public Page<Article> findByTaglist(int pageNum, int pageSize, List<Tag> tagList){
         return this.articleRepository.findByTagListInOrderByCreateTimeDesc(tagList, PageRequest.of(pageNum, pageSize));
     }
-    public Page<Article> findAll(int pageNum, int pageSize){
+    public Page<Article> findAllByPage(int pageNum, int pageSize){
         return this.articleRepository.findByOrderByCreateTimeDesc(PageRequest.of(pageNum, pageSize));
     }
     public Article save(Long id, String title, String content, String descItem, List<Tag> tagList, Category category, User author, String postImage){

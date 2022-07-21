@@ -2,8 +2,12 @@ package com.lk.fishblog.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Table(name = "B_Bookmark")
@@ -15,8 +19,14 @@ import java.io.Serializable;
 public class Bookmark implements Serializable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
+    @Column(updatable = false)
+    @CreationTimestamp
+    public Date createTime;
+    @UpdateTimestamp
+    public Date updateTime;
+
     private String title;
     private String link;
     private String icon;

@@ -157,11 +157,11 @@ public class ArticleController {
      * @param tags 类别
      */
     @GetMapping(path="/")
-    public PageInfo<Article> getAll(@RequestParam Integer pageIndex, @RequestParam Integer pageSize, @RequestParam List<Long> tags){
+    public PageInfo<Article> getArticle(@RequestParam Integer pageIndex, @RequestParam Integer pageSize, @RequestParam List<Long> tags){
 
         Page<Article> a;
         if(tags.isEmpty()){
-            a = articleService.findAll(pageIndex-1, pageSize);
+            a = articleService.findAllByPage(pageIndex-1, pageSize);
         }else{
             List<Tag> tagList = new ArrayList<>();
             for(Long val: tags){
