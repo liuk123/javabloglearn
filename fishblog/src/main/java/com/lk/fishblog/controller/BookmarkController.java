@@ -71,7 +71,7 @@ public class BookmarkController {
         bookmarkService.delOne(id);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功");
     }
-    @DeleteMapping(path = "/navCategory/")
+    @DeleteMapping(path = "/bookmarkCategory/")
     public ResultSet delNavCategoryById(@RequestParam Long id){
         bookmarkCategoryService.delOne(id);
         List<BookmarkCategory> ncList = bookmarkCategoryService.findByPid(id);

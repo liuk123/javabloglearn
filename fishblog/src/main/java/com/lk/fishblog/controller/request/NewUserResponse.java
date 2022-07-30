@@ -1,5 +1,6 @@
 package com.lk.fishblog.controller.request;
 
+import com.lk.fishblog.model.Authority;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,13 +18,14 @@ public class NewUserResponse {
     private String phone;
     private String email;
     private Date createTime;
+    private List<Authority> authorities;
 
-    public NewUserResponse(Long id, String username, String avatar, String email, Date createTime){
+    public NewUserResponse(Long id, String username, String avatar, String email, Date createTime, List<Authority> authorities){
         this.id = id;
         this.username = username;
         this.avatar = avatar;
         this.email = email;
         this.createTime = createTime;
-
+        this.authorities = authorities;
     }
 }

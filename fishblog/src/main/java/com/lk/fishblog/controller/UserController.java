@@ -3,7 +3,10 @@ package com.lk.fishblog.controller;
 import com.lk.fishblog.common.utils.ResultSet;
 import com.lk.fishblog.controller.request.NewUserRequest;
 import com.lk.fishblog.controller.request.NewUserResponse;
+import com.lk.fishblog.model.Authority;
+import com.lk.fishblog.model.Role;
 import com.lk.fishblog.model.User;
+import com.lk.fishblog.model.UserGroup;
 import com.lk.fishblog.security.MyPasswordEncoder;
 import com.lk.fishblog.service.ArticleService;
 import com.lk.fishblog.service.CommentService;
@@ -16,6 +19,9 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -39,13 +45,25 @@ public class UserController {
     public ResultSet getCurrentUserBySession(Authentication authentication){
         if(authentication != null){
             User u = (User) authentication.getPrincipal();
+            List<Authority> authors = new ArrayList<>();
+            for(UserGroup ug:u.getUserGroupList()){
+                List<Role> roleList = ug.getRoleList();
+                for(Role role: roleList){
+                    authors.addAll(role.getAuthorityList());
+                }
+
+            }
+            for(Role role: u.getRoleList()){
+                authors.addAll(role.getAuthorityList());
+            }
             return new ResultSet(ResultSet.RESULT_CODE_TRUE, "获取用户信息",
                     new NewUserResponse(
                             u.getId(),
                             u.getUsername(),
                             u.getAvatar(),
                             u.getEmail(),
-                            u.getCreateTime()));
+                            u.getCreateTime(),authors)
+                    );
         }else{
             return new ResultSet(ResultSet.RESULT_CODE_FALSE, "获取用户信息", null);
         }
