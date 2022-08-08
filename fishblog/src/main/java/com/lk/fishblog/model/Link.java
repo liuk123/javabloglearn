@@ -10,13 +10,13 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "B_Bookmark")
+@Table(name = "B_Link")
 @Builder
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Bookmark implements Serializable{
+public class Link implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,18 +24,10 @@ public class Bookmark implements Serializable{
     @Column(updatable = false)
     @CreationTimestamp
     public Date createTime;
-    @UpdateTimestamp
-    public Date updateTime;
 
     private String title;
     private String link;
     private String icon;
-    private String type;
+    private String category;
     private String descItem;
-
-    @JsonIgnore
-    @ManyToOne(cascade = {},fetch = FetchType.LAZY)
-    @JoinColumn(name="category_id")
-    private BookmarkCategory bookmarkCategory;
-
 }

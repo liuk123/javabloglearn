@@ -177,7 +177,7 @@ public class ArticleController {
             article.setAuthor(u);
         }
         PageInfo<Article> page = new PageInfo<>(a);
-        page.setPageSize(pageSize);
+//        page.setPageSize(pageSize);
         return page;
     }
 

@@ -62,7 +62,7 @@ public class BookmarkController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResultSet saveNav(@RequestBody @Valid NewBookmarkRequest bookmarkRequest){
         BookmarkCategory nc = new BookmarkCategory(bookmarkRequest.getCategoryId());
-        Bookmark n = bookmarkService.save(bookmarkRequest.getId(),bookmarkRequest.getIcon(),bookmarkRequest.getTitle(),bookmarkRequest.getLink(), bookmarkRequest.getType(),nc);
+        Bookmark n = bookmarkService.save(bookmarkRequest.getId(),bookmarkRequest.getIcon(),bookmarkRequest.getTitle(),bookmarkRequest.getLink(), bookmarkRequest.getType(),nc, bookmarkRequest.getDescItem());
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "添加成功",n);
     }
 

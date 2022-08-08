@@ -18,9 +18,9 @@ public class BookmarkService {
     @Autowired
     BookmarkRepository bookmarkRepository;
 
-    public Bookmark save(Long id, String icon, String title, String link, String type, BookmarkCategory bookmarkCategory){
+    public Bookmark save(Long id, String icon, String title, String link, String type, BookmarkCategory bookmarkCategory, String descItem){
         return bookmarkRepository.save(
-                Bookmark.builder().id(id).icon(icon).title(title).link(link).type(type).bookmarkCategory(bookmarkCategory).build()
+                Bookmark.builder().id(id).icon(icon).title(title).link(link).type(type).bookmarkCategory(bookmarkCategory).descItem(descItem).build()
         );
     }
     public List<Bookmark> findBookmarkByCIds(List<Long> ids){
