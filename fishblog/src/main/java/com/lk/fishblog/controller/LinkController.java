@@ -25,15 +25,23 @@ public class LinkController {
      * @param
      * @return
      */
-    @GetMapping(path="/link/")
-    public ResultSet getLink(){
-        List<Link> n = linkService.findLink();
+    @GetMapping(path="/{type}")
+    public ResultSet getLink(@PathVariable String type){
+        List<Link> n = linkService.findLink(type);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", n);
     }
-    @PostMapping(path = "/link/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResultSet saveLink(@RequestBody @Valid NewLinkRequest newLinkRequest){
-        Link c = linkService.save(newLinkRequest.getId(),newLinkRequest.getIcon(),newLinkRequest.getTitle(),newLinkRequest.getLink(), newLinkRequest.getType(), newLinkRequest.getDescItem());
+        Link c = linkService.save(
+                newLinkRequest.getId(),
+                newLinkRequest.getIcon(),
+                newLinkRequest.getTitle(),
+                newLinkRequest.getLink(),
+                newLinkRequest.getCategory(),
+                newLinkRequest.getDescItem(),
+                newLinkRequest.getSort(),
+                newLinkRequest.getType());
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "添加成功",c);
     }
     @DeleteMapping(path = "/")

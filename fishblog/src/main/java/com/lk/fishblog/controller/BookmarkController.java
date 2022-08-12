@@ -35,8 +35,8 @@ public class BookmarkController {
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", n);
     }
 
-    @GetMapping(path="/")
-    public ResultSet getBookmarks(@RequestParam Long id){
+    @GetMapping(path="/{id}")
+    public ResultSet getBookmarks(@PathVariable Long id){
         List<BookmarkCategory> n = bookmarkCategoryService.findByPid(id);
         for(BookmarkCategory b: n){
             b.setBookmarkList(new ArrayList<>(b.getBookmarkList()));

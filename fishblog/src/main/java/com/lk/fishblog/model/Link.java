@@ -1,9 +1,7 @@
 package com.lk.fishblog.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -28,6 +26,8 @@ public class Link implements Serializable{
     private String title;
     private String link;
     private String icon;
+    private String type;
+    private Long sort;
     private String category;
     private String descItem;
 }

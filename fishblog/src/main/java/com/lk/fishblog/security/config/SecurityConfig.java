@@ -1,10 +1,8 @@
 package com.lk.fishblog.security.config;
 
 import com.lk.fishblog.security.MyCustomUserService;
-import com.lk.fishblog.security.MyPasswordEncoder;
-import com.lk.fishblog.security.filter.MyFilterSecurityInterceptor;
 import com.lk.fishblog.security.handler.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,20 +11,17 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import com.lk.fishblog.security.handler.MyLogoutSuccessHandler;
 import com.lk.fishblog.security.handler.MyAuthenticationSuccessHandler;
 
+import javax.sql.DataSource;
+
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final PersistentTokenRepository persistentTokenRepository;
-
-    private final MyPasswordEncoder myPasswordEncoder;
-
     private final MyCustomUserService myCustomUserService;
-    private final MyFilterSecurityInterceptor myFilterSecurityInterceptor;
 
     private final SecurityProperties securityProperties;
     private final MyAuthenticationFailureHandler authenticationFailureHandler;
@@ -37,24 +32,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     final MyAuthenticationSuccessHandler authenticationSuccessHandler;
     final CustomExpiredSessionHandler customExpiredSessionHandler;
 
-    public SecurityConfig(MyPasswordEncoder myPasswordEncoder, MyCustomUserService myCustomUserService,
-                          SecurityProperties securityProperties, PersistentTokenRepository persistentTokenRepository,
+    private final DataSource dataSource;
+
+    public SecurityConfig(MyCustomUserService myCustomUserService,
+                          SecurityProperties securityProperties,
                           RestAuthenticationEntryPoint restAuthenticationEntryPoint, MyAuthenticationFailureHandler authenticationFailureHandler,
                           RestfulAccessDeniedHandler accessDeniedHandler,
                           MyLogoutSuccessHandler myLogoutSuccessHandler, MyAuthenticationSuccessHandler authenticationSuccessHandler,
-                          MyFilterSecurityInterceptor myFilterSecurityInterceptor,
-                          CustomExpiredSessionHandler customExpiredSessionHandler) {
-        this.myPasswordEncoder = myPasswordEncoder;
+                          CustomExpiredSessionHandler customExpiredSessionHandler, DataSource dataSource) {
         this.myCustomUserService = myCustomUserService;
         this.securityProperties = securityProperties;
-        this.persistentTokenRepository = persistentTokenRepository;
         this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
         this.authenticationFailureHandler = authenticationFailureHandler;
         this.accessDeniedHandler = accessDeniedHandler;
         this.myLogoutSuccessHandler = myLogoutSuccessHandler;
         this.authenticationSuccessHandler = authenticationSuccessHandler;
-        this.myFilterSecurityInterceptor = myFilterSecurityInterceptor;
         this.customExpiredSessionHandler = customExpiredSessionHandler;
+        this.dataSource = dataSource;
     }
 
 
@@ -64,6 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()//权限
             .antMatchers("/user/**","/assets/**").permitAll()//不拦截这些请求
 //            .regexMatchers(securityProperties.getRegexMatchers()).permitAll()
+            .antMatchers(HttpMethod.GET, "/link/**").permitAll()
             .antMatchers(HttpMethod.GET, "/article/**").permitAll()
             .antMatchers(HttpMethod.GET, "/comment/**").permitAll()
             .antMatchers(HttpMethod.GET, "/reply/**").permitAll()
@@ -89,7 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             //参数名，和表单中的一样
             .rememberMeParameter("remember")
             //持久层对象
-            .tokenRepository(persistentTokenRepository)
+            .tokenRepository(persistentTokenRepository())
             //登录逻辑设置
             .userDetailsService(myCustomUserService)
             //失效时间，默认为两周，这里设为60秒
@@ -132,4 +127,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(myCustomUserService).passwordEncoder(new BCryptPasswordEncoder());
     }
 
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl jdbcTokenRepositoryImpl = new JdbcTokenRepositoryImpl();
+        jdbcTokenRepositoryImpl.setDataSource(dataSource);
+        // 自动建表，第一次运行设为true，以后都设为false
+//        jdbcTokenRepositoryImpl.setCreateTableOnStartup(false);
+        return jdbcTokenRepositoryImpl;
+    }
 }
