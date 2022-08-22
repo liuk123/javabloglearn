@@ -94,7 +94,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .logout()
             .logoutUrl(securityProperties.getLogoutUrl())
             .logoutSuccessUrl(securityProperties.getLoginPage())
-            .deleteCookies("JSESSIONID")
+//            .deleteCookies("JSESSIONID")
             .logoutSuccessHandler(myLogoutSuccessHandler)
 
             .and()
@@ -132,7 +132,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         JdbcTokenRepositoryImpl jdbcTokenRepositoryImpl = new JdbcTokenRepositoryImpl();
         jdbcTokenRepositoryImpl.setDataSource(dataSource);
         // 自动建表，第一次运行设为true，以后都设为false
-//        jdbcTokenRepositoryImpl.setCreateTableOnStartup(false);
+        jdbcTokenRepositoryImpl.setCreateTableOnStartup(false);
         return jdbcTokenRepositoryImpl;
     }
 }
