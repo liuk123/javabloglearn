@@ -56,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()//权限
-            .antMatchers("/user/**","/assets/**").permitAll()//不拦截这些请求
+            .antMatchers("/user/**","/assets/**","/news/**").permitAll()//不拦截这些请求
 //            .regexMatchers(securityProperties.getRegexMatchers()).permitAll()
             .antMatchers(HttpMethod.GET, "/link/**").permitAll()
             .antMatchers(HttpMethod.GET, "/article/**").permitAll()
