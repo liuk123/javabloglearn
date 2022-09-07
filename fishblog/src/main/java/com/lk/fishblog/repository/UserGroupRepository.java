@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import java.util.List;
 
 public interface UserGroupRepository extends BaseRepository<UserGroup, Long> {
-    @EntityGraph(value = "UserGroupEntity")
+    @EntityGraph(value = "UserGroupEntity", type = EntityGraph.EntityGraphType.FETCH)
     List<UserGroup> findUserGroupsByUserList(User user);
 }
