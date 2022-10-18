@@ -169,15 +169,23 @@ public class ArticleController {
             }
             a = articleService.findByTaglist(pageIndex-1, pageSize, tagList);
         }
+        List<Article> lista = new ArrayList<>();
         for(Article article: a.getContent()){
-            List<Tag> taglist = new ArrayList<>(article.getTagList());
-            article.setTagList(taglist);
+            Article reta = new Article();
+            reta.setTagList(new ArrayList<>(article.getTagList()));
             User au = article.getAuthor();
             User u = new User(au.getId(),au.getUsername(),au.getAvatar());
-            article.setAuthor(u);
+            reta.setAuthor(u);
+            reta.setId(article.getId());
+            reta.setCategory(article.getCategory());
+            reta.setCreateTime(article.getCreateTime());
+            reta.setUpdateTime(article.getUpdateTime());
+            reta.setDescItem(article.getDescItem());
+            reta.setPostImage(article.getPostImage());
+            reta.setTitle(article.getTitle());
+            lista.add(reta);
         }
-        PageInfo<Article> page = new PageInfo<>(a);
-//        page.setPageSize(pageSize);
+        PageInfo<Article> page = new PageInfo<Article>(a.getNumber()+1, a.getSize(), a.getTotalPages(),a.getTotalElements(),lista);
         return page;
     }
 

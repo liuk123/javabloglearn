@@ -109,7 +109,8 @@ public class User implements UserDetails, Serializable {
                 roles.addAll(userGroup.getRoleList());
             }
         }
-        roles.addAll(getRoleList());
+//        roles.addAll(getRoleList());
+        roles.addAll(roleList);
         return roles;
     }
     @JsonIgnore

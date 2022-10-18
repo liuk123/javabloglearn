@@ -50,4 +50,13 @@ public class PageInfo<T> extends ResultSet{
             this.pageSize = 10;
         }
     }
+    public PageInfo(int pageIndex, int pageSize, int pages, long total, List<T> list){
+        super.resultCode = ResultSet.RESULT_CODE_TRUE;
+        super.resultMsg = "查询成功";
+        this.pageIndex = pageIndex;
+        this.pageSize = pageSize;
+        this.pages = pages;
+        this.total = total;
+        this.list = list;
+    }
 }
