@@ -19,8 +19,8 @@ public class NewArticleRequest {
     private String content;
     @NotEmpty
     private String descItem;
-    @NotEmpty
-    private List<Long> tagList;
+    private Long tagId;
+    private Long tagColumnId;
     private Long category;
 
     private Long id;

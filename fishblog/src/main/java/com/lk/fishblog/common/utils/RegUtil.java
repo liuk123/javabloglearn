@@ -17,7 +17,7 @@ public class RegUtil {
      */
     public List<String> extractUrls(String content) {
         List<String> result = new ArrayList<String>();
-        Pattern pattern = Pattern.compile("!\\[.*?]\\((.+?)\\)");
+        Pattern pattern = Pattern.compile("!\\[.*?]\\(([a-z\\-\\.0-9]+?)[\\?|\\)]");
         Matcher matcher = pattern.matcher(content);
         while (matcher.find()) {
             result.add(matcher.group(1));

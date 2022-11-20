@@ -13,4 +13,5 @@ public class NewTagRequest {
     private String title;
     private Long pid;
     private Long sort;
+    private Long tagColumnId;
 }

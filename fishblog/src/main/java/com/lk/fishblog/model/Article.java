@@ -21,8 +21,10 @@ import java.util.List;
         @NamedEntityGraph(
                 name = "ArticleEntity",
                 attributeNodes = {
-                        @NamedAttributeNode(value="author"),
+//                        @NamedAttributeNode(value="author"),
                         @NamedAttributeNode(value="category"),
+                        @NamedAttributeNode(value="tag"),
+                        @NamedAttributeNode(value="tagColumn"),
                 }
         )
 })
@@ -51,16 +53,17 @@ public class Article implements Serializable{
     @OrderBy("createTime DESC")
     private List<Comment> commentList;
 
-    @ManyToMany(fetch=FetchType.LAZY)
-    @JoinTable(
-            name = "b_article_tag",
-            joinColumns = {
-                    @JoinColumn(name = "article_id") },
-            inverseJoinColumns = {
-                    @JoinColumn(name = "tag_id") })
-    private  List<Tag> tagList;
 
-    @ManyToOne(cascade = {}, fetch=FetchType.EAGER)
+    @ManyToOne(cascade = {}, optional=false, fetch=FetchType.EAGER)
+    @JoinColumn(name="tag_id")
+    private Tag tag;
+
+
+    @ManyToOne(cascade = {}, optional=false, fetch=FetchType.LAZY)
+    @JoinColumn(name="tag_column_id")
+    private TagColumn tagColumn;
+
+    @ManyToOne(cascade = {}, optional=false, fetch=FetchType.EAGER)
     @JoinColumn(name="category_id")
     private Category category;
 

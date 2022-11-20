@@ -35,13 +35,16 @@ public class ArticleService {
         return this.articleRepository.findByAuthor_IdAndCategory_IdOrderByCreateTimeDesc(uerId, categoryId, PageRequest.of(pageNum, pageSize));
     }
 //    @Cacheable
-    public Page<Article> findByTaglist(int pageNum, int pageSize, List<Tag> tagList){
-        return this.articleRepository.findByTagListInOrderByCreateTimeDesc(tagList, PageRequest.of(pageNum, pageSize));
+    public Page<Article> findByTagList(int pageNum, int pageSize, List<Long> tagIds){
+        return this.articleRepository.findByTag_IdInOrderByCreateTimeDesc(tagIds, PageRequest.of(pageNum, pageSize));
+    }
+    public Page<Article> findByTagColumn(int pageNum, int pageSize, Long tagColumnId){
+        return this.articleRepository.findByTagColumn_IdOrderByCreateTimeDesc(tagColumnId, PageRequest.of(pageNum, pageSize));
     }
     public Page<Article> findAllByPage(int pageNum, int pageSize){
         return this.articleRepository.findByOrderByCreateTimeDesc(PageRequest.of(pageNum, pageSize));
     }
-    public Article save(Long id, String title, String content, String descItem, List<Tag> tagList, Category category, User author, String postImage){
+    public Article save(Long id, String title, String content, String descItem, Tag tag, Category category, User author, String postImage, TagColumn tagColumn){
 
         return articleRepository.save(
             Article
@@ -50,7 +53,8 @@ public class ArticleService {
                 .id(id)
                 .content(content)
                 .descItem(descItem)
-                .tagList(tagList)
+                .tag(tag)
+                .tagColumn(tagColumn)
                 .category(category)
                 .author(author)
                 .postImage(postImage)

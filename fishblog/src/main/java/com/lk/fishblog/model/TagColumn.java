@@ -8,35 +8,39 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "B_TAG")
+@Table(name = "B_TagColumn")
 @Builder
 @EqualsAndHashCode(callSuper = true)
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Tag extends BaseEntity implements Serializable{
+@NamedEntityGraphs({
+        @NamedEntityGraph(
+                name = "TagColumnEntity",
+                attributeNodes = {
+                        @NamedAttributeNode(value="tagList"),
+                }
+        )
+})
+public class TagColumn extends BaseEntity implements Serializable{
     private String title;
     private Long sort;
-    private Long pid;
 
     @JsonIgnore
-    @OneToMany(cascade = { CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH }, mappedBy = "tag", fetch=FetchType.LAZY)
+    @OneToMany(cascade = { }, mappedBy = "tagColumn", fetch=FetchType.LAZY)
     private  List<Article> articleList;
 
-    @JsonIgnore
-    @ManyToOne(cascade = {}, fetch=FetchType.LAZY)
-    @JoinColumn(name="tag_column_id")
-    private TagColumn tagColumn;
-
-
-    public Tag(Long id){
+    public TagColumn(Long id){
         this.id = id;
     }
 
+    @OneToMany(cascade = { }, mappedBy = "tagColumn")
+    private  List<Tag> tagList;
+
     @Override
     public String toString() {
-        return "Tag{" +
+        return "TagColumn{" +
                 "id='" + getId() + '\'' +
                 ", title='" + getTitle() + '\'' +
                 '}';

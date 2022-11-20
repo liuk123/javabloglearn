@@ -100,10 +100,6 @@ public class ArticleController {
             }
         }
 
-        List<Tag> tagList = new ArrayList<>();
-        for(Long val: a.getTagList()){
-            tagList.add(new Tag(val));
-        }
         Category c = null;
         if(a.getCategory() != null){
             c = new Category(a.getCategory());
@@ -115,10 +111,11 @@ public class ArticleController {
                 a.getTitle(),
                 a.getContent(),
                 a.getDescItem(),
-                tagList,
+                new Tag(a.getTagId()),
                 c,
                 new User(user.getId()),
-                a.getPostImage());
+                a.getPostImage(),
+                new TagColumn(a.getTagColumnId()));
         return new ResultSet(ResultSet.RESULT_CODE_TRUE,"添加成功", article.getId());
     }
 
@@ -129,7 +126,6 @@ public class ArticleController {
     @GetMapping(path="/{id}")
     public ResultSet getById(@PathVariable Long id){
         Article a = articleService.findById(id);
-        List<Tag> tagList = new ArrayList<>(a.getTagList());
         Article article = new Article();
         List<Comment> commentList = a.getCommentList().stream().limit(5).collect(Collectors.toList());
         for(Comment comment: commentList){
@@ -141,7 +137,7 @@ public class ArticleController {
         article.setTitle(a.getTitle());
         article.setUpdateTime(a.getUpdateTime());
         article.setAuthor(u);
-        article.setTagList(tagList);
+        article.setTag(a.getTag());
         article.setCommentList(commentList);
         article.setCreateTime(a.getCreateTime());
         article.setContent(a.getContent());
@@ -154,25 +150,26 @@ public class ArticleController {
      * 首页获取文章列表
      * @param pageIndex 页码
      * @param pageSize 页数
-     * @param tags 类别
+     * @param tagIds 类别
+     * @param tagColumnId 栏目
      */
     @GetMapping(path="/")
-    public PageInfo<Article> getArticle(@RequestParam Integer pageIndex, @RequestParam Integer pageSize, @RequestParam List<Long> tags){
+    public PageInfo<Article> getArticle(@RequestParam Integer pageIndex, @RequestParam Integer pageSize, @RequestParam(required = false) List<Long> tagIds, @RequestParam(required = false) Long tagColumnId){
 
-        Page<Article> a;
-        if(tags.isEmpty()){
-            a = articleService.findAllByPage(pageIndex-1, pageSize);
+        Page<Article> a = null;
+        if (tagIds!=null&&!tagIds.isEmpty()){
+            a = articleService.findByTagList(pageIndex-1, pageSize, tagIds);
+        }else if(tagColumnId!=null){
+            a = articleService.findByTagColumn(pageIndex-1, pageSize, tagColumnId);
         }else{
-            List<Tag> tagList = new ArrayList<>();
-            for(Long val: tags){
-                tagList.add(new Tag(val));
-            }
-            a = articleService.findByTaglist(pageIndex-1, pageSize, tagList);
+            a = articleService.findAllByPage(pageIndex-1, pageSize);
+        }
+        if(a == null){
+            return null;
         }
         List<Article> lista = new ArrayList<>();
         for(Article article: a.getContent()){
             Article reta = new Article();
-            reta.setTagList(new ArrayList<>(article.getTagList()));
             User au = article.getAuthor();
             User u = new User(au.getId(),au.getUsername(),au.getAvatar());
             reta.setAuthor(u);
@@ -183,6 +180,8 @@ public class ArticleController {
             reta.setDescItem(article.getDescItem());
             reta.setPostImage(article.getPostImage());
             reta.setTitle(article.getTitle());
+            reta.setTag(article.getTag());
+            reta.setTagColumn(article.getTagColumn());
             lista.add(reta);
         }
         PageInfo<Article> page = new PageInfo<Article>(a.getNumber()+1, a.getSize(), a.getTotalPages(),a.getTotalElements(),lista);

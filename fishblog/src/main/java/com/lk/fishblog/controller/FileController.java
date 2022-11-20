@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,7 +44,7 @@ public class FileController {
 
     @PostMapping(path = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResultSet addFile(@RequestParam(value = "uploadFile") MultipartFile file, HttpServletRequest request){
+    public ResultSet addFile(@RequestParam(value = "uploadFile") MultipartFile file, HttpServletRequest request) throws IOException {
         if(file.isEmpty()){
             return new ResultSet(ResultSet.RESULT_CODE_FALSE, "文件不可为空");
         }
@@ -59,14 +61,17 @@ public class FileController {
         if(!newFile.isDirectory()){
             newFile.mkdirs();
         }
+        BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
+        int width = bufferedImage.getWidth();
+        int height = bufferedImage.getHeight();
         try{
             file.transferTo(newFile);
             String os = System.getProperty("os.name");
             String filePath;
             if (os.toLowerCase().startsWith("win")){
-                filePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/"+ uploadTemPath + format + fileName;
+                filePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/"+ uploadTemPath + format + fileName + "?tr=" + width+","+height;
             }else{
-                filePath = request.getScheme() + "://www.cicode.cn/api/"+ uploadTemPath + format + fileName;
+                filePath = request.getScheme() + "://www.cicode.cn/api/"+ uploadTemPath + format + fileName + "?tr=" + width+","+height;
             }
             NewFileResponse f = new NewFileResponse();
             f.setName(file.getOriginalFilename());
@@ -81,7 +86,7 @@ public class FileController {
 
     @PostMapping(path = "/uploadMultipart", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResultSet addFiles(HttpServletRequest request){
+    public ResultSet addFiles(HttpServletRequest request) throws IOException {
         List<MultipartFile> files = ((MultipartHttpServletRequest)request).getFiles("uploadFile");
         if(files.isEmpty()){
             return new ResultSet(ResultSet.RESULT_CODE_FALSE, "文件不可为空");
@@ -102,14 +107,19 @@ public class FileController {
                 if(!newFile.isDirectory()){
                     newFile.mkdirs();
                 }
+
+                BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
+                int width = bufferedImage.getWidth();
+                int height = bufferedImage.getHeight();
+
                 try{
                     file.transferTo(newFile);
                     String os = System.getProperty("os.name");
                     String filePath;
                     if (os.toLowerCase().startsWith("win")){
-                        filePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/"+ uploadTemPath + format + fileName;
+                        filePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/"+ uploadTemPath + format + fileName + "?tr=" + width+","+height;
                     }else{
-                        filePath = request.getScheme() + "://www.cicode.cn/api/"+ uploadTemPath + format + fileName;
+                        filePath = request.getScheme() + "://www.cicode.cn/api/"+ uploadTemPath + format + fileName + "?tr=" + width+","+height;
                     }
 //                    String filePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/"+uploadTemPath + format + fileName;
                     NewFileResponse f = new NewFileResponse();
