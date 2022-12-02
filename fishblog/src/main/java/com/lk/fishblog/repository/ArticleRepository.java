@@ -13,7 +13,7 @@ public interface ArticleRepository extends BaseRepository<Article, Long> {
     Page<Article> findByTagColumn_IdOrderByCreateTimeDesc(Long id, Pageable pageable);
     Page<Article> findByTag_IdInOrderByCreateTimeDesc(List<Long> ids, Pageable pageable);
     Page<Article> findByOrderByCreateTimeDesc(Pageable pageable);
-    @EntityGraph(value = "ArticleEntity", type = EntityGraph.EntityGraphType.FETCH)
+//    @EntityGraph(value = "ArticleEntity", type = EntityGraph.EntityGraphType.FETCH)
     Article findFirstById(Long id);
 //    void
 //    @Query(value = "SELECT new Article(a.content) FROM Article a WHERE a.id=?1")

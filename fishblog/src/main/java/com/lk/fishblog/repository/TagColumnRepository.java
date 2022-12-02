@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface TagColumnRepository extends JpaRepository<TagColumn, Long> {
-    @EntityGraph(value = "TagColumnEntity", type = EntityGraph.EntityGraphType.FETCH)
+    @EntityGraph(value = "TagColumnEntity", type = EntityGraph.EntityGraphType.LOAD)
     List<TagColumn> findAll();
 }

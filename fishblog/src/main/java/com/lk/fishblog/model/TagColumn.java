@@ -35,7 +35,7 @@ public class TagColumn extends BaseEntity implements Serializable{
         this.id = id;
     }
 
-    @OneToMany(cascade = { }, mappedBy = "tagColumn")
+    @OneToMany(cascade = { }, mappedBy = "tagColumn", fetch=FetchType.EAGER)
     private  List<Tag> tagList;
 
     @Override
