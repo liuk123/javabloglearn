@@ -6,4 +6,5 @@ fishblog/src/main/resources/application.properties
 /uploadFile/
 *.log
 
-fishblog/assets
+fishblog/assets/
+fishblog/src/main/java/com/lk/fishblog/FishblogApplication.java
