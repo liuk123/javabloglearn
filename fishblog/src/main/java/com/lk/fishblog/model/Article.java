@@ -17,16 +17,6 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@NamedEntityGraphs({
-        @NamedEntityGraph(
-                name = "ArticleEntity",
-                attributeNodes = {
-//                        @NamedAttributeNode(value="category"),
-//                        @NamedAttributeNode(value="tag"),
-//                        @NamedAttributeNode(value="tagColumn"),
-                }
-        )
-})
 public class Article implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -53,7 +43,7 @@ public class Article implements Serializable{
     private List<Comment> commentList;
 
 
-    @ManyToOne(cascade = {}, optional=false, fetch=FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.REFRESH,CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST}, fetch=FetchType.EAGER)
     @JoinColumn(name="tag_id")
     private Tag tag;
 
@@ -62,7 +52,7 @@ public class Article implements Serializable{
     @JoinColumn(name="tag_column_id")
     private TagColumn tagColumn;
 
-    @ManyToOne(cascade = {}, optional=false, fetch=FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.REFRESH,CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST}, fetch=FetchType.EAGER)
     @JoinColumn(name="category_id")
     private Category category;
 

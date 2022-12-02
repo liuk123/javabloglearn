@@ -138,7 +138,6 @@ public class ArticleController {
         article.setUpdateTime(a.getUpdateTime());
         article.setAuthor(u);
         article.setTag(a.getTag());
-        article.setTagColumn(a.getTagColumn());
         article.setCommentList(commentList);
         article.setCreateTime(a.getCreateTime());
         article.setContent(a.getContent());
