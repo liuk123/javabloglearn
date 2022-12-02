@@ -5,3 +5,5 @@ fishblog/src/main/resources/application.properties
 
 /uploadFile/
 *.log
+
+/icons/
