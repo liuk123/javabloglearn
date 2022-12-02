@@ -44,7 +44,7 @@ public class FishblogApplication implements WebMvcConfigurer {
 		if (os.toLowerCase().startsWith("win")){
 //			registry.addResourceHandler("/"+uploadPath+"**").addResourceLocations("file:D:/code/java/javabloglearn/fishblog/assets/" + uploadPath);
 //			registry.addResourceHandler("/"+uploadTemPath+"**").addResourceLocations("file:D:/code/java/javabloglearn/fishblog/assets/" + uploadTemPath);
-			registry.addResourceHandler("/"+assets+"**").addResourceLocations("file:D:/code/java/javabloglearn/fishblog/" + assets);
+			registry.addResourceHandler("/"+assets+"**").addResourceLocations("file:D:/code/liuk/javabloglearn/fishblog/" + assets);
 		}else{
 //			registry.addResourceHandler("/"+uploadPath+"**").addResourceLocations("file: /home/assets/" + uploadPath);
 //			registry.addResourceHandler("/"+uploadTemPath+"**").addResourceLocations("file: /home/assets/" + uploadTemPath);
