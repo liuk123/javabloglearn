@@ -115,7 +115,8 @@ public class ArticleController {
                 c,
                 new User(user.getId()),
                 a.getPostImage(),
-                new TagColumn(a.getTagColumnId()));
+                new TagColumn(a.getTagColumnId()),
+                a.getKeyword());
         return new ResultSet(ResultSet.RESULT_CODE_TRUE,"添加成功", article.getId());
     }
 
@@ -142,7 +143,9 @@ public class ArticleController {
         article.setCreateTime(a.getCreateTime());
         article.setContent(a.getContent());
         article.setDescItem(a.getDescItem());
+        article.setTagColumn(a.getTagColumn());
         article.setCategory(a.getCategory());
+        article.setKeyword(a.getKeyword());
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", article);
     }
 
@@ -181,7 +184,7 @@ public class ArticleController {
             reta.setPostImage(article.getPostImage());
             reta.setTitle(article.getTitle());
             reta.setTag(article.getTag());
-            reta.setTagColumn(article.getTagColumn());
+            reta.setKeyword(article.getKeyword());
             lista.add(reta);
         }
         PageInfo<Article> page = new PageInfo<Article>(a.getNumber()+1, a.getSize(), a.getTotalPages(),a.getTotalElements(),lista);

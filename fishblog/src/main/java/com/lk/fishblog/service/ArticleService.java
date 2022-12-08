@@ -44,7 +44,7 @@ public class ArticleService {
     public Page<Article> findAllByPage(int pageNum, int pageSize){
         return this.articleRepository.findByOrderByCreateTimeDesc(PageRequest.of(pageNum, pageSize));
     }
-    public Article save(Long id, String title, String content, String descItem, Tag tag, Category category, User author, String postImage, TagColumn tagColumn){
+    public Article save(Long id, String title, String content, String descItem, Tag tag, Category category, User author, String postImage, TagColumn tagColumn, String keyword){
 
         return articleRepository.save(
             Article
@@ -58,6 +58,7 @@ public class ArticleService {
                 .category(category)
                 .author(author)
                 .postImage(postImage)
+                .keyword(keyword)
                 .build()
         );
     }

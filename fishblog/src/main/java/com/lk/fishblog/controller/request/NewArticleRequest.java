@@ -25,4 +25,5 @@ public class NewArticleRequest {
 
     private Long id;
     private String postImage;
+    private String keyword;
 }

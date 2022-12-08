@@ -33,26 +33,27 @@ public class Article implements Serializable{
     private String content;
     private String descItem;
     private String postImage;
+    private String keyword;
 
     @ManyToOne(cascade = {}, optional=false, fetch=FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User author;
 
-    @OneToMany(mappedBy = "article",cascade={CascadeType.REMOVE,CascadeType.REFRESH}, fetch=FetchType.LAZY)
+       @OneToMany(mappedBy = "article",cascade={CascadeType.REMOVE,CascadeType.REFRESH}, fetch=FetchType.LAZY)
     @OrderBy("createTime DESC")
     private List<Comment> commentList;
 
 
-    @ManyToOne(cascade = {CascadeType.REFRESH,CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST}, fetch=FetchType.EAGER)
+    @ManyToOne(cascade = {}, fetch=FetchType.EAGER)
     @JoinColumn(name="tag_id")
     private Tag tag;
 
 
-    @ManyToOne(cascade = {}, optional=false, fetch=FetchType.LAZY)
+    @ManyToOne(cascade = {}, fetch=FetchType.LAZY)
     @JoinColumn(name="tag_column_id")
     private TagColumn tagColumn;
 
-    @ManyToOne(cascade = {CascadeType.REFRESH,CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST}, fetch=FetchType.EAGER)
+    @ManyToOne(cascade = {}, fetch=FetchType.EAGER)
     @JoinColumn(name="category_id")
     private Category category;
 

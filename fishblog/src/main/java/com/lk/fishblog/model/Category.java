@@ -34,7 +34,7 @@ public class Category implements Serializable{
     private List<Article> articleList;
 
     @JsonIgnore
-    @ManyToOne(cascade = {}, optional=false, fetch=FetchType.LAZY)
+    @ManyToOne(cascade = {}, fetch=FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User author;
 
