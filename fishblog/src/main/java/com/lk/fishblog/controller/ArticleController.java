@@ -11,6 +11,8 @@ import com.lk.fishblog.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -29,6 +31,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/article")
 @Slf4j
+@CacheConfig(cacheNames = "ArticleCache")
 public class ArticleController {
     @Autowired
     ReplyService replyService;
@@ -125,6 +128,7 @@ public class ArticleController {
      * @param id 文章id
      */
     @GetMapping(path="/{id}")
+    @Cacheable(key="#id")
     public ResultSet getById(@PathVariable Long id){
         Article a = articleService.findById(id);
         Article article = new Article();

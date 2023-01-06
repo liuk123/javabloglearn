@@ -8,6 +8,8 @@ import com.lk.fishblog.service.BookmarkCategoryService;
 import com.lk.fishblog.service.BookmarkService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/bookmark")
 @Slf4j
+@CacheConfig(cacheNames = "BookmarkCateCache")
 public class BookmarkController {
     @Autowired
     BookmarkService bookmarkService;
@@ -29,6 +32,7 @@ public class BookmarkController {
      * @param
      * @return
      */
+    @Cacheable()
     @GetMapping(path="/bookmarkCategory/")
     public ResultSet getBookmarkCategory(){
         List<BookmarkCategory> n = bookmarkCategoryService.findBookmarkCategory();
@@ -36,6 +40,7 @@ public class BookmarkController {
     }
 
     @GetMapping(path="/{id}")
+    @Cacheable(key="#id")
     public ResultSet getBookmarks(@PathVariable Long id){
         List<BookmarkCategory> n = bookmarkCategoryService.findByPid(id);
         for(BookmarkCategory b: n){

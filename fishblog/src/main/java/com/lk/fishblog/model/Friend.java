@@ -8,13 +8,13 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "B_Link")
+@Table(name = "B_Friend")
 @Builder
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Link implements Serializable{
+public class Friend implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

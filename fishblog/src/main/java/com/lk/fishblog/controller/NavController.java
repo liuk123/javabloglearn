@@ -40,7 +40,7 @@ public class NavController {
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", n);
     }
     @GetMapping(path="/navItem/")
-    public ResultSet getNav(Authentication authentication, @RequestParam List<Long> pids){
+    public ResultSet getNav(@RequestParam List<Long> pids){
         List<Nav> n = navService.findNavByCIds(pids);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", n);
     }

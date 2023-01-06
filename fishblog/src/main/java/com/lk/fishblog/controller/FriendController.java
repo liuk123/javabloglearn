@@ -2,7 +2,9 @@ package com.lk.fishblog.controller;
 
 import com.lk.fishblog.common.utils.ResultSet;
 import com.lk.fishblog.controller.request.NewLinkRequest;
+import com.lk.fishblog.model.Friend;
 import com.lk.fishblog.model.Link;
+import com.lk.fishblog.service.FriendService;
 import com.lk.fishblog.service.LinkService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,28 +18,27 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/link")
+@RequestMapping("/friend")
 @Slf4j
-@CacheConfig(cacheNames = "LinkCache")
-public class LinkController {
+@CacheConfig(cacheNames = "FriendCache")
+public class FriendController {
     @Autowired
-    LinkService linkService;
+    FriendService friendService;
+
     /**
      * 获取书签分类
      * @param
      * @return
      */
     @GetMapping(path="/")
-    @Cacheable
-    public ResultSet getLinkAll(){
-        List<Link> n = linkService.findAll();
+    public ResultSet getFriend(){
+        List<Friend> n = friendService.findAll();
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", n);
     }
-
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResultSet saveLink(@RequestBody @Valid NewLinkRequest newLinkRequest){
-        Link c = linkService.save(
+        Friend c = friendService.save(
                 newLinkRequest.getId(),
                 newLinkRequest.getIcon(),
                 newLinkRequest.getTitle(),
@@ -49,7 +50,7 @@ public class LinkController {
     }
     @DeleteMapping(path = "/")
     public ResultSet delById(@RequestParam Long id){
-        linkService.delOne(id);
+        friendService.delOne(id);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功");
     }
 }

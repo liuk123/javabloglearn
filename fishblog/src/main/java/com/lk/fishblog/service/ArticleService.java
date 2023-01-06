@@ -6,6 +6,7 @@ import com.lk.fishblog.repository.CollectRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ import java.util.List;
 @Service
 @Transactional
 @Slf4j
-@CacheConfig(cacheNames = "CoffeeCache")
+@CacheConfig(cacheNames = "ArticleCache")
 public class ArticleService {
     @Autowired
     ArticleRepository articleRepository;
@@ -27,17 +28,18 @@ public class ArticleService {
     public Article findById(Long id){
         return articleRepository.findFirstById(id);
     }
-//    @Cacheable
+
     public Page<Article> findByAuthor(Long uerId, int pageNum, int pageSize){
         return this.articleRepository.findByAuthor_IdOrderByCreateTimeDesc(uerId, PageRequest.of(pageNum, pageSize));
     }
     public Page<Article> findByAuthorAndCategory(Long uerId, Long categoryId, int pageNum, int pageSize){
         return this.articleRepository.findByAuthor_IdAndCategory_IdOrderByCreateTimeDesc(uerId, categoryId, PageRequest.of(pageNum, pageSize));
     }
-//    @Cacheable
     public Page<Article> findByTagList(int pageNum, int pageSize, List<Long> tagIds){
         return this.articleRepository.findByTag_IdInOrderByCreateTimeDesc(tagIds, PageRequest.of(pageNum, pageSize));
     }
+
+    @Cacheable(key="#tagColumnId")
     public Page<Article> findByTagColumn(int pageNum, int pageSize, Long tagColumnId){
         return this.articleRepository.findByTagColumn_IdOrderByCreateTimeDesc(tagColumnId, PageRequest.of(pageNum, pageSize));
     }

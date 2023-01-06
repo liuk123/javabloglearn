@@ -1,11 +1,13 @@
 package com.lk.fishblog.common.utils;
 
 import lombok.Data;
+import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Data
-public class ResultSet {
+public class ResultSet implements Serializable {
     public static final int RESULT_CODE_FALSE = 0;
     public static final int RESULT_CODE_TRUE = 1;
     public static final int RESULT_CODE_ERROR = -1;

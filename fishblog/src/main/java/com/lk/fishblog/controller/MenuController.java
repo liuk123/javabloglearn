@@ -5,6 +5,7 @@ import com.lk.fishblog.controller.request.NewMenuRequest;
 import com.lk.fishblog.model.Authority;
 import com.lk.fishblog.model.Menu;
 import com.lk.fishblog.service.*;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,6 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/menu")
+@CacheConfig(cacheNames = "MenuCache")
 public class MenuController {
 
     final UserService userService;

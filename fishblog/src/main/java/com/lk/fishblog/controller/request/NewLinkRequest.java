@@ -12,7 +12,6 @@ public class NewLinkRequest {
     private String title;
     private String link;
     private String icon;
-    private String type;
     private Long sort;
     private String category;
     private String descItem;

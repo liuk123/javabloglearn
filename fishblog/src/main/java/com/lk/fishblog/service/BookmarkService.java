@@ -5,6 +5,8 @@ import com.lk.fishblog.model.BookmarkCategory;
 import com.lk.fishblog.repository.BookmarkRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

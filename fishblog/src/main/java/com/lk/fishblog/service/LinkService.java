@@ -17,13 +17,13 @@ public class LinkService {
     @Autowired
     LinkRepository linkRepository;
 
-    public Link save(Long id, String icon, String title, String link, String category, String descItem, Long sort, String type){
+    public Link save(Long id, String icon, String title, String link, String category, String descItem, Long sort){
         return linkRepository.save(
-                Link.builder().id(id).icon(icon).title(title).link(link).category(category).descItem(descItem).sort(sort).type(type).build()
+                Link.builder().id(id).icon(icon).title(title).link(link).category(category).descItem(descItem).sort(sort).build()
         );
     }
-    public List<Link> findLink(String type){
-        return linkRepository.findAllByTypeOrderBySortDesc(type);
+    public List<Link> findAll(){
+        return linkRepository.findAllByOrderBySortDesc();
     }
     public void delOne(Long id){
         linkRepository.deleteById(id);
