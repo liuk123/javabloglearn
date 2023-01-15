@@ -32,7 +32,7 @@ public class BookmarkController {
      * @param
      * @return
      */
-    @Cacheable()
+    @Cacheable(cacheNames = "bookmarkCat")
     @GetMapping(path="/bookmarkCategory/")
     public ResultSet getBookmarkCategory(){
         List<BookmarkCategory> n = bookmarkCategoryService.findBookmarkCategory();
@@ -40,7 +40,7 @@ public class BookmarkController {
     }
 
     @GetMapping(path="/{id}")
-    @Cacheable(key="#id")
+    @Cacheable(key="#id", cacheNames = "bookmark")
     public ResultSet getBookmarks(@PathVariable Long id){
         List<BookmarkCategory> n = bookmarkCategoryService.findByPid(id);
         for(BookmarkCategory b: n){
@@ -48,13 +48,12 @@ public class BookmarkController {
         }
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", n);
     }
-
+    @Cacheable(key="#ids", cacheNames = "bookmarkIds")
     @GetMapping(path="/bookmarkItem/")
     public ResultSet getBookmark(@RequestParam List<Long> ids){
         List<Bookmark> n = bookmarkService.findBookmarkByCIds(ids);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", n);
     }
-
 
     @PostMapping(path = "/bookmarkCategory/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)

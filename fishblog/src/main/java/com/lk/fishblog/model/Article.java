@@ -35,7 +35,7 @@ public class Article implements Serializable{
     private String postImage;
     private String keyword;
 
-    @ManyToOne(cascade = {}, optional=false, fetch=FetchType.LAZY)
+    @ManyToOne(cascade = {}, fetch=FetchType.EAGER)
     @JoinColumn(name="user_id")
     private User author;
 

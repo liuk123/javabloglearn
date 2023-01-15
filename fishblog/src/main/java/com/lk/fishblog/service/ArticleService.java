@@ -35,14 +35,16 @@ public class ArticleService {
     public Page<Article> findByAuthorAndCategory(Long uerId, Long categoryId, int pageNum, int pageSize){
         return this.articleRepository.findByAuthor_IdAndCategory_IdOrderByCreateTimeDesc(uerId, categoryId, PageRequest.of(pageNum, pageSize));
     }
+    @Cacheable(key="#tagIds +'_'+ #pageNum", cacheNames = "art_tagList")
     public Page<Article> findByTagList(int pageNum, int pageSize, List<Long> tagIds){
         return this.articleRepository.findByTag_IdInOrderByCreateTimeDesc(tagIds, PageRequest.of(pageNum, pageSize));
     }
 
-    @Cacheable(key="#tagColumnId")
+    @Cacheable(key="#tagColumnId +'_'+ #pageNum", cacheNames = "art_tagCol")
     public Page<Article> findByTagColumn(int pageNum, int pageSize, Long tagColumnId){
         return this.articleRepository.findByTagColumn_IdOrderByCreateTimeDesc(tagColumnId, PageRequest.of(pageNum, pageSize));
     }
+    @Cacheable(key="#pageNum", cacheNames = "art")
     public Page<Article> findAllByPage(int pageNum, int pageSize){
         return this.articleRepository.findByOrderByCreateTimeDesc(PageRequest.of(pageNum, pageSize));
     }
