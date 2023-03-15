@@ -38,7 +38,7 @@ public class PageInfo<T> extends ResultSet{
         super.resultMsg = "查询成功";
         if(!page.isEmpty()){
             if(page.getSize() == 0){
-                this.pageSize = 12;
+                this.pageSize = 10;
             }else{
                 this.pageSize = page.getSize();
             }
@@ -47,7 +47,7 @@ public class PageInfo<T> extends ResultSet{
             this.total = page.getTotalElements();
             this.list = page.getContent();
         }else{
-            this.pageSize = 12;
+            this.pageSize = 10;
         }
     }
     public PageInfo(int pageIndex, int pageSize, int pages, long total, List<T> list){

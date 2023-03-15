@@ -128,7 +128,7 @@ public class ArticleController {
      * @param id 文章id
      */
     @GetMapping(path="/{id}")
-    @Cacheable(key="#id", cacheNames = "art_id")
+//    @Cacheable(key="#id", cacheNames = "art_id")
     public ResultSet getById(@PathVariable Long id){
         Article a = articleService.findById(id);
         Article article = new Article();

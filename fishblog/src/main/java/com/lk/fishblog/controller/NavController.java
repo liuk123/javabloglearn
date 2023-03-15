@@ -133,9 +133,9 @@ public class NavController {
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "添加成功",n);
     }
 
-    @DeleteMapping(path = "/{id}")
-    public ResultSet delById(@PathVariable Long id){
-        navService.delOne(id);
+    @DeleteMapping(path = "/")
+    public ResultSet delById(@RequestParam List<Long> ids){
+        navService.del(ids);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功");
     }
     @DeleteMapping(path = "/navCategory/{id}")

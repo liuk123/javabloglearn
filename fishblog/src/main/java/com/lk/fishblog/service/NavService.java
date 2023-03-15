@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -35,5 +36,13 @@ public class NavService {
     @Transactional
     public void delOne(Long id){
         navRepository.deleteById(id);
+    }
+    @Transactional
+    public void del(List<Long> ids){
+        List<Nav> navs = new ArrayList<>();
+        for(Long id: ids){
+            navs.add(new Nav(id));
+        }
+        navRepository.deleteAll(navs);
     }
 }

@@ -35,16 +35,16 @@ public class ArticleService {
     public Page<Article> findByAuthorAndCategory(Long uerId, Long categoryId, int pageNum, int pageSize){
         return this.articleRepository.findByAuthor_IdAndCategory_IdOrderByCreateTimeDesc(uerId, categoryId, PageRequest.of(pageNum, pageSize));
     }
-    @Cacheable(key="#tagIds +'_'+ #pageNum", cacheNames = "art_tagList")
+    @Cacheable(key="#tagIds +'_'+ #pageNum+'_'+#pageSize", cacheNames = "art_tagList")
     public Page<Article> findByTagList(int pageNum, int pageSize, List<Long> tagIds){
         return this.articleRepository.findByTag_IdInOrderByCreateTimeDesc(tagIds, PageRequest.of(pageNum, pageSize));
     }
 
-    @Cacheable(key="#tagColumnId +'_'+ #pageNum", cacheNames = "art_tagCol")
+    @Cacheable(key="#tagColumnId +'_'+ #pageNum+'_'+#pageSize", cacheNames = "art_tagCol")
     public Page<Article> findByTagColumn(int pageNum, int pageSize, Long tagColumnId){
         return this.articleRepository.findByTagColumn_IdOrderByCreateTimeDesc(tagColumnId, PageRequest.of(pageNum, pageSize));
     }
-    @Cacheable(key="#pageNum", cacheNames = "art")
+    @Cacheable(key="#pageNum+'_'+#pageSize", cacheNames = "art")
     public Page<Article> findAllByPage(int pageNum, int pageSize){
         return this.articleRepository.findByOrderByCreateTimeDesc(PageRequest.of(pageNum, pageSize));
     }
@@ -105,5 +105,21 @@ public class ArticleService {
      */
     public void deleteCollect(Collect collect){
         collectRepository.delete(collect);
+    }
+
+    public Article random(Long n){
+        Long total = null;
+        if(n==null){
+            total = n;
+        }else{
+            total = articleRepository.count();
+        }
+        int idx = (int)(Math.random() * total);
+        Page<Article> page = articleRepository.findAll(PageRequest.of(idx, 1));
+        Article q = null;
+        if (page.hasContent()) {
+            q = page.getContent().get(0);
+        }
+        return q;
     }
 }

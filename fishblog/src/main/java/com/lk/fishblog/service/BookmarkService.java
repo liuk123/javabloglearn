@@ -5,8 +5,8 @@ import com.lk.fishblog.model.BookmarkCategory;
 import com.lk.fishblog.repository.BookmarkRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,5 +31,21 @@ public class BookmarkService {
     @Transactional
     public void delOne(Long id){
         bookmarkRepository.deleteById(id);
+    }
+
+    public Bookmark random(Long n){
+        Long total = null;
+        if(n==null){
+            total = n;
+        }else{
+            total = bookmarkRepository.count();
+        }
+        int idx = (int)(Math.random() * total);
+        Page<Bookmark> page = bookmarkRepository.findAll(PageRequest.of(idx, 1));
+        Bookmark q = null;
+        if (page.hasContent()) {
+            q = page.getContent().get(0);
+        }
+        return q;
     }
 }

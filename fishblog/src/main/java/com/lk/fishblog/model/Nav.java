@@ -27,4 +27,8 @@ public class Nav implements Serializable{
     @JoinColumn(name="navcategory_id")
     private NavCategory navCategory;
 
+
+    public  Nav(Long id){
+        this.id = id;
+    }
 }

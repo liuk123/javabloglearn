@@ -48,6 +48,12 @@ public class BookmarkController {
         }
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", n);
     }
+    @GetMapping(path="/random/")
+    public ResultSet getRandomBookmark(@RequestParam(required = false) Long total){
+        Bookmark n = bookmarkService.random(total);
+        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", n);
+    }
+
     @Cacheable(key="#ids", cacheNames = "bookmarkIds")
     @GetMapping(path="/bookmarkItem/")
     public ResultSet getBookmark(@RequestParam List<Long> ids){
