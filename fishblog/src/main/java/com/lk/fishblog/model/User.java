@@ -98,6 +98,10 @@ public class User implements UserDetails, Serializable {
         this.username = username;
         this.avatar = avatar;
     }
+    public User(Long id, String username){
+        this.id = id;
+        this.username = username;
+    }
 
     @JsonIgnore
     public List<Role> getAllRoles(){

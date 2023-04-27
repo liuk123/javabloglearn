@@ -6,6 +6,8 @@ import com.lk.fishblog.model.User;
 import com.lk.fishblog.repository.ReplyRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +33,11 @@ public class ReplyService {
                         .build()
         );
     }
+
+    public Page<Reply> findByCommentId(Long id, int pageNum, int pageSize){
+        return this.replyRepository.findByComment_IdOrderByCreateTimeDesc(id, PageRequest.of(pageNum, pageSize));
+    }
+
     public void deleteById(Long id){
         replyRepository.deleteById(id);
     }

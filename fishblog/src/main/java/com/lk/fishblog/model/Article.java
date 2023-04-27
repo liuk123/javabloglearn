@@ -39,7 +39,7 @@ public class Article implements Serializable{
     @JoinColumn(name="user_id")
     private User author;
 
-       @OneToMany(mappedBy = "article",cascade={CascadeType.REMOVE,CascadeType.REFRESH}, fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "article",cascade={CascadeType.REMOVE,CascadeType.REFRESH}, fetch=FetchType.LAZY)
     @OrderBy("createTime DESC")
     private List<Comment> commentList;
 

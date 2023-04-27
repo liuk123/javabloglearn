@@ -7,6 +7,7 @@ import java.util.List;
 public interface BookmarkCategoryRepository extends BaseRepository<BookmarkCategory, Long> {
     List<BookmarkCategory> findByOrderBySort();
     List<BookmarkCategory> findByPidOrderBySort(Long pid);
+    List<BookmarkCategory> findByIdOrderBySort(Long pid);
     void  deleteFirstById(Long id);
 
 }

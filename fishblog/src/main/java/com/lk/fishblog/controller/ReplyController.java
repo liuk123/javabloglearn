@@ -1,17 +1,15 @@
 package com.lk.fishblog.controller;
 
-import com.lk.fishblog.common.utils.CookieUtil;
+import com.lk.fishblog.common.utils.PageInfo;
 import com.lk.fishblog.common.utils.ResultSet;
 import com.lk.fishblog.controller.request.NewReplyRequest;
 import com.lk.fishblog.model.Comment;
 import com.lk.fishblog.model.Reply;
 import com.lk.fishblog.model.User;
-import com.lk.fishblog.service.ArticleService;
-import com.lk.fishblog.service.CommentService;
 import com.lk.fishblog.service.ReplyService;
-import com.lk.fishblog.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
@@ -26,35 +24,29 @@ import javax.validation.Valid;
 public class ReplyController {
     @Autowired
     ReplyService replyService;
-    @Autowired
-    CommentService commentService;
-    @Autowired
-    UserService userService;
-    @Autowired
-    ArticleService articleService;
-    @Autowired
-    CookieUtil cookieUtil;
 
-    @GetMapping(path="/{id}")
-    public ResultSet getById(@PathVariable Long id){
-        Reply a = replyService.findById(id);
-        log.info("Reply {}:", a);
-        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", a);
+
+//    @GetMapping(path="/{id}")
+//    public ResultSet getById(@PathVariable Long id){
+//        Reply a = replyService.findById(id);
+//        log.info("Reply {}:", a);
+//        return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", a);
+//    }
+
+    @GetMapping(path="/")
+    public PageInfo<Reply> getComment(@RequestParam Integer pageIndex, @RequestParam Integer pageSize, @RequestParam(required = false) Long id){
+        Page<Reply> c = this.replyService.findByCommentId(id, pageIndex, pageSize);
+        PageInfo<Reply> page = new PageInfo<>(c);
+        return page;
     }
 
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResultSet addByJson(HttpServletRequest request, @RequestBody @Valid NewReplyRequest r, Authentication authentication){
+    public ResultSet addByJson(@RequestBody @Valid NewReplyRequest r, Authentication authentication){
         User fu = (User) authentication.getPrincipal();
-//        User fu =cookieUtil.getLoginUser(request);
-//        if(fu == null){
-//            return new ResultSet(ResultSet.RESULT_CODE_FALSE,"请重新登录");
-//        }else if(fu.getRole()<10){
-//            return new ResultSet(ResultSet.RESULT_CODE_FALSE,"没有权限");
-//        }
-        User tu = new User(r.getToUserId());
+        User tu = new User(r.getToUserId(), r.getToUsername());
         Comment c = new Comment(r.getCommentId());
-        Reply reply = replyService.save(r.getContent(), c, new User(fu.getId()), tu);
+        Reply reply = replyService.save(r.getContent(), c, new User(fu.getId(),fu.getUsername(),fu.getAvatar()), tu);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "添加成功", reply);
     }
 

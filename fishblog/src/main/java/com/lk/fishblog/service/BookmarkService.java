@@ -25,8 +25,8 @@ public class BookmarkService {
                 Bookmark.builder().id(id).icon(icon).title(title).link(link).type(type).bookmarkCategory(bookmarkCategory).descItem(descItem).build()
         );
     }
-    public List<Bookmark> findBookmarkByCIds(List<Long> ids){
-        return bookmarkRepository.findByBookmarkCategory_IdIn(ids);
+    public Page<Bookmark> findBookmarkByCIds(List<Long> ids, int pageNum, int pageSize){
+        return bookmarkRepository.findByBookmarkCategory_IdIn(ids, PageRequest.of(pageNum, pageSize));
     }
     @Transactional
     public void delOne(Long id){

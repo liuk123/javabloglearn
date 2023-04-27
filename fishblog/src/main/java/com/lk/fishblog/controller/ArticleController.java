@@ -132,10 +132,10 @@ public class ArticleController {
     public ResultSet getById(@PathVariable Long id){
         Article a = articleService.findById(id);
         Article article = new Article();
-        List<Comment> commentList = a.getCommentList().stream().limit(5).collect(Collectors.toList());
-        for(Comment comment: commentList){
-            comment.setReplyList(comment.getReplyList().stream().limit(5).collect(Collectors.toList()));
-        }
+//        List<Comment> commentList = a.getCommentList().stream().limit(10).collect(Collectors.toList());
+//        for(Comment comment: commentList){
+//            comment.setReplyList(comment.getReplyList().stream().limit(10).collect(Collectors.toList()));
+//        }
         User au = a.getAuthor();
         User u = new User(au.getId(),au.getUsername(), au.getAvatar());
         article.setId(a.getId());
@@ -143,7 +143,7 @@ public class ArticleController {
         article.setUpdateTime(a.getUpdateTime());
         article.setAuthor(u);
         article.setTag(a.getTag());
-        article.setCommentList(commentList);
+//        article.setCommentList(commentList);
         article.setCreateTime(a.getCreateTime());
         article.setContent(a.getContent());
         article.setDescItem(a.getDescItem());

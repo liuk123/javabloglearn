@@ -7,6 +7,8 @@ import com.lk.fishblog.repository.ArticleRepository;
 import com.lk.fishblog.repository.CommentRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +37,9 @@ public class CommentService {
     }
     public List<Comment> findTop5ByArticleId(Long id){
         return  commentRepository.findTop5ByArticle_IdOrderByUpdateTimeDescIdAsc(id);
+    }
+    public Page<Comment> findByArticleId(Long id, int pageNum, int pageSize){
+        return this.commentRepository.findByArticle_IdOrderByCreateTimeDesc(id, PageRequest.of(pageNum, pageSize));
     }
 
     public void deleteById(Long id){

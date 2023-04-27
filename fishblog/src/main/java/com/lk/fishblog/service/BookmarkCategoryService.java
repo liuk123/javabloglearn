@@ -29,6 +29,9 @@ public class BookmarkCategoryService {
     public List<BookmarkCategory> findByPid(long pid){
         return bookmarkCategoryRepository.findByPidOrderBySort(pid);
     }
+    public List<BookmarkCategory> findById(long id){
+        return bookmarkCategoryRepository.findByIdOrderBySort(id);
+    }
     public void delOne(Long id){
         bookmarkCategoryRepository.deleteFirstById(id);
     }
