@@ -11,10 +11,9 @@ import java.util.List;
 @ToString
 public class NewNewsRequest {
     public Long id;
-    private Long sort;
     private String title;
     private String link;
-    private Long categoryId;
-    private String type;
+    private String category;
     private String descItem;
+    private Long RssId;
 }

@@ -26,12 +26,10 @@ public class News implements Serializable{
 
     private String title;
     private String link;
-    private String type;
-    private Long sort;
     private String descItem;
 
     @JsonIgnore
     @ManyToOne(cascade = {},fetch = FetchType.LAZY)
-    @JoinColumn(name="newscategory_id")
-    private NewsCategory newsCategory;
+    @JoinColumn(name="rss_id")
+    private Rss rss;
 }

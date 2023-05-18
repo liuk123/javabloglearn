@@ -20,8 +20,8 @@ public class NewsService {
     public void save(List<News> news){
         newsRepository.saveAll(news);
     }
-    public List<News> findNews(Long id){
-        return newsRepository.findAllByNewsCategory_id(id);
+    public void deleteAll(){
+        newsRepository.deleteAllInBatch();
     }
     public List<News> findAll(){
         return newsRepository.findAllByOrderByCreateTimeDesc();

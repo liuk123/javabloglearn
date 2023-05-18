@@ -69,6 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.GET, "/focus/**").permitAll()
             .antMatchers(HttpMethod.GET, "/friend/**").permitAll()
             .antMatchers(HttpMethod.GET, "/speak/**").permitAll()
+            .antMatchers(HttpMethod.GET, "/rss/**").permitAll()
             .anyRequest()
             .authenticated()
 
