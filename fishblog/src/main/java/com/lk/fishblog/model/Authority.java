@@ -30,7 +30,8 @@ public class Authority implements Serializable{
 
     private Long pid;
     private String name;
-    private String url;
+    private String value;
+    private String type;
     private String description;
 
     @JsonIgnore
@@ -41,11 +42,12 @@ public class Authority implements Serializable{
     @ManyToMany(targetEntity = Menu.class, mappedBy = "authorityList", fetch=FetchType.LAZY)
     private List<Menu> menuList;
 
-    public Authority(Long id, Long pid, String name, String url, String description){
+    public Authority(Long id, Long pid, String name, String value, String description, String type){
         this.id = id;
         this.pid = pid;
         this.name = name;
-        this.url = url;
+        this.value = value;
+        this.type = type;
         this.description = description;
     }
     public Authority(Long id){

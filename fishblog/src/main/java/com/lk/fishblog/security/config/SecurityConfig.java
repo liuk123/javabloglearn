@@ -15,6 +15,7 @@ import org.springframework.security.web.authentication.rememberme.JdbcTokenRepos
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import com.lk.fishblog.security.handler.MyLogoutSuccessHandler;
 import com.lk.fishblog.security.handler.MyAuthenticationSuccessHandler;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import javax.sql.DataSource;
 
@@ -113,9 +114,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //            .expiredSessionStrategy(customExpiredSessionHandler);
 
         //开启跨域访问
-        http.cors().disable();
+//        http.cors().disable();
         //开启模拟请求，比如API POST测试工具的测试，不开启时，API POST为报403错误
-        http.csrf().disable();
+//        http.csrf().disable();
+        http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 
     }
 

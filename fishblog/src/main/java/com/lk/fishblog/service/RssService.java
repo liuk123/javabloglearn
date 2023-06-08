@@ -27,10 +27,10 @@ public class RssService {
         );
     }
     public Page<Rss> find(int pageNum, int pageSize){
-        return rssRepository.findByOrderBySortDesc(PageRequest.of(pageNum, pageSize));
+        return rssRepository.findByOrderBySortAsc(PageRequest.of(pageNum, pageSize));
     }
     public List<Rss> findAll(){
-        return rssRepository.findAllByOrderBySortDesc();
+        return rssRepository.findAllByOrderBySortAsc();
     }
     public void delOne(Long id){
         rssRepository.deleteById(id);

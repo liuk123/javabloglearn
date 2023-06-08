@@ -7,6 +7,8 @@ import com.lk.fishblog.model.Rss;
 import com.lk.fishblog.service.NewsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/news")
 @Slf4j
+@CacheConfig(cacheNames = "NewsCache")
 public class NewsController {
     @Autowired
     NewsService newsService;
@@ -27,8 +30,9 @@ public class NewsController {
      * @param
      * @return
      */
-    @GetMapping(path={"/{id}", "/"})
-    public ResultSet getLink(@PathVariable(required = false) Long id){
+    @GetMapping(path="/")
+    @Cacheable(cacheNames = "news_all")
+    public ResultSet getLink(){
         List<News> n = newsService.findAll();
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", n);
     }

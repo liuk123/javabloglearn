@@ -37,7 +37,6 @@ public class RssController {
         return page;
     }
     @GetMapping(path="/all/")
-    @Cacheable
     public ResultSet getLinkAll(){
         List<Rss> n = rssService.findAll();
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", n);

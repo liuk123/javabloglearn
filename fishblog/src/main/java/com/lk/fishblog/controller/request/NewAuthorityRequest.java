@@ -12,10 +12,11 @@ public class NewAuthorityRequest {
     private Long id;
     private Long pid;
     private String name;
-    private String url;
+    private String value;
+    private String type;
     private String description;
 
     public Authority toAuthority(){
-        return new Authority(id,pid,name,url,description);
+        return new Authority(id,pid,name,value,description,type);
     }
 }

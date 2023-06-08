@@ -16,7 +16,14 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-
+@NamedEntityGraphs({
+        @NamedEntityGraph(
+                name = "BookmarkCategoryEntity",
+                attributeNodes = {
+                        @NamedAttributeNode(value="bookmarkList")
+                }
+        )
+})
 public class BookmarkCategory implements Serializable{
 
     @Id

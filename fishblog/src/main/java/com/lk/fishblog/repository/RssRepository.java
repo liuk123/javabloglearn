@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import java.util.List;
 
 public interface RssRepository extends BaseRepository<Rss, Long> {
-    @EntityGraph(value = "RssEntity", type = EntityGraph.EntityGraphType.FETCH)
-    Page<Rss> findByOrderBySortDesc(Pageable pageable);
     @EntityGraph(value = "RssEntity", type = EntityGraph.EntityGraphType.LOAD)
-    List<Rss> findAllByOrderBySortDesc();
+    Page<Rss> findByOrderBySortAsc(Pageable pageable);
+    @EntityGraph(value = "RssEntity", type = EntityGraph.EntityGraphType.LOAD)
+    List<Rss> findAllByOrderBySortAsc();
 }
