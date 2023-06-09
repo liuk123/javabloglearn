@@ -8,18 +8,27 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @Data
 public class SecurityProperties {
-    private String loginPage = "http://www.cicode.cn/user/login";
-    private String loginProcessingUrl = "http://www.cicode.cn/user/login";
+    private String loginPage = "http://www,cicode.cn/user/login";
+    private String loginProcessingUrl = "/user/login";
     private String logoutUrl = "/user/logout";
 
     private String[] matchers = new String[]{
             "/user/**",
+            "/news/**"
+    };
+    private String[] MethodGETMatchers = new String[]{
+            "/link/**",
+            "/article/**",
+            "/comment/**",
+            "/reply/**",
+            "/tag/**",
+            "/category/**",
+            "/bookmark/**",
             "/menu/**",
             "/focus/**",
-            "/assets/**"
-    };
-    private String[] regexMatchers = new String[]{
-
+            "/friend/**",
+            "/speak/**",
+            "/rss/**"
     };
 
 }

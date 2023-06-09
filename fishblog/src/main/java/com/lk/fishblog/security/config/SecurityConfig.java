@@ -16,6 +16,7 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 import com.lk.fishblog.security.handler.MyLogoutSuccessHandler;
 import com.lk.fishblog.security.handler.MyAuthenticationSuccessHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
@@ -57,20 +58,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()//权限
-            .antMatchers("/user/**","/assets/**","/news/**").permitAll()//不拦截这些请求
-//            .regexMatchers(securityProperties.getRegexMatchers()).permitAll()
-            .antMatchers(HttpMethod.GET, "/link/**").permitAll()
-            .antMatchers(HttpMethod.GET, "/article/**").permitAll()
-            .antMatchers(HttpMethod.GET, "/comment/**").permitAll()
-            .antMatchers(HttpMethod.GET, "/reply/**").permitAll()
-            .antMatchers(HttpMethod.GET, "/tag/**").permitAll()
-            .antMatchers(HttpMethod.GET, "/category/**").permitAll()
-            .antMatchers(HttpMethod.GET, "/bookmark/**").permitAll()
-            .antMatchers(HttpMethod.GET, "/menu/**").permitAll()
-            .antMatchers(HttpMethod.GET, "/focus/**").permitAll()
-            .antMatchers(HttpMethod.GET, "/friend/**").permitAll()
-            .antMatchers(HttpMethod.GET, "/speak/**").permitAll()
-            .antMatchers(HttpMethod.GET, "/rss/**").permitAll()
+//            .antMatchers("/user/**","/assets/**","/news/**").permitAll()//不拦截这些请求
+            .antMatchers(securityProperties.getMatchers()).permitAll()
+            .antMatchers(HttpMethod.GET, securityProperties.getMethodGETMatchers()).permitAll()
+//            .antMatchers(HttpMethod.GET, "/article/**").permitAll()
+//            .antMatchers(HttpMethod.GET, "/comment/**").permitAll()
+//            .antMatchers(HttpMethod.GET, "/reply/**").permitAll()
+//            .antMatchers(HttpMethod.GET, "/tag/**").permitAll()
+//            .antMatchers(HttpMethod.GET, "/category/**").permitAll()
+//            .antMatchers(HttpMethod.GET, "/bookmark/**").permitAll()
+//            .antMatchers(HttpMethod.GET, "/menu/**").permitAll()
+//            .antMatchers(HttpMethod.GET, "/focus/**").permitAll()
+//            .antMatchers(HttpMethod.GET, "/friend/**").permitAll()
+//            .antMatchers(HttpMethod.GET, "/speak/**").permitAll()
+//            .antMatchers(HttpMethod.GET, "/rss/**").permitAll()
             .anyRequest()
             .authenticated()
 
@@ -96,9 +97,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
             .and()
             .logout()
-            .logoutUrl(securityProperties.getLogoutUrl())
+//            .logoutUrl(securityProperties.getLogoutUrl())
+            .logoutRequestMatcher(new AntPathRequestMatcher(securityProperties.getLogoutUrl()))
             .logoutSuccessUrl(securityProperties.getLoginPage())
-//            .deleteCookies("JSESSIONID")
             .logoutSuccessHandler(myLogoutSuccessHandler)
 
             .and()
@@ -117,7 +118,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        http.cors().disable();
         //开启模拟请求，比如API POST测试工具的测试，不开启时，API POST为报403错误
 //        http.csrf().disable();
-        http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+        http.csrf().ignoringAntMatchers("/news/").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 
     }
 
