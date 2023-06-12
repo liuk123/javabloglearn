@@ -31,7 +31,7 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
         PrintWriter out = response.getWriter();
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("resultCode",0);
-        map.put("resultMessage","未登录");
+        map.put("resultMsg","未登录");
         ObjectMapper objectMapper = new ObjectMapper();
         out.write(objectMapper.writeValueAsString(map));
         out.flush();

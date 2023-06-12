@@ -30,7 +30,7 @@ public class RestfulAccessDeniedHandler implements AccessDeniedHandler {
         PrintWriter out = response.getWriter();
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("resultCode",0);
-        map.put("resultMessage", "权限不足");
+        map.put("resultMsg", "权限不足");
         ObjectMapper objectMapper = new ObjectMapper();
         out.write(objectMapper.writeValueAsString(map));
         out.flush();

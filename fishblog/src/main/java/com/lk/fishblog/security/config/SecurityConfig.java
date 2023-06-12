@@ -58,7 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()//权限
-//            .antMatchers("/user/**","/assets/**","/news/**").permitAll()//不拦截这些请求
+//            .antMatchers("/user/**","/amount/**","/news/**").permitAll()//不拦截这些请求
             .antMatchers(securityProperties.getMatchers()).permitAll()
             .antMatchers(HttpMethod.GET, securityProperties.getMethodGETMatchers()).permitAll()
 //            .antMatchers(HttpMethod.GET, "/article/**").permitAll()
@@ -118,6 +118,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        http.cors().disable();
         //开启模拟请求，比如API POST测试工具的测试，不开启时，API POST为报403错误
 //        http.csrf().disable();
+//        ,"/amount/"
         http.csrf().ignoringAntMatchers("/news/").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 
     }

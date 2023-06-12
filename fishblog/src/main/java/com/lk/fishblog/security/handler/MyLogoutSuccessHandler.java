@@ -26,7 +26,7 @@ public class MyLogoutSuccessHandler implements LogoutSuccessHandler {
         response.setContentType("application/json");
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("resultCode",1);
-        map.put("resultMessage","退出成功");
+        map.put("resultMsg","退出成功");
         map.put("data", null);
         PrintWriter out = response.getWriter();
         ObjectMapper objectMapper = new ObjectMapper();

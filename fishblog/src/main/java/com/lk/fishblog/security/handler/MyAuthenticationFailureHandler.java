@@ -33,11 +33,11 @@ public class MyAuthenticationFailureHandler implements AuthenticationFailureHand
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("resultCode",0);
         if (ex instanceof UsernameNotFoundException || ex instanceof BadCredentialsException) {
-            map.put("resultMessage","用户名或密码错误");
+            map.put("resultMsg","用户名或密码错误");
         } else if (ex instanceof DisabledException) {
-            map.put("resultMessage","账户被禁用");
+            map.put("resultMsg","账户被禁用");
         } else {
-            map.put("resultMessage","登录失败");
+            map.put("resultMsg","登录失败");
         }
         ObjectMapper objectMapper = new ObjectMapper();
         out.write(objectMapper.writeValueAsString(map));

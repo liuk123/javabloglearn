@@ -14,7 +14,8 @@ public class SecurityProperties {
 
     private String[] matchers = new String[]{
             "/user/**",
-            "/news/**"
+            "/news/**",
+            "/amount/**"
     };
     private String[] MethodGETMatchers = new String[]{
             "/link/**",

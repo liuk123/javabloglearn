@@ -47,7 +47,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
         response.setContentType("application/json");
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("resultCode",1);
-        map.put("resultMessage","登录成功");
+        map.put("resultMsg","登录成功");
         map.put("data",new NewUserResponse(
                 u.getId(),
                 u.getUsername(),
