@@ -1,10 +1,14 @@
 package com.lk.fishblog;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.tomcat.util.http.LegacyCookieProcessor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
+import org.springframework.boot.web.embedded.tomcat.TomcatContextCustomizer;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -66,5 +70,16 @@ public class FishblogApplication implements WebMvcConfigurer {
 		mapper.registerModule(hibernate5Module);
 //		mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
 		return converter;
+	}
+
+	/**
+	 * 解决cookie中存才,号，不兼容。百度统计中
+	 * @return
+	 */
+	@Bean
+	public WebServerFactoryCustomizer<TomcatServletWebServerFactory> cookieProcessorCustomizer() {
+		return tomcatServletWebServerFactory -> tomcatServletWebServerFactory.addContextCustomizers((TomcatContextCustomizer) context -> {
+			context.setCookieProcessor(new LegacyCookieProcessor());
+		});
 	}
 }

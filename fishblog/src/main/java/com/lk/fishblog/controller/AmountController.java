@@ -38,22 +38,24 @@ public class AmountController {
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResultSet save(@RequestBody @Valid NewAmountRequest newAmountRequest, Authentication authentication){
-            User user = (User) authentication.getPrincipal();
-            String key = "user_" + user.getId();
-            Amount amount = amountService.findByName(key);
-            Amount c;
-            if(amount!=null){// 更新
-                if(amount.getAmount() + newAmountRequest.getValue() < 0){
-                    return new ResultSet(ResultSet.RESULT_CODE_TRUE, "余额不足", amount.getAmount());
-                }
-                c  = amountService.save(amount.getId(),amount.getName(),amount.getAmount() + newAmountRequest.getValue());
-            }else{ // 新建
-                if(newAmountRequest.getValue() <= 0){
-                    return new ResultSet(ResultSet.RESULT_CODE_TRUE, "添加失败", null);
-                }
-                c = amountService.save(null,key,newAmountRequest.getValue());
+        if(authentication==null){
+            return new ResultSet(ResultSet.RESULT_CODE_FALSE, "请登录", null);
+        }
+        User user = (User) authentication.getPrincipal();
+        String key = "user_" + user.getId();
+        Amount amount = amountService.findByName(key);
+        Amount c;
+        if(amount!=null){// 更新
+            if(amount.getAmount() + newAmountRequest.getValue() < 0){
+                return new ResultSet(ResultSet.RESULT_CODE_FALSE, "余额不足", amount.getAmount());
             }
-
+            c  = amountService.save(amount.getId(),amount.getName(),amount.getAmount() + newAmountRequest.getValue());
+        }else{ // 新建
+            if(newAmountRequest.getValue() <= 0){
+                return new ResultSet(ResultSet.RESULT_CODE_FALSE, "添加失败", null);
+            }
+            c = amountService.save(null,key,newAmountRequest.getValue());
+        }
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "添加成功",c.getAmount());
     }
 

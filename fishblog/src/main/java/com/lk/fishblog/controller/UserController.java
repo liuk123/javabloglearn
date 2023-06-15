@@ -56,7 +56,7 @@ public class UserController {
                             u.getCreateTime(),authors)
                     );
         }else{
-            return new ResultSet(ResultSet.RESULT_CODE_FALSE, "获取用户信息", null);
+            return new ResultSet(ResultSet.RESULT_CODE_TRUE, "获取用户信息", null);
         }
     }
 
