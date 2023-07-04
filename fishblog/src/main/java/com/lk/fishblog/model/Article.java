@@ -35,6 +35,8 @@ public class Article implements Serializable{
     private String postImage;
     private String keyword;
 
+    private Long type;//    0:草稿, 1:原创， 2:转载, 3:翻译
+
     @ManyToOne(cascade = {}, fetch=FetchType.EAGER)
     @JoinColumn(name="user_id")
     private User author;

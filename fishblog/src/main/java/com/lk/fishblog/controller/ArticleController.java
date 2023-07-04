@@ -23,6 +23,7 @@ import javax.validation.Valid;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -64,8 +65,11 @@ public class ArticleController {
         User user = (User) authentication.getPrincipal();
 //图片从缓存文件夹移入正式文件夹
         List<String> urlList = regUtil.extractUrls(a.getContent());
-        if(a.getPostImage() != null && !urlList.contains(a.getPostImage())){
-            urlList.add(a.getPostImage());
+        if(a.getPostImage() != null){
+            String postImageStr = a.getPostImage().substring(0, a.getPostImage().indexOf('?'));
+            if(!urlList.contains(postImageStr)){
+                urlList.add(postImageStr);
+            }
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
         String format = sdf.format(new Date());
@@ -119,7 +123,8 @@ public class ArticleController {
                 new User(user.getId()),
                 a.getPostImage(),
                 new TagColumn(a.getTagColumnId()),
-                a.getKeyword());
+                a.getKeyword(),
+                a.getType());
         return new ResultSet(ResultSet.RESULT_CODE_TRUE,"添加成功", article.getId());
     }
 
@@ -128,14 +133,24 @@ public class ArticleController {
      * @param id 文章id
      */
     @GetMapping(path="/{id}")
-//    @Cacheable(key="#id", cacheNames = "art_id")
-    public ResultSet getById(@PathVariable Long id){
+    public ResultSet getById(Authentication authentication, @PathVariable Long id){
+
         Article a = articleService.findById(id);
+        if(a==null){
+            return new ResultSet(ResultSet.RESULT_CODE_FALSE, "无法查找到", null);
+        }else if(a.getType()<=0){
+            if(authentication!=null){
+                User u = (User) authentication.getPrincipal();
+                if(!u.getId().equals(a.getAuthor().getId())){
+                    return new ResultSet(ResultSet.RESULT_CODE_FALSE, "无权查看", null);
+                }
+            }else{
+                return new ResultSet(ResultSet.RESULT_CODE_FALSE, "无权查看", null);
+            }
+
+        }
         Article article = new Article();
-//        List<Comment> commentList = a.getCommentList().stream().limit(10).collect(Collectors.toList());
-//        for(Comment comment: commentList){
-//            comment.setReplyList(comment.getReplyList().stream().limit(10).collect(Collectors.toList()));
-//        }
+
         User au = a.getAuthor();
         User u = new User(au.getId(),au.getUsername(), au.getAvatar());
         article.setId(a.getId());
@@ -143,13 +158,14 @@ public class ArticleController {
         article.setUpdateTime(a.getUpdateTime());
         article.setAuthor(u);
         article.setTag(a.getTag());
-//        article.setCommentList(commentList);
+
         article.setCreateTime(a.getCreateTime());
         article.setContent(a.getContent());
         article.setDescItem(a.getDescItem());
         article.setTagColumn(a.getTagColumn());
         article.setCategory(a.getCategory());
         article.setKeyword(a.getKeyword());
+        article.setType(a.getType());
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", article);
     }
 
@@ -163,13 +179,14 @@ public class ArticleController {
     @GetMapping(path="/")
     public PageInfo<Article> getArticle(@RequestParam Integer pageIndex, @RequestParam Integer pageSize, @RequestParam(required = false) List<Long> tagIds, @RequestParam(required = false) Long tagColumnId){
 
+        List<Long> types = new ArrayList<>(Arrays.asList(1L, 2L));
         Page<Article> a = null;
         if (tagIds!=null&&!tagIds.isEmpty()){
-            a = articleService.findByTagList(pageIndex-1, pageSize, tagIds);
+            a = articleService.findByTagList(pageIndex-1, pageSize, tagIds, types);
         }else if(tagColumnId!=null){
-            a = articleService.findByTagColumn(pageIndex-1, pageSize, tagColumnId);
+            a = articleService.findByTagColumn(pageIndex-1, pageSize, tagColumnId, types);
         }else{
-            a = articleService.findAllByPage(pageIndex-1, pageSize);
+            a = articleService.findAllByPage(pageIndex-1, pageSize, types);
         }
         if(a == null){
             return null;
@@ -189,6 +206,7 @@ public class ArticleController {
             reta.setTitle(article.getTitle());
             reta.setTag(article.getTag());
             reta.setKeyword(article.getKeyword());
+            reta.setType(article.getType());
             lista.add(reta);
         }
         PageInfo<Article> page = new PageInfo<Article>(a.getNumber()+1, a.getSize(), a.getTotalPages(),a.getTotalElements(),lista);
@@ -202,12 +220,19 @@ public class ArticleController {
      * @param pageSize 页数
      */
     @GetMapping(path="/getByAuthor/")
-    public PageInfo<Article> getByAuthor(@RequestParam Long id, @RequestParam(required = false) Long categoryId, @RequestParam Integer pageIndex, @RequestParam Integer pageSize){
+    public PageInfo<Article> getByAuthor(Authentication authentication, @RequestParam Long id, @RequestParam(required = false) Long categoryId, @RequestParam Integer pageIndex, @RequestParam Integer pageSize){
+        List<Long> types = new ArrayList<>(Arrays.asList(1L, 2L));
+        if(authentication != null){
+            User u = (User) authentication.getPrincipal();
+            if(u.getId().equals(id)){
+                types.add(0L);
+            }
+        }
         Page<Article> a;
         if(categoryId==null){
-            a = articleService.findByAuthor(id, pageIndex-1, pageSize);
+            a = articleService.findByAuthor(id, pageIndex-1, pageSize, types);
         }else{
-            a = articleService.findByAuthorAndCategory(id, categoryId, pageIndex-1, pageSize);
+            a = articleService.findByAuthorAndCategory(id, categoryId, pageIndex-1, pageSize, types);
         }
         PageInfo<Article> page = new PageInfo<>(a);
         page.setPageSize(pageSize);
@@ -222,8 +247,11 @@ public class ArticleController {
     public ResultSet delById(@PathVariable Long id){
         Article a = articleService.findById(id);
         List<String> urlList = regUtil.extractUrls(a.getContent());
-        if(a.getPostImage() != null && !urlList.contains(a.getPostImage())){
-            urlList.add(a.getPostImage());
+        if(a.getPostImage() != null){
+            String postImageStr = a.getPostImage().substring(0, a.getPostImage().indexOf('?'));
+            if(!urlList.contains(postImageStr)){
+                urlList.add(postImageStr);
+            }
         }
         for(String url: urlList){
             File oldFile = new File(url.substring(url.indexOf(uploadPath)));

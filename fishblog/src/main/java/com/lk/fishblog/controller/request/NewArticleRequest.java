@@ -22,6 +22,7 @@ public class NewArticleRequest {
     private Long tagId;
     private Long tagColumnId;
     private Long category;
+    private Long type;
 
     private Long id;
     private String postImage;

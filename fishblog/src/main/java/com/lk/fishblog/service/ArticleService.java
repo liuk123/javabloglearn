@@ -29,26 +29,26 @@ public class ArticleService {
         return articleRepository.findFirstById(id);
     }
 
-    public Page<Article> findByAuthor(Long uerId, int pageNum, int pageSize){
-        return this.articleRepository.findByAuthor_IdOrderByCreateTimeDesc(uerId, PageRequest.of(pageNum, pageSize));
+    public Page<Article> findByAuthor(Long uerId, int pageNum, int pageSize, List<Long> types){
+        return this.articleRepository.findByTypeInAndAuthor_IdOrderByCreateTimeDesc(types, uerId, PageRequest.of(pageNum, pageSize));
     }
-    public Page<Article> findByAuthorAndCategory(Long uerId, Long categoryId, int pageNum, int pageSize){
-        return this.articleRepository.findByAuthor_IdAndCategory_IdOrderByCreateTimeDesc(uerId, categoryId, PageRequest.of(pageNum, pageSize));
+    public Page<Article> findByAuthorAndCategory(Long uerId, Long categoryId, int pageNum, int pageSize, List<Long> types){
+        return this.articleRepository.findByTypeInAndAuthor_IdAndCategory_IdOrderByCreateTimeDesc(types, uerId, categoryId, PageRequest.of(pageNum, pageSize));
     }
     @Cacheable(key="#tagIds +'_'+ #pageNum+'_'+#pageSize", cacheNames = "art_tagList")
-    public Page<Article> findByTagList(int pageNum, int pageSize, List<Long> tagIds){
-        return this.articleRepository.findByTag_IdInOrderByCreateTimeDesc(tagIds, PageRequest.of(pageNum, pageSize));
+    public Page<Article> findByTagList(int pageNum, int pageSize, List<Long> tagIds, List<Long> types){
+        return this.articleRepository.findByTypeInAndTag_IdInOrderByCreateTimeDesc(types, tagIds, PageRequest.of(pageNum, pageSize));
     }
 
     @Cacheable(key="#tagColumnId +'_'+ #pageNum+'_'+#pageSize", cacheNames = "art_tagCol")
-    public Page<Article> findByTagColumn(int pageNum, int pageSize, Long tagColumnId){
-        return this.articleRepository.findByTagColumn_IdOrderByCreateTimeDesc(tagColumnId, PageRequest.of(pageNum, pageSize));
+    public Page<Article> findByTagColumn(int pageNum, int pageSize, Long tagColumnId, List<Long> types){
+        return this.articleRepository.findByTypeInAndTagColumn_IdOrderByCreateTimeDesc(types, tagColumnId, PageRequest.of(pageNum, pageSize));
     }
     @Cacheable(key="#pageNum+'_'+#pageSize", cacheNames = "art")
-    public Page<Article> findAllByPage(int pageNum, int pageSize){
-        return this.articleRepository.findByOrderByCreateTimeDesc(PageRequest.of(pageNum, pageSize));
+    public Page<Article> findAllByPage(int pageNum, int pageSize, List<Long> types){
+        return this.articleRepository.findByTypeInOrderByCreateTimeDesc(types, PageRequest.of(pageNum, pageSize));
     }
-    public Article save(Long id, String title, String content, String descItem, Tag tag, Category category, User author, String postImage, TagColumn tagColumn, String keyword){
+    public Article save(Long id, String title, String content, String descItem, Tag tag, Category category, User author, String postImage, TagColumn tagColumn, String keyword, Long type){
 
         return articleRepository.save(
             Article
@@ -63,6 +63,7 @@ public class ArticleService {
                 .author(author)
                 .postImage(postImage)
                 .keyword(keyword)
+                .type(type)
                 .build()
         );
     }
