@@ -1,5 +1,6 @@
 package com.lk.fishblog.controller;
 
+import com.lk.fishblog.common.utils.FileUtil;
 import com.lk.fishblog.common.utils.PageInfo;
 import com.lk.fishblog.common.utils.ResultSet;
 import com.lk.fishblog.controller.request.NewBookmarkCategoryRequest;
@@ -9,6 +10,7 @@ import com.lk.fishblog.service.BookmarkCategoryService;
 import com.lk.fishblog.service.BookmarkService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -16,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,14 +32,19 @@ public class BookmarkController {
     BookmarkService bookmarkService;
     @Autowired
     BookmarkCategoryService bookmarkCategoryService;
+    @Autowired
+    FileUtil fileUtil;
+
+    @Value("${upload.favicon}")
+    private String favicon;
 
     /**
      * 获取书签分类
      * @param
      * @return
      */
-    @Cacheable(cacheNames = "bookmarkCat")
     @GetMapping(path="/bookmarkCategory/")
+    @Cacheable(cacheNames = "bookmarkCat")
     public ResultSet getBookmarkCategory(){
         List<BookmarkCategory> n = bookmarkCategoryService.findBookmarkCategory();
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", n);
@@ -80,7 +88,6 @@ public class BookmarkController {
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "查询成功", n);
     }
 
-    @Cacheable(key="#ids", cacheNames = "bookmarkIds")
     @GetMapping(path="/bookmarkItem/")
     public PageInfo<Bookmark> getBookmark(@RequestParam List<Long> ids, @RequestParam Integer pageIndex, @RequestParam Integer pageSize){
         Page<Bookmark> n = bookmarkService.findBookmarkByCIds(ids, pageIndex-1, pageSize);
@@ -105,7 +112,9 @@ public class BookmarkController {
     }
 
     @DeleteMapping(path = "/")
-    public ResultSet delById(@RequestParam Long id){
+    public ResultSet delById(@RequestParam Long id, @RequestParam String icon){
+        File f = new File(favicon + icon);
+        fileUtil.delFile(f.getAbsolutePath());
         bookmarkService.delOne(id);
         return new ResultSet(ResultSet.RESULT_CODE_TRUE, "删除成功");
     }

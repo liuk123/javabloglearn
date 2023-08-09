@@ -1,5 +1,6 @@
 package com.lk.fishblog.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -16,14 +17,14 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@NamedEntityGraphs({
-        @NamedEntityGraph(
-                name = "BookmarkCategoryEntity",
-                attributeNodes = {
-                        @NamedAttributeNode(value="bookmarkList")
-                }
-        )
-})
+//@NamedEntityGraphs({
+//        @NamedEntityGraph(
+//                name = "BookmarkCategoryEntity",
+//                attributeNodes = {
+////                        @NamedAttributeNode(value="bookmarkList")
+//                }
+//        )
+//})
 public class BookmarkCategory implements Serializable{
 
     @Id
@@ -41,7 +42,8 @@ public class BookmarkCategory implements Serializable{
     private String title;
     private String icon;
 
-    @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "bookmarkCategory", fetch=FetchType.LAZY)
+//    @JsonIgnore
+    @OneToMany(cascade = { }, mappedBy = "bookmarkCategory", fetch=FetchType.LAZY)
     private  List<Bookmark> bookmarkList;
 
     public BookmarkCategory(Long id){

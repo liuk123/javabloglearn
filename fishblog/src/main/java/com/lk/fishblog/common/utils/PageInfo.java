@@ -48,6 +48,7 @@ public class PageInfo<T> extends ResultSet{
             this.list = page.getContent();
         }else{
             this.pageSize = 10;
+            this.pageIndex=1;
         }
     }
     public PageInfo(int pageIndex, int pageSize, int pages, long total, List<T> list){
