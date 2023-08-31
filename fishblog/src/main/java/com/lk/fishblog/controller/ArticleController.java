@@ -191,26 +191,7 @@ public class ArticleController {
         if(a == null){
             return null;
         }
-        List<Article> lista = new ArrayList<>();
-        for(Article article: a.getContent()){
-            Article reta = new Article();
-            User au = article.getAuthor();
-            User u = new User(au.getId(),au.getUsername(),au.getAvatar());
-            reta.setAuthor(u);
-            reta.setId(article.getId());
-            reta.setCategory(article.getCategory());
-            reta.setCreateTime(article.getCreateTime());
-            reta.setUpdateTime(article.getUpdateTime());
-            reta.setDescItem(article.getDescItem());
-            reta.setPostImage(article.getPostImage());
-            reta.setTitle(article.getTitle());
-            reta.setTag(article.getTag());
-            reta.setKeyword(article.getKeyword());
-            reta.setType(article.getType());
-            lista.add(reta);
-        }
-        PageInfo<Article> page = new PageInfo<Article>(a.getNumber()+1, a.getSize(), a.getTotalPages(),a.getTotalElements(),lista);
-        return page;
+        return getArticlePageInfo(a);
     }
 
     /**
@@ -234,8 +215,29 @@ public class ArticleController {
         }else{
             a = articleService.findByAuthorAndCategory(id, categoryId, pageIndex-1, pageSize, types);
         }
-        PageInfo<Article> page = new PageInfo<>(a);
-        page.setPageSize(pageSize);
+        return getArticlePageInfo(a);
+    }
+
+    private PageInfo<Article> getArticlePageInfo(Page<Article> a) {
+        List<Article> lista = new ArrayList<>();
+        for(Article article: a.getContent()){
+            Article reta = new Article();
+            User au = article.getAuthor();
+            User u = new User(au.getId(),au.getUsername(),au.getAvatar());
+            reta.setAuthor(u);
+            reta.setId(article.getId());
+            reta.setCategory(article.getCategory());
+            reta.setCreateTime(article.getCreateTime());
+            reta.setUpdateTime(article.getUpdateTime());
+            reta.setDescItem(article.getDescItem());
+            reta.setPostImage(article.getPostImage());
+            reta.setTitle(article.getTitle());
+            reta.setTag(article.getTag());
+            reta.setKeyword(article.getKeyword());
+            reta.setType(article.getType());
+            lista.add(reta);
+        }
+        PageInfo<Article> page = new PageInfo<Article>(a.getNumber()+1, a.getSize(), a.getTotalPages(),a.getTotalElements(),lista);
         return page;
     }
 
